@@ -1,0 +1,53 @@
+# install.pads
+# Durch diese Variable wird definiert, welcher Klartext fuer dieses
+# Modul angezeigt werden soll  
+
+
+# Soll geprueft werden, ob der gebootete Kernel ein SuSE Standardkernel ist?
+# yes / no   (funktioniert momentan nur bei Verwendung von LILO)  
+
+$kernelcheck = "yes";
+
+
+# Ueberpruefung, ob diese Pakete installiert sind. Wenn nichts ueberprueft
+# werden soll:
+#  @i_modules = ("no");   
+
+@i_modules = ("no");
+
+
+# Welche Pakete enthalten veraenderte Dateien.
+# Diese Pakete werden mit rpm --verify ueberprueft.
+#  @m_modules = ("no");  ist hier auch moeglich     
+
+@m_modules = ("no");
+
+
+# Welche Kommandos ausgefuehrt werden, dessen Ausgabe in die Supportanfrage
+# reinsoll.
+#  @command = ("no"); ist wiederum moeglich    
+
+@commands = ("hwinfo");
+
+
+# Welche Files sollen mit "cat" in die Anfrage uebernommen werden.
+#  @files = ("no");   moeglich 
+
+@files = ("/var/log/boot.msg", "/var/log/y2log");
+
+
+# Welche Directory-Listings im long-format sollen in die Anfrage.
+# @ls = ("no"); moeglich           
+
+@ls = ("no");
+
+
+# Was soll ausgefuehrt werden, bevor die /var/log/messages ausgewertet wird?
+# Die Liste @messages kann leer bleiben: @messages = ("");
+# $message ist entweder ein Suchbegriff, nach dem rueckwaerts in der messages
+# gesucht wird, und der danach folgende Teil wird in die Anfrage gestellt,
+# ein "tail -n <zeilen>" für soviele Zeilen vom Ende her, oder ein no.
+
+@messages = ("");
+$message = "no";
+

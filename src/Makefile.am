@@ -10,7 +10,8 @@ scriptdir = $(YAST2DIR)/bin
 regdir = /var/lib/support
 
 reg_DATA = rc.registration
-reg_SCRIPTS = eo.pl send_support_request.pl
+reg_INCLUDES = boot.include cdr.include dsl.include install.include isdn.include modem.include printer.include scanner.include sound.include x11.include
+reg_SCRIPTS = eo.pl send_support_request.pl support_all.pl $(reg_INCLUDES)
 
 script_SCRIPTS = is_suse_there.sh
 

@@ -1,0 +1,77 @@
+#
+# $Id$
+#
+# Last Update: 05.03.01 mmichna
+#*printer*Drucker Probleme: Ansteuerung, Ausdrucke, KEINE Ports, KEIN Netzwerk
+# Diese Variable ist wichtig für die Sprachunterstützung im Menü. Mailt mir
+# einfach den Deutschen Text zu, für welche Abfrage diese Config ist. Sollte
+# nicht länger als eine Zeile sein.
+
+
+# Soll geprüft werden, ob der gebootete Kernel ein SuSE Standardkernel ist?
+#
+$kernelcheck = "no";
+
+# Überprüfung, ob diese Pakete installiert sind. Wenn nichts überprüft werden
+# soll, >> @i_modules = ("no"); <<. Zur Zeit gibt das noch einen Fehler,
+# aber die Abfrage wird später eingebaut. Kann ignoriert werden.
+#
+@i_modules = ("a2ps", "aps", "gs_both", "gs_x11", "gs_fonto", "gs_fonts", "gs_lib", "lprold", "lprng", "plp", "cups-devel", "cups", "cups-drivers");
+
+
+# Welche Pakete enthalten veränderte Dateien.
+# "no" sollte möglich sein.
+#
+@m_modules = ("no");
+
+
+# Welche Kommandos ausgeführt werden, dessen Ausgabe in die Supportanfrage
+# reinsoll. 
+#
+@commands = ("lsmod", "lspci -v | grep -A 3 -i usb", "grep -v ^# /etc/printcap", "grep parport /var/log/messages | tail -n 20", "grep lpd /var/log/messages | tail -n 20", "ps aux | grep lpd | grep -v grep", "lpc status lp");
+
+
+# Welche Files sollen mit "cat" in die Anfrage übernommen werden. Auch hier
+# hier gilt, "no" erübrigt sich, da /proc/interrupts immer drin stehen soll.
+#
+@files = ("/proc/version", "/proc/interrupts", "/proc/ioports", "/proc/devices", "/proc/parport/0/hardware", "/proc/parport/0/autoprobe", "/proc/bus/usb/devices", "/etc/gs.upp/y2prn_lp.upp");
+
+
+# Welche Directory-Listings im long-format sollen in die Anfrage. Hier kann
+# wieder ein "no" rein, auch hier gilt, Fehler ignorieren.
+#
+@ls = ("no");
+
+# Was soll ausgeführt werden, bevor die /var/log/messages ausgewertet wird?
+# Die Liste braucht nichts enthalten.
+# $message ist entweder ein Suchbegriff, nach dem Rückwerts in der messages
+# gesucht wird, und der entsprechende Teil wird in die Anfrage gestellt,
+# oder ein "tail -n <zeilen>" für soviele Zeilen vom Ende her, oder ein no.
+# 
+@messages = ("");
+$message = "no";
+
+################################################################################
+# $Log$
+# Revision 1.1  2001/04/12 13:06:01  mge
+# added: 		support_all.pl	(AKA sitar.pl)
+# added: 		*.include	(AKA pads config files)
+# changed:	yast2-module-support.spec.in src/Makefile.am
+# 				according to these additions
+#
+# Revision 1.5  2001/03/05 08:10:19  stark
+# cups support added by mmichna
+#
+# Revision 1.4  2000/12/05 10:58:13  stark
+# changed description format
+#
+# Revision 1.3  2000/08/24 09:46:19  jsmeix
+# Zwei neue Befehle:
+#   lpc status lp
+# und
+#   ps aux | grep lpd | grep -v grep
+#
+# Revision 1.2  2000/06/20 09:40:03  tw
+# changes for RCS
+#
+#
