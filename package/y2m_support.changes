@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jan 16 17:30:09 CET 2001 - kkaempf@suse.de
+
+- honor back button in support_question
+
+-------------------------------------------------------------------
 Tue Jan 16 16:02:17 CET 2001 - kkaempf@suse.de
 
 - remove duplicate include statements
