@@ -68,6 +68,10 @@
 	+ wrapper_options
 	+" >"
 	+ wrapper_file;
+
+    // execute wrapper only first time in this dialog
+    if (retval == `first) {
+
     y2milestone ("running %1", wrapper_cmd);
 
     UI::OpenDialog (`opt(`decorated), `HBox(`HSpacing(1), `Label(UI::PleaseWaitMsg()), `HSpacing(1)));
@@ -75,7 +79,9 @@
     UI::CloseDialog();
 
     // read output from wrapper
-    string wrapper_data = SCR::Read(.target.string, wrapper_file);
+    wrapper_data = SCR::Read(.target.string, wrapper_file);
+
+    }
 
     // helptext 1 of 3
     string help = _("<p><b>Support Data</b></p>\n");
