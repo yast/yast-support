@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jan 11 11:33:16 CET 2001 - kkaempf@suse.de
+
+- add proper regcode check
+
+-------------------------------------------------------------------
 Thu Jan 11 11:24:54 CET 2001 - kkaempf@suse.de
 
 - check internet connection, popup appropriate message boxes
