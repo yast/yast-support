@@ -36,8 +36,10 @@
 	    if (retval == `next) {
 		ask_registration = false;
 		if (lookup (regdata, "changed", false)) {
+		    // popup when saving data
 		    UI (`DisplayMessage (_("Saving new registration data")));
 		    if (!write_registration (regdata)) {
+			// popup when saving failed
 			UI (`DisplayMessage (_("Saving of registration data failed !")));
 		    }
 		}
@@ -55,6 +57,7 @@
 	else if (retval == `next) {
 	    retval = CallFunction (`support_send ());
 	    if (retval == `next) {
+		// just a final text to give user a 'good' fealing
 		UI(`DisplayMessage(_("Thank you for using SuSE support")));
 		go_on = false;
 	    }
