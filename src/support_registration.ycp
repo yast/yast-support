@@ -122,7 +122,7 @@ the registration number you entered.</p>"));
 what it has to offer in the appendix at the end of your manual.</p>"));
 
     // screen caption
-    UI(`SetWizardContents (_("SuSE Support"), contents, help, false, true));
+    UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
 
     boolean not_ok = true;
     boolean changed = false;
