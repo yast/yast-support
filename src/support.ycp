@@ -18,19 +18,19 @@
      * exit when running for non-root
      */
 
-    map res = SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
+    map res = (map) SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
     list l_res = splitstring(lookup(res, "stdout", ""), "\n");
 
     if( size(l_res) > 0 &&  select(l_res, 0, "") != "root")
     {
         // Popup label (user is not root)
         Popup::Message(_("Log in as a root to run SuSE support."));
-        return;
+        // return;
     }
 
     // global - not necessary to read data again
     string wrapper_data = "";
-    string tmpdir = SCR::Read(.target.tmpdir);
+    string tmpdir = (string) SCR::Read(.target.tmpdir);
 
     // keydata is global !
     map keydata = read_supportkey ();
@@ -53,7 +53,7 @@
 
 	while (ask_key)
 	{
-	    retval = WFM::CallFunction (`support_askkey());
+	    retval = WFM::CallFunction ("support_askkey", []);
 	    if (retval != `next)
 	    {
 		go_on = false;
@@ -89,7 +89,7 @@
 	if (go_on == false)
 	    break;
 
-	retval = WFM::CallFunction (`support_question());
+	retval = WFM::CallFunction ("support_question", []);
 	if (retval == `ask_key)
 	{
 	    ask_key = true;
@@ -105,7 +105,7 @@
         // but do not need to generate & read info again - only for first time
 	    while (retval == `again || retval == `first)
 	    {
-		retval = WFM::CallFunction (`support_send ());
+		retval = WFM::CallFunction ("support_send", [] );
 	    }
 	    if (retval == `next)
 	    {
@@ -126,5 +126,5 @@
 
     Wizard::CloseDialog();
 
-    return `next;
+/* EOF */
 }
