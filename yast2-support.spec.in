@@ -30,6 +30,7 @@ Summary:      YaST2 module for support
 @clientdir@/support_question.ycp
 @clientdir@/support_send.ycp
 @clientdir@/view_anymsg.ycp
+@yncludedir@/support/supportio.ycp
 @configdir@/support.y2cc
 @configdir@/messages.y2cc
 @configdir@/bootmsg.y2cc

@@ -1,10 +1,11 @@
 -------------------------------------------------------------------
-Thu Aug 22 16:09:56 CEST 2002 - jsuchome@suse.cz
+Thu Aug 22 17:37:08 CEST 2002 - jsuchome@suse.cz
 
 - changed install paths:
     /usr/lib/YaST2/bin/support for scripts
     /usr/share/YaST2/data/support for initial data
     /var/lib/YaST2/support is still used for variable data
+- supportio.ycp put to yncludedir
 - html output for wrapper script changed to plain
 - added check for root as a user 
 
