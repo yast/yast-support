@@ -15,8 +15,9 @@ Release:      1
 Copyright:    (c) 2000 SuSE GmbH
 Group:        System Environment/YaST
 BuildArchitectures: noarch
-Requires:	y2t_support
-
+Requires:	yast2-trans-support
+Provides:	y2m_support
+Obsoletes:	y2m_support
 Packager:     @MAINTAINER@
 
 Summary:      YaST2 Module for support
@@ -51,7 +52,11 @@ make install
 @YAST2DIR@/clients/support_registration.ycp
 @YAST2DIR@/clients/support_question.ycp
 @YAST2DIR@/clients/support_send.ycp
+@YAST2DIR@/clients/view_messages.ycp
+@YAST2DIR@/clients/view_bootmsg.ycp
 @YAST2DIR@/menuentries/menuentry_support.ycp
+@YAST2DIR@/menuentries/menuentry_messages.ycp
+@YAST2DIR@/menuentries/menuentry_bootmsg.ycp
 %dir @YAST2DIR@/include/support
 @YAST2DIR@/include/support/registration.ycp
 @YAST2DIR@/bin/is_suse_there.sh
