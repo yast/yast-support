@@ -31,19 +31,10 @@
 
       ////////////////////////////////////////////////////////////////////////////////
       // explanation in YaST2 Control Center                                         //
-      `helptext     : UI(_("Project-Id-Version: YaST2
-POT-Creation-Date: 2001-09-28 15:57:33+0200
-PO-Revision-Date: 2001-05-03 17:54+GMT
-Last-Translator: Jay Migliacio <jam@suse.com>
-Language-Team: English_US <i18n@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-X-Generator: KBabel 0.8
-")),
+      `helptext     : UI(_("This module displays the boot log (/var/log/boot.msg)")),
 
       ////////////////////////////////////////////////////////////////////////////////
-      // leaf nil, experts only ;-)
+      // leave nil, experts only ;-)
       `codefragment : nil 
    ]
    ]);
