@@ -7,7 +7,7 @@ menudir = $(YAST2DIR)/menuentries
 includedir = $(YAST2DIR)/include/support
 scriptdir = $(YAST2DIR)/bin
 
-regdir = /var/lib/support
+regdir = $(DESTDIR)/var/lib/support
 
 reg_DATA = rc.registration
 reg_INCLUDES = boot.include cdr.include dsl.include install.include isdn.include laptop.include modem.include printer.include scanner.include sound.include x11.include
