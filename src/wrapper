@@ -156,7 +156,6 @@ CASE:{
 		for (@trash) {
 			$out .= $_;
 		}
-		print $out;
 		&open_outfile();
 		print $outFH $out;
 		&close_outfile();
