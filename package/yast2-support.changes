@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Jan 17 17:51:26 CET 2005 - jsuchome@suse.cz
+
+- move client for viewing logs to yast2-repair
+- removed lookup & select
+- 2.11.0
+
+-------------------------------------------------------------------
 Mon Sep 13 15:33:06 CEST 2004 - visnov@suse.cz
 
 - adapted for 9.2 (mlasars)
