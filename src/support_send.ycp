@@ -146,7 +146,8 @@ transfer the data to another computer by floppy disk.</p>");
 	}
     }
 
-    SCR::Execute(.target.remove, hw_file);
+    SCR::Execute(.target.remove, user_file);
+    SCR::Execute(.target.remove, wrapper_file);
 
     return ret;
 }
