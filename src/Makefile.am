@@ -30,7 +30,4 @@ EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS) \
 	     $(script_SCRIPTS)
 
 install-data-hook:
-	chgrp users $(regdir)
-	chmod og+w $(regdir)
-	chgrp users $(regdir)/$(reg_DATA)
-	chmod og+w $(regdir)/$(reg_DATA)
+	chmod 700 $(regdir)
