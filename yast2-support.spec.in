@@ -1,0 +1,41 @@
+@HEADER-COMMENT@
+# neededforbuild yast2-devtools
+
+@HEADER@
+Requires:	yast2
+
+Provides:	y2m_support yast2-module-support
+Obsoletes:	y2m_support yast2-module-support
+
+BuildArchitectures: noarch
+
+Summary:      YaST2 Module for support
+
+%description
+-
+
+@PREP@
+
+@BUILD-YCP@
+
+@INSTALL-YCP@
+
+@CLEAN@
+
+%files
+%defattr(-,root,root)
+%dir /var/lib/support
+/var/lib/support/*
+@scrconfdir@/cfg_support.scr
+@clientdir@/support.ycp
+@clientdir@/support_askkey.ycp
+@clientdir@/support_question.ycp
+@clientdir@/support_send.ycp
+@clientdir@/view_anymsg.ycp
+@configdir@/menuentry_support.y2cc
+@configdir@/menuentry_messages.y2cc
+@configdir@/menuentry_bootmsg.y2cc
+%dir @yncludedir@/support
+@yncludedir@/support/supportio.ycp
+@ybindir@/is_suse_there.sh
+%doc @docdir@
