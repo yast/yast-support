@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jan 16 16:02:17 CET 2001 - kkaempf@suse.de
+
+- remove duplicate include statements
+
+-------------------------------------------------------------------
 Thu Jan 11 16:12:24 CET 2001 - kkaempf@suse.de
 
 - gather more system informations
