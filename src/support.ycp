@@ -5,23 +5,79 @@
  */
 
 {
-  // Menuentry for the YaST2 menu
-  if (Args() == [ "get_menuentry" ]) 
-      return [ 
-	      "support", $[
-				// menu label for support query module
-			     "menuentry"    : UI(_("Post a support query")),
-			     "arguments"    : [ ],
-				// explanation for support query module
-			     "widget"       : `RichText(
-						       UI(_( "<P>Launch this module to post a support query.</P>"))),
-			     "codefragment" : nil ]
-      ];
+    textdomain "support";
+
+    // Menuentry for the YaST2 menu
+    if (Args() == [ "get_menuentry" ]) {
+	return [ 
+	    "support", $[
+		// menu label for support query module
+		"menuentry"    : UI(_("Post a support query")),
+		"arguments"    : [ ],
+		// explanation for support query module
+		"widget"       : `RichText(
+				       UI(_( "<P>Launch this module to post a support query.</P>"))),
+		"codefragment" : nil ]
+        ];
+    }
 
     integer current_stage = -1;
-  
+    include "ui/wizard_dialog.ycp";
 
-    any ret = UI (`UserInput());
+    include "support/registration.ycp";
+
+    // regata is global !
+
+    map regdata = read_registration ();
+
+    UI(`CreateWizardDialog());
+
+    // if no valid registration data present, ask !
+
+    any retval = nil;
+    boolean ask_registration = (check_registration (regdata) != _(""));
+    boolean go_on = true;
+
+    while (go_on) {
+
+	while (ask_registration) {
+	    retval = CallFunction (`support_registration ());
+	    if (retval == `abort) {
+		go_on = false;
+		break;
+	    }
+	    if (retval == `next) {
+		ask_registration = false;
+		if (lookup (regdata, "changed", false)) {
+		    UI (`DisplayMessage (_("Saving new registration data")));
+		    if (!write_registration (regdata)) {
+			UI (`DisplayMessage (_("Saving of registration data failed !")));
+		    }
+		}
+		break;
+	    }
+	} // while (ask_registration)
+
+	if (go_on == false)
+	    break;
+
+	retval = CallFunction (`support_question());
+	if (retval == `ask_registration) {
+	    ask_registration = true;
+	}
+	else if (retval == `next) {
+	    retval = CallFunction (`support_send ());
+	    if (retval == `next) {
+		UI(`DisplayMessage(_("Thank you for using SuSE support")));
+		go_on = false;
+	    }
+	}
+
+	if (retval == `abort) {
+	    go_on = false;
+	}
+    }
+
 
     // --------------------------------------------------------------
  

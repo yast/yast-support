@@ -1,0 +1,14 @@
+#
+# registration data
+#
+REG_CODE=""
+REG_SALUTATION=""
+REG_NAME1=""
+REG_NAME2=""
+REG_COMPANY=""
+REG_STREET=""
+REG_ZIP=""
+REG_COUNTRY=""
+REG_STATE=""
+REG_CITY=""
+REG_EMAIL=""

@@ -1,0 +1,42 @@
+{
+    textdomain "support";
+
+    include "ui/wizard_message.ycp";
+
+    // support_question.ycp
+    // present/ask question data
+
+    term contents = `VBox (
+		      `Frame (_("Current registration data"),
+			`HBox (
+			  `Label (_("Registration Code:")),
+			  `Label (lookup (regdata, "regcode", "")),
+			  `HSpacing (0.5),
+			  `Label (lookup (regdata, "name1", "")),
+			  `Label (lookup (regdata, "name2", "")),
+			  `HStretch (),
+			  `PushButton (`id(`ask_registration), _("&Change"))
+			 )
+		      ),
+		      `VSpacing (1.0),
+		      `Left (`CheckBox (`id(`hwdata), _("&Send hardware data"), lookup (regdata, "hwdata", true))),
+		      `Left (`CheckBox (`id(`swdata), _("&Send software data"), lookup (regdata, "swdata", true))),
+		      `VSpacing (1.0),
+		      `TextEntry (`id(`question), _("&Your question for SuSE support:"), lookup (regdata, "question", "")),
+		      `VStretch ()
+		    );
+
+    locale help = _("<p><b>Support Question</b>\n");
+
+    UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
+
+    any ret = UI (`UserInput());
+
+    if (ret != `abort) {
+	regdata = add (regdata, "question", UI(`QueryWidget (`id(`question), `Value)));
+	regdata = add (regdata, "hwdata", UI(`QueryWidget (`id(`hwdata), `Value)));
+	regdata = add (regdata, "swdata", UI(`QueryWidget (`id(`swdata), `Value)));
+    }
+
+    return ret;
+}

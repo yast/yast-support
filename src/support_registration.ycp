@@ -1,0 +1,210 @@
+{
+    textdomain "support";
+
+    include "ui/wizard_message.ycp";
+
+    include "support/registration.ycp";
+
+    y2milestone ("regdata in '%1'", regdata);
+
+    // support_regcode.ycp
+    // present/ask registration data
+
+    // regcode = $["regcode"
+    //		   "salutation"
+    //		   "name1"
+    //		   "name2"
+    //		   "company"
+    //		   "street"
+    //		   "zip"
+    //		   "country"
+    //		   "state"
+    //		   "city"
+    //		   "email"
+    //
+
+    map old_regdata = regdata;
+
+    string regcode	= lookup (regdata, "regcode", "");
+    string salutation	= lookup (regdata, "salutation", "");
+    string name1	= lookup (regdata, "name1", "");
+    string name2	= lookup (regdata, "name2", "");
+    string company	= lookup (regdata, "company", "");
+    string street	= lookup (regdata, "street", "");
+    string zip		= lookup (regdata, "zip", "");
+    string country	= lookup (regdata, "country", "");
+    string state	= lookup (regdata, "state", "");
+    string city		= lookup (regdata, "city", "");
+    string email	= lookup (regdata, "email", "");
+
+    if (lookup (regdata, "changed", false)) {
+	regdata = add (regdata, "changed", false);
+    }
+
+    term contents = `VBox (
+		      `Frame (_("Enter registration data"),
+			`VBox (
+			  `HBox (
+			    `CheckBox (`id(`male), _("&Mr"), (salutation == "male")),
+			    `CheckBox (`id(`female), _("Mr&s"), (salutation == "female")),
+			    `HStretch ()
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    `TextEntry (`id(`name1), _("&First name:"), name1),
+			    `HSpacing (0.5),
+			    `TextEntry (`id(`name2), _("&Last name:"), name2),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    `TextEntry (`id(`company), _("&Company:"), company),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    `TextEntry (`id(`street), _("&Street:"), street),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			      `HWeight (20, `TextEntry (`id(`zip), _("&ZIP:"), zip)),
+			      `HWeight (80, `TextEntry (`id(`city), _("&City:"), city)),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			      `HWeight (20, `TextEntry (`id(`state), _("&State:"), state)),
+			      `HWeight (80, `TextEntry (`id(`country), _("&Country:"), country)),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    `TextEntry (`id(`email), _("&E-Mail:"), email),
+			    `HSpacing (0.5)
+			  ),
+			  `VSpacing (0.5),
+			  `HBox (
+			    `HSpacing (0.5),
+			    `TextEntry (`id(`regcode), _("&Registration Code:"), regcode),
+			    `HSpacing (0.5)
+			  ),
+			  `VSpacing (0.5)
+		        )
+		      )
+		    );
+    locale help = _("<p><b>Support Module</b>\n");
+
+    UI(`SetWizardContents (_("SuSE Support"), contents, help, false, true));
+
+    boolean not_ok = true;
+    boolean changed = false;
+    any ret = nil;
+
+    while (not_ok) {
+	ret = UI (`UserInput());
+
+	not_ok = false;
+	changed = false;
+
+	y2milestone (sformat ("ret '%1'", ret));
+
+	if ((ret == `back) || (ret == `abort)) {
+	    regdata = old_regdata;
+	    break;
+	}
+
+	// ret == `next
+
+	string value = "";
+
+	if (salutation != "male" && UI(`QueryWidget(`id(`male), `Value)) == true) {
+	    regdata = add (regdata, "salutation", "male"); changed = true;
+	} else if (salutation != "female" && UI(`QueryWidget(`id(`female), `Value)) == true) {
+	    regdata = add (regdata, "salutation", "female"); changed = true;
+	}
+
+	value = UI(`QueryWidget(`id(`name1), `Value));
+	if (value != name1) {
+	    regdata = add (regdata, "name1", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`name2), `Value));
+	if (value != name2) {
+	    regdata = add (regdata, "name2", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`company), `Value));
+	if (value != company) {
+	    regdata = add (regdata, "company", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`street), `Value));
+	if (value != street) {
+	   regdata = add (regdata, "street", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`zip), `Value));
+	if (value != zip) {
+	   regdata = add (regdata, "zip", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`city), `Value));
+	if (value != city) {
+	   regdata = add (regdata, "city", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`state), `Value));
+	if (value != state) {
+	   regdata = add (regdata, "state", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`country), `Value));
+	if (value != country) {
+	   regdata = add (regdata, "country", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`email), `Value));
+	if (value != email) {
+	   regdata = add (regdata, "email", value); changed = true;
+	}
+	value = UI(`QueryWidget(`id(`regcode), `Value));
+	if (value != regcode) {
+	   regdata = add (regdata, "regcode", value); changed = true;
+	}
+
+	if (lookup (regdata, "salutation", "") == "") {
+	    not_ok = true;
+	    UI (`DisplayMessage (_("Please check either Mrs or Mr")));
+	}
+	    else if (lookup (regdata, "name1", "") == "") {
+		not_ok = true;
+		UI (`DisplayMessage (_("Please enter your first name")));
+	    }
+	    else if (lookup (regdata, "name2", "") == "") {
+		not_ok = true;
+		UI (`DisplayMessage (_("Please enter your last name")));
+	    }
+	    else if (lookup (regdata, "email", "") == "") {
+		not_ok = true;
+		UI (`DisplayMessage (_("Please enter your email address")));
+	    }
+	    else if (lookup (regdata, "regcode", "") == "") {
+		not_ok = true;
+		UI (`DisplayMessage (_("Please enter your registration code")));
+	    }
+	    else {
+		string email = lookup (regdata, "email", "");
+		// email shoul be at least a@b.cc
+		if ((size (email) < 6)
+		    || (findfirstof ("@", email) < 0)
+		    || (findfirstof (".", email) < 0)) {
+		    not_ok = true;
+		    UI (`DisplayMessage (_("Please enter a valid email address")));
+		}
+	    }
+
+    } // while (not_ok)
+
+    y2milestone (sformat ("exit '%1'", ret));
+
+    if (changed) {
+	regdata = add (regdata, "changed", true);
+    }
+
+    y2milestone ("regdata out '%1'", regdata);
+
+    return ret;
+}
