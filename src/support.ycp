@@ -30,6 +30,7 @@
 
     // global - not necessary to read data again
     string wrapper_data = "";
+    string tmpdir = SCR::Read(.target.tmpdir);
 
     // keydata is global !
     map keydata = read_supportkey ();
