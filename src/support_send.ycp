@@ -38,8 +38,6 @@
 	if ((substring (option, 0, 2) == "--")
 	    && (optval == true))
 	{
-	    if (option == "--all")
-		output_format = "html";
 	    wrapper_options = wrapper_options + " " + option;
 	}
     });
@@ -70,7 +68,7 @@ transfer the data to another computer by floppy disk.</p>"));
     // present/ask question data
 
     term contents = `Dummy();
-    if (lookup (regdata, "--all", false))
+    if (output_format != "plain")
     {
 	contents = `VBox (`RichText (wrapper_data));
     }
