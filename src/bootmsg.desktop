@@ -6,7 +6,7 @@ X-KDE-ModuleType=Library
 X-KDE-RootOnly=true
 X-KDE-HasReadOnlyMode=true
 X-KDE-Library=yast2
-X-KDE-FactoryName=view_anymsg__var_log_boot_msg
+X-SuSE-YaST-Call=view_anymsg /var/log/boot.msg
 
 X-SuSE-YaST-Group=Misc
 X-SuSE-YaST-Argument=/var/log/boot.msg
