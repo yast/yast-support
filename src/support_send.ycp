@@ -113,9 +113,9 @@ transfer the data to another computer by floppy disk.</p>");
 	`VBox (
 	    `Left (`HBox (
 		// radio button
-		`RadioButton (`id(`online), _("&transmission via Internet to SuSE Support"), true),
+		`RadioButton (`id(`online), _("transmission via Internet to SuSE Support"), true),
 		// radio button
-		`RadioButton (`id(`disk), _("&save to disk"), false)
+		`RadioButton (`id(`disk), _("save to disk"), false)
 	    ))
 	)
 	));

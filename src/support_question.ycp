@@ -22,15 +22,15 @@
 	"--isdn"	: _("&ISDN"),
 	"--printer"	: _("&Printer"),
 	"--x11"		: _("&KDE/X11"),
-	"--boot"	: _("B&ooting"),
+	"--boot"	: _("&Booting"),
 	"--sound"	: _("&Sound"),
-	"--laptop"	: _("No&tebook"),
+	"--laptop"	: _("&Notebook"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
         "--cdr"         : _("&CD-R"),
         "--net"         : _("Net&work"),
-        "--hw"          : _("H&ardware"),
-	"--install"	: _("Insta&llation"),
+        "--hw"          : _("&Hardware"),
+	"--install"	: _("I&nstallation"),
 	"--all"		: _("&Unspecified")
     ];
 
@@ -96,7 +96,7 @@
 			    `Label (keydata["name2"]:""),
 			    `HStretch (),
 			    // push button for changing key data
-			    `PushButton (`id(`ask_key), _("C&hange"))
+			    `PushButton (`id(`ask_key), _("&Change"))
 			  )
 			)
 		      ),
