@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon May  7 16:34:28 CEST 2001 - sh@suse.de
+
+- Use new UI(`GetLanguage()) parameter 
+
+-------------------------------------------------------------------
 Wed May  2 18:56:49 CEST 2001 - kkaempf@suse.de
 
 - use RichText widget for HTML output
