@@ -11,7 +11,7 @@ regdir = /var/lib/support
 
 reg_DATA = rc.registration
 reg_INCLUDES = boot.include cdr.include dsl.include install.include isdn.include laptop.include modem.include printer.include scanner.include sound.include x11.include
-reg_SCRIPTS = eo.pl send_support_request.pl support_all.pl support_modules.pl wrapper $(reg_INCLUDES)
+reg_SCRIPTS = eo.pl send_support_request.pl support_modules.pl wrapper $(reg_INCLUDES)
 
 script_SCRIPTS = is_suse_there.sh
 

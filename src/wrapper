@@ -111,7 +111,7 @@ sub support_whatever() {
 	}
 
 	if ($doitall) {
-		push @ret, $_ for (`/var/lib/support/support_all.pl --output=$output`);
+		push @ret, $_ for (`/usr/sbin/support_all.pl --format=$output`);
 	}
 	else {
 		push @ret, $_ for (`/var/lib/support/support_modules.pl --output=$output $myparams`);
