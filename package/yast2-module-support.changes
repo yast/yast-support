@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Apr 30 17:24:05 CEST 2001 - kkaempf@suse.de
+
+- correctly use "wrapper" script
+
+-------------------------------------------------------------------
 Thu Apr 12 17:09:51 CEST 2001 - kkaempf@suse.de
 
 - update probing tools
