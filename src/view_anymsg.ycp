@@ -18,7 +18,7 @@
  * At finish, the list of filenames is written back to /var/lib/support/filenames
  * adapting the default line (starting with "*") accordingly.
  *
- * The default is either given as Args(0) or is the file last viewed.
+ * The default is either given as WFM::Args(0) or is the file last viewed.
  */
 
 {
@@ -42,10 +42,10 @@
     // check if default given as argument
 
     string filename = "";
-    if ((size(Args()) > 0)
-	&& is(Args(0), string))
+    if ((size(WFM::Args()) > 0)
+	&& is(WFM::Args(0), string))
     {
-	filename = Args(0);
+	filename = WFM::Args(0);
     }
 
     // build up ComboBox
@@ -59,7 +59,7 @@
 	if (name != ""
 	    && substring (name, 0, 1) != "#")
 	{
-	    // the default is either given via Args() -> filename != ""
+	    // the default is either given via WFM::Args() -> filename != ""
 	    // or by a filename starting with "*"
 	    if (name == filename)
 	    {

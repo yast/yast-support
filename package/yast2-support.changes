@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jul 12 16:09:31 CEST 2002 - arvin@suse.de
+
+- use proper namespace for Args and CallFunction (#16776)
+
+-------------------------------------------------------------------
 Thu Jul 11 16:16:54 CEST 2002 - kkaempf@suse.de
 
 - generate support.pot

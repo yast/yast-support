@@ -36,7 +36,7 @@
 
 	while (ask_key)
 	{
-	    retval = CallFunction (`support_askkey());
+	    retval = WFM::CallFunction (`support_askkey());
 	    if (retval != `next)
 	    {
 		go_on = false;
@@ -72,7 +72,7 @@
 	if (go_on == false)
 	    break;
 
-	retval = CallFunction (`support_question());
+	retval = WFM::CallFunction (`support_question());
 	if (retval == `ask_key)
 	{
 	    ask_key = true;
@@ -87,7 +87,7 @@
 	    // support_send might return `again, loop here
 	    while (retval == `again)
 	    {
-		retval = CallFunction (`support_send ());
+		retval = WFM::CallFunction (`support_send ());
 	    }
 	    if (retval == `next)
 	    {
