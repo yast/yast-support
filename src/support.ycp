@@ -36,7 +36,7 @@
     map keydata = read_supportkey ();
 
     Wizard::CreateDialog();
-    Wizard::ReplaceAbortButton(`Empty());
+    Wizard::HideAbortButton();
 
     // if no valid supportkey data present, ask !
 
