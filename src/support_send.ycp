@@ -38,6 +38,8 @@
 	if ((substring (option, 0, 2) == "--")
 	    && (optval == true))
 	{
+	    if (option == "--all")
+		output_format = "html";
 	    wrapper_options = wrapper_options + " " + option;
 	}
     });
