@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu May 10 22:11:34 CEST 2001 - kkaempf@suse.de
+
+- suppress empty/unused locales (translations)
+
+-------------------------------------------------------------------
 Tue May  8 15:54:10 CEST 2001 - bjacke@suse.de
 
 - fix call in wrapper script and minor tweaks
