@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep  7 04:48:22 CEST 2001 - bjacke@suse.de
+
+- use new sitar version and update information collector files
+
+-------------------------------------------------------------------
 Mon May 14 11:21:12 CEST 2001 - mge@suse.de
 
 - "wrapper": don't print "Buttons:" if --all
