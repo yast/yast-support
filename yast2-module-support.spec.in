@@ -48,6 +48,7 @@ make install
 /var/lib/support/rc.registration
 /var/lib/support/eo.pl
 /var/lib/support/send_support_request.pl
+@YAST2DIR@/scrconf/rc_registration.scr
 @YAST2DIR@/clients/support.ycp
 @YAST2DIR@/clients/support_registration.ycp
 @YAST2DIR@/clients/support_question.ycp

@@ -16,7 +16,7 @@
 
 //    UI(`OpenDialog());
 
-    string messages = SCR(`Read (.target.string, ("/var/log/messages")));
+    string messages = SCR(`Read (.target.string, ("/var/log/boot.msg")));
     if (size (messages) <= 0)
     {
 	messages = UI(_("<strong>Error</strong><br>
@@ -24,7 +24,7 @@ Can't access <tt>/var/log/messages</tt>, you need to be 'root' in order
 to read this file."));
     }
 
-    UI(`LongTextPopup ("System log (/var/log/messages)",
+    UI(`LongTextPopup ("System log (/var/log/boot.msg)",
 	`RichText ( messages), 80, 20));
 //    UI( `CloseDialog() );
   

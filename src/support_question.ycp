@@ -1,7 +1,60 @@
+/**
+ * support_question.ycp
+ *
+ * asking a support question
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ *
+ */
 {
     textdomain "support";
 
     // support_question.ycp
+
+    // checkbox labels to identify a support question
+    map ask_options = $[
+	"--isdn"	: _("&ISDN"),
+	"--printer"	: _("&Printer"),
+	"--x11"		: _("&User Interface"),
+	"--boot"	: _("&Booting"),
+	"--sound"	: _("&Sound"),
+	"--laptop" 	: _("&Notebook / Laptop"),
+	"--dsl"		: _("&DSL"),
+	"--modem"	: _("&Modem"),
+	"--cdr"		: _("&CD-Writer"),
+	"--scanner"	: _("Sc&anner"),
+	"--install"	: _("I&nstallation"),
+	"--all"		: _("&Unspecified")
+    ];
+
+    // frame label, around checkbuttons
+    term ui_category_left = `Vbox ();
+    term ui_category_right = `Vbox ();
+
+    integer side = 0;	// start left
+
+    foreach (`ckey, `clabel, ask_options, ``{
+	if (ckey != "--all")
+	{
+	    if (side == 0)
+	    {
+		side = 1;
+		ui_category_left = add (ui_category_left,
+		    `Left (`CheckBox (`id(ckey), clabel, lookup (regdata, ckey, true))));
+	    }
+	    else
+	    {
+		side = 0;
+		ui_category_right = add (ui_category_right,
+		    `Left (`CheckBox (`id(ckey), clabel, lookup (regdata, ckey, true))));
+	    }
+	}
+    });
+
+    ui_category_left = add (ui_category_left,
+	    `Left (`CheckBox (`id("--all"), lookup (ask_options, "_", ""), lookup (regdata, "--all", true))));
 
     // present/ask question data
 
@@ -21,10 +74,10 @@
 			 )
 		      ),
 		      `VSpacing (1.0),
-		      // checkbox for sending hardware data
-		      `Left (`CheckBox (`id(`hwdata), _("&Send hardware data"), lookup (regdata, "hwdata", true))),
-		      // checkbox for sending software data
-		      `Left (`CheckBox (`id(`swdata), _("&Send software data"), lookup (regdata, "swdata", true))),
+		      // frame label, around checkbuttons
+		      `Frame (_("Choose a category"),
+			`HBox (ui_category_left, ui_category_right)
+		      ),
 		      `VSpacing (1.0),
 		      // label for multi line edit widget where user can
 		      // describe the problem
@@ -69,8 +122,9 @@ you can make use of the SuSE Professional Services as well. You will find more i
 
     if (ret != `abort) {
 	regdata = add (regdata, "question", UI(`QueryWidget (`id(`question), `Value)));
-	regdata = add (regdata, "hwdata", UI(`QueryWidget (`id(`hwdata), `Value)));
-	regdata = add (regdata, "swdata", UI(`QueryWidget (`id(`swdata), `Value)));
+	foreach (`ckey, `clabel, ask_options, ``{
+	    regdata = add (regdata, ckey, UI(`QueryWidget (`id(ckey), `Value)));
+	});
     }
 
     return ret;

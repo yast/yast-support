@@ -2,7 +2,7 @@
 # Makefile.am for modules/y2c_boot
 #
 
-SUBDIRS = src doc
+SUBDIRS = conf src doc
 
 VERSION = $(shell cat $(srcdir)/VERSION)
 
