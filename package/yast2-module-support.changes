@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue May  1 16:08:39 CEST 2001 - bjacke@suse.de
+
+- correct include files and support_module
+
+-------------------------------------------------------------------
 Mon Apr 30 17:24:05 CEST 2001 - kkaempf@suse.de
 
 - correctly use "wrapper" script
