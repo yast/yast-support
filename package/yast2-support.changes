@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Aug 29 16:11:12 CEST 2002 - jsuchome@suse.cz
+
+- added tests
+
+-------------------------------------------------------------------
 Tue Aug 27 19:49:38 CEST 2002 - jsuchome@suse.cz
 
 - hacked send_support_request.pl for running outside of suse.de
