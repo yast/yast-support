@@ -22,19 +22,20 @@
 
     // set up and execute wrapper script
 
-    string tmpdir = SCR(`Read(.target.tmpdir));
+    string tmpdir = SCR::Read(.target.tmpdir);
 
     string reg_file = "/var/lib/support/rc.registration";
 
     string user_data = "---\n" + lookup (regdata, "question", "") + "\n---\n";
     string user_file = tmpdir + "/user.out";
 
-    SCR(`Write(.target.string, user_file, user_data));
+    SCR::Write(.target.string, user_file, user_data);
 
     string wrapper_file = tmpdir+"/wrapper.out";
     string wrapper_options = "";
     string output_format = "plain";
-    foreach (`option, `optval, regdata, ``{
+    foreach (`option, `optval, regdata,
+    ``{
 	if ((substring (option, 0, 2) == "--")
 	    && (optval == true))
 	{
@@ -49,22 +50,22 @@
 	+" >"
 	+ wrapper_file;
     y2milestone ("running %1", wrapper_cmd);
-    SCR(`Execute(.target.bash, wrapper_cmd));
+    SCR::Execute(.target.bash, wrapper_cmd);
 
     // read output from wrapper
-    string wrapper_data = SCR(`Read(.target.string, wrapper_file));
+    string wrapper_data = SCR::Read(.target.string, wrapper_file);
 
     // helptext 1 of 3
-    string help = UI(_("<p><b>Support Data</b></p>\n"));
+    string help = _("<p><b>Support Data</b></p>\n");
 
     //helptext 2 of 3
-    help = help + UI(_("<p>Here you will see an overview of the information you 
-transmitted. The transfer takes place by HTTP uploading.</p>"));
+    help = help + _("<p>Here you will see an overview of the information you 
+transmitted. The transfer takes place by HTTP uploading.</p>");
 
     //helptext 3 of 3
-    help = help + UI(_("<p>If you do not have Internet access on your Linux system, 
+    help = help + _("<p>If you do not have Internet access on your Linux system, 
 you can save the data instead to the hard drive (save to disk) and from there 
-transfer the data to another computer by floppy disk.</p>"));
+transfer the data to another computer by floppy disk.</p>");
 
     // support_question.ycp
     // present/ask question data
@@ -92,60 +93,60 @@ transfer the data to another computer by floppy disk.</p>"));
 	));
 
     // screen caption
-    UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
+    UI::SetWizardContents (_("SuSE Support"), contents, help, true, true);
 
     if (! lookup (regdata, "--all", false) != "")
     {
-	UI(`ChangeWidget(`id(`data), `Value, wrapper_data));
+	UI::ChangeWidget(`id(`data), `Value, wrapper_data);
     }
 
-    any ret = UI (`UserInput());
+    any ret = UI::UserInput();
 
     string all_files = reg_file + " " + user_file + " " + wrapper_file;
 
     if (ret == `next)
     {
-	if (UI(`QueryWidget (`id(`online), `Value)) == true)
+	if (UI::QueryWidget (`id(`online), `Value) == true)
 	{
-	    if (SCR(`Execute(.target.bash, "/usr/lib/YaST2/bin/is_suse_there.sh")) != 0)
+	    if (SCR::Execute(.target.bash, "/usr/lib/YaST2/bin/is_suse_there.sh") != 0)
 	    {
 		// cant connect to server, popup message 1 of 3
-		string message_text = UI(_("Can't connect to SuSE support server."));
+		string message_text = _("Can't connect to SuSE support server.");
 		// cant connect to server, popup message 2 of 3
-		message_text = message_text + "\n" + UI(_("Please check your internet connection"));
+		message_text = message_text + "\n" + _("Please check your internet connection");
 		// cant connect to server, popup message 3 of 3
-		message_text = message_text + "\n" + UI(_("or choose 'save to disk' and send a printed copy by mail."));
-		UI(`ErrorPopup (message_text));
+		message_text = message_text + "\n" + _("or choose 'save to disk' and send a printed copy by mail.");
+		UI::ErrorPopup (message_text);
 		ret = `again;
 	    }
 	    else
 	    {
 		// popup message, about to connect to support server
-		UI(`MessagePopup (_("Sending data via Internet")));
-		if (SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files)) != 0)
+		UI::MessagePopup (_("Sending data via Internet"));
+		if (SCR::Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files) != 0)
 		{
 		    // failed to upload data to server, popup message 1 of 3
-		    string message_text = UI(_("Can't connect to SuSE support server."));
+		    string message_text = _("Can't connect to SuSE support server.");
 		    // failed to upload data to server, popup message 2 of 3
-		    message_text = message_text + "\n" + UI(_("Please check your internet connection"));
+		    message_text = message_text + "\n" + _("Please check your internet connection");
 		    // failed to upload data to server, popup message 3 of 3
-		    message_text = message_text + "\n" + UI(_("or try again later."));
-		    UI(`ErrorPopup (message_text));
+		    message_text = message_text + "\n" + _("or try again later.");
+		    UI::ErrorPopup (message_text);
 		    ret = `again;
 		}
 	    }
 	}
-	else if (UI(`QueryWidget (`id(`disk), `Value)) == true)
+	else if (UI::QueryWidget (`id(`disk), `Value) == true)
 	{
 	    string disk_file = "/tmp/support.request";
 	    // popup message about where the "saving to disk" file resides
-	    string disk_message = sformat (UI(_("Saving data to %1")), disk_file);
-	    UI(`MessagePopup (disk_message));
-	    SCR(`Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file));
+	    string disk_message = sformat (_("Saving data to %1"), disk_file);
+	    UI::MessagePopup (disk_message);
+	    SCR::Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file);
 	}
     }
 
-    SCR(`Execute(.target.remove, hw_file));
+    SCR::Execute(.target.remove, hw_file);
 
     return ret;
 }

@@ -18,46 +18,54 @@
 
     map regdata = read_registration ();
 
-    UI(`CreateWizardDialog());
-    UI(`ReplaceWizardAbortButton(`Empty()));
+    UI::CreateWizardDialog();
+    UI::ReplaceWizardAbortButton(`Empty());
 
     // if no valid registration data present, ask !
 
     any retval = nil;
 
     // use string->locale propagation
-    locale empty_locale = "";
+
     locale check_message = check_registration (regdata);
-    y2milestone ("empty_locale '%1', check_message '%2'", empty_locale, check_message);
-    boolean ask_registration = (check_message != empty_locale);
+    y2milestone ("check_message '%1'", check_message);
+    boolean ask_registration = (check_message != "");
 
     boolean go_on = true;
 
-    while (go_on) {
+    while (go_on)
+    {
 
-	while (ask_registration) {
+	while (ask_registration)
+	{
 	    retval = CallFunction (`support_registration ());
-	    if (retval != `next) {
+	    if (retval != `next)
+	    {
 		go_on = false;
 		break;
 	    }
-	    else {
-		locale check_message = check_registration (regdata);
+	    else
+	    {
+		string check_message = check_registration (regdata);
 		y2milestone ("empty_locale '%1', check_message '%2'", empty_locale, check_message);
 		ask_registration = (check_message != empty_locale);
-		if (ask_registration == true) {
-		    UI (`ErrorPopup (check_message));
+		if (ask_registration == true)
+		{
+		    UI::ErrorPopup (check_message);
 		}
-		else if (lookup (regdata, "changed", false)) {
+		else if (lookup (regdata, "changed", false))
+		{
 		    // popup when saving data
-		    UI (`MessagePopup (_("Saving new registration data")));
-		    if (!write_registration (regdata)) {
+		    UI::MessagePopup (_("Saving new registration data"));
+		    if (!write_registration (regdata))
+		    {
 			// popup when saving failed
-			UI (`ErrorPopup (_("Saving of registration data failed !")));
+			UI::ErrorPopup (_("Saving of registration data failed !"));
 		    }
 		    break;
 		}
-		else {
+		else
+		{
 		    break;
 		}
 	    }
@@ -67,26 +75,32 @@
 	    break;
 
 	retval = CallFunction (`support_question());
-	if (retval == `ask_registration) {
+	if (retval == `ask_registration)
+	{
 	    ask_registration = true;
 	}
-	else if (retval == `back) {
+	else if (retval == `back)
+	{
 	    retval = `abort;
 	}
-	else if (retval == `next) {
+	else if (retval == `next)
+	{
 	    retval = `again;
 	    // support_send might return `again, loop here
-	    while (retval == `again) {
+	    while (retval == `again)
+	    {
 		retval = CallFunction (`support_send ());
 	    }
-	    if (retval == `next) {
+	    if (retval == `next)
+	    {
 		// just a final text to give user a 'good' fealing
-		UI(`MessagePopup (_("Thank you for using SuSE support")));
+		UI::MessagePopup (_("Thank you for using SuSE support"));
 		go_on = false;
 	    }
 	}
 
-	if (retval == `abort) {
+	if (retval == `abort)
+	{
 	    go_on = false;
 	}
     }
@@ -94,7 +108,7 @@
 
     // --------------------------------------------------------------
  
-    UI( `CloseDialog() );
+    UI::CloseDialog();
   
     return `next;
 }

@@ -14,10 +14,10 @@
 	// check forename, surname
 	// if not set, try to get data from installation
 
-	string name1 = SCR(`Read(.rc.registration.REG_NAME1));
-	string name2 = SCR(`Read(.rc.registration.REG_NAME2));
+	string name1 = SCR::Read(.rc.registration.REG_NAME1);
+	string name2 = SCR::Read(.rc.registration.REG_NAME2);
 	if ((name1 == "") || (name2 == "")) {
-	    map settings = SCR(`Read(.target.ycp, "/var/lib/YaST2/settings.ycp"));
+	    map settings = SCR::Read(.target.ycp, "/var/lib/YaST2/settings.ycp");
 	    y2milestone ("settings (%1)", settings);
 	    name1 = lookup (settings, "forename", "");
 	    name2 = lookup (settings, "surname", "");
@@ -26,34 +26,34 @@
 	regdata = add (regdata, "name1", name1);
 	regdata = add (regdata, "name2", name2);
 
-	regdata = add (regdata, "salutation", SCR(`Read(.rc.registration.REG_SALUTATION)));
-	regdata = add (regdata, "company",    SCR(`Read(.rc.registration.REG_COMPANY)));
-	regdata = add (regdata, "street",     SCR(`Read(.rc.registration.REG_STREET)));
-	regdata = add (regdata, "zip",	      SCR(`Read(.rc.registration.REG_ZIP)));
-	regdata = add (regdata, "country",    SCR(`Read(.rc.registration.REG_COUNTRY)));
-	regdata = add (regdata, "state",      SCR(`Read(.rc.registration.REG_STATE)));
-	regdata = add (regdata, "city",       SCR(`Read(.rc.registration.REG_CITY)));
-	regdata = add (regdata, "email",      SCR(`Read(.rc.registration.REG_EMAIL)));
-	regdata = add (regdata, "regcode",    SCR(`Read(.rc.registration.REG_CODE)));
+	regdata = add (regdata, "salutation", SCR::Read(.rc.registration.REG_SALUTATION));
+	regdata = add (regdata, "company",    SCR::Read(.rc.registration.REG_COMPANY));
+	regdata = add (regdata, "street",     SCR::Read(.rc.registration.REG_STREET));
+	regdata = add (regdata, "zip",	      SCR::Read(.rc.registration.REG_ZIP));
+	regdata = add (regdata, "country",    SCR::Read(.rc.registration.REG_COUNTRY));
+	regdata = add (regdata, "state",      SCR::Read(.rc.registration.REG_STATE));
+	regdata = add (regdata, "city",       SCR::Read(.rc.registration.REG_CITY));
+	regdata = add (regdata, "email",      SCR::Read(.rc.registration.REG_EMAIL));
+	regdata = add (regdata, "regcode",    SCR::Read(.rc.registration.REG_CODE));
 
 	return regdata;
     };
 
     global define write_registration (map regdata) ``{
 
-	SCR(`Write(.rc.registration.REG_NAME1,	lookup (regdata, "name1", "")));
-	SCR(`Write(.rc.registration.REG_NAME2,	lookup (regdata, "name2", "")));
-	SCR(`Write(.rc.registration.REG_SALUTATION, lookup (regdata, "salutation", "")));
-	SCR(`Write(.rc.registration.REG_COMPANY,lookup (regdata, "company", "")));
-	SCR(`Write(.rc.registration.REG_STREET,	lookup (regdata, "street", "")));
-	SCR(`Write(.rc.registration.REG_ZIP,	lookup (regdata, "zip", "")));
-	SCR(`Write(.rc.registration.REG_COUNTRY,lookup (regdata, "country", "")));
-	SCR(`Write(.rc.registration.REG_STATE,	lookup (regdata, "state", "")));
-	SCR(`Write(.rc.registration.REG_CITY,	lookup (regdata, "city", "")));
-	SCR(`Write(.rc.registration.REG_EMAIL,	lookup (regdata, "email", "")));
-	SCR(`Write(.rc.registration.REG_CODE,	lookup (regdata, "regcode", "")));
+	SCR::Write(.rc.registration.REG_NAME1,	lookup (regdata, "name1", ""));
+	SCR::Write(.rc.registration.REG_NAME2,	lookup (regdata, "name2", ""));
+	SCR::Write(.rc.registration.REG_SALUTATION, lookup (regdata, "salutation", ""));
+	SCR::Write(.rc.registration.REG_COMPANY,lookup (regdata, "company", ""));
+	SCR::Write(.rc.registration.REG_STREET,	lookup (regdata, "street", ""));
+	SCR::Write(.rc.registration.REG_ZIP,	lookup (regdata, "zip", ""));
+	SCR::Write(.rc.registration.REG_COUNTRY,lookup (regdata, "country", ""));
+	SCR::Write(.rc.registration.REG_STATE,	lookup (regdata, "state", ""));
+	SCR::Write(.rc.registration.REG_CITY,	lookup (regdata, "city", ""));
+	SCR::Write(.rc.registration.REG_EMAIL,	lookup (regdata, "email", ""));
+	SCR::Write(.rc.registration.REG_CODE,	lookup (regdata, "regcode", ""));
 
-	return SCR(`Write(.rc.registration, nil));
+	return SCR::Write(.rc.registration, nil);
 
     };
 
@@ -62,7 +62,7 @@
 
     global define check_registration (map regdata) ``{
 
-	locale message = "";
+	string message = "";
 
 	if (lookup (regdata, "salutation", "") == "")
 	{

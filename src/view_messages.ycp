@@ -16,7 +16,7 @@
     string filename = "/var/log/messages";
     
     // title for view window, %1 will be replaced by filename
-    ShowFilePopup ( sformat( UI(_("System log (%1)") ), filename ), filename );
+    ShowFilePopup ( sformat( _("System log (%1)"), filename ), filename );
 
     return true;
 }

@@ -105,38 +105,40 @@
 		    );
 
     // helptext 1 of 4
-    string help = UI(_("<p><b>Support Module</b></p>\n"));
+    string help = _("<p><b>Support Module</b></p>\n");
 
 	//helptext 2 of 4
-        help = help + UI(_("<p>Please enter your personal information as completely as possible 
+        help = help + _("<p>Please enter your personal information as completely as possible 
 in this form. For one reason, this allows us to be able to reach you if, for instance, it 
 is not possible to e-mail you. Secondly, this will enable us to enter your information during 
-the registration process necessary for support.</p>"));
+the registration process necessary for support.</p>");
 
 	//helptext 3 of 4
-        help = help + UI(_("<p>To avoid additional inquiries, you should in any case review 
-the registration number you entered.</p>"));
+        help = help + _("<p>To avoid additional inquiries, you should in any case review 
+the registration number you entered.</p>");
 
 	//helptext 4 of 4
-        help = help + UI(_("<p>You can find further information on installation support and 
-what it has to offer in the appendix at the end of your manual.</p>"));
+        help = help + _("<p>You can find further information on installation support and 
+what it has to offer in the appendix at the end of your manual.</p>");
 
     // screen caption
-    UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
+    UI::SetWizardContents (_("SuSE Support"), contents, help, true, true);
 
     boolean not_ok = true;
     boolean changed = false;
     any ret = nil;
 
-    while (not_ok) {
-	ret = UI (`UserInput());
+    while (not_ok)
+    {
+	ret = UI::UserInput();
 
 	not_ok = false;
 	changed = false;
 
 	y2milestone (sformat ("ret '%1'", ret));
 
-	if ((ret == `back) || (ret == `abort)) {
+	if ((ret == `back) || (ret == `abort))
+	{
 	    regdata = old_regdata;
 	    break;
 	}
@@ -145,95 +147,115 @@ what it has to offer in the appendix at the end of your manual.</p>"));
 
 	string value = "";
 
-	if (salutation != "male" && UI(`QueryWidget(`id(`male), `Value)) == true) {
+	if (salutation != "male" && UI(`QueryWidget(`id(`male), `Value)) == true)
+	{
 	    regdata = add (regdata, "salutation", "male"); changed = true;
-	} else if (salutation != "female" && UI(`QueryWidget(`id(`female), `Value)) == true) {
+	} else if (salutation != "female" && UI(`QueryWidget(`id(`female), `Value)) == true)
+	{
 	    regdata = add (regdata, "salutation", "female"); changed = true;
 	}
 
-	value = UI(`QueryWidget(`id(`name1), `Value));
-	if (value != name1) {
+	value = UI::QueryWidget(`id(`name1), `Value);
+	if (value != name1)
+	{
 	    regdata = add (regdata, "name1", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`name2), `Value));
-	if (value != name2) {
+	value = UI::QueryWidget(`id(`name2), `Value);
+	if (value != name2)
+	{
 	    regdata = add (regdata, "name2", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`company), `Value));
-	if (value != company) {
+	value = UI::QueryWidget(`id(`company), `Value);
+	if (value != company)
+	{
 	    regdata = add (regdata, "company", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`street), `Value));
-	if (value != street) {
+	value = UI::QueryWidget(`id(`street), `Value);
+	if (value != street)
+	{
 	   regdata = add (regdata, "street", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`zip), `Value));
-	if (value != zip) {
+	value = UI::QueryWidget(`id(`zip), `Value);
+	if (value != zip)
+	{
 	   regdata = add (regdata, "zip", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`city), `Value));
-	if (value != city) {
+	value = UI::QueryWidget(`id(`city), `Value);
+	if (value != city)
+	{
 	   regdata = add (regdata, "city", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`state), `Value));
-	if (value != state) {
+	value = UI::QueryWidget(`id(`state), `Value);
+	if (value != state)
+	{
 	   regdata = add (regdata, "state", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`country), `Value));
-	if (value != country) {
+	value = UI::QueryWidget(`id(`country), `Value);
+	if (value != country)
+	{
 	   regdata = add (regdata, "country", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`email), `Value));
-	if (value != email) {
+	value = UI::QueryWidget(`id(`email), `Value);
+	if (value != email)
+	{
 	   regdata = add (regdata, "email", value); changed = true;
 	}
-	value = UI(`QueryWidget(`id(`regcode), `Value));
-	if (value != regcode) {
+	value = UI::QueryWidget(`id(`regcode), `Value);
+	if (value != regcode)
+	{
 	   regdata = add (regdata, "regcode", value); changed = true;
 	}
 
-	if (lookup (regdata, "salutation", "") == "") {
+	if (lookup (regdata, "salutation", "") == "")
+	{
 	    not_ok = true;
 	    // warning message
-	    UI (`ErrorPopup (_("Please check either Mrs or Mr")));
+	    UI::ErrorPopup (_("Please check either Mrs or Mr"));
 	}
-	    else if (lookup (regdata, "name1", "") == "") {
+	else if (lookup (regdata, "name1", "") == "")
+	{
+	    not_ok = true;
+	    // warning message
+	    UI::ErrorPopup (_("Please enter your first name"));
+	}
+	else if (lookup (regdata, "name2", "") == "")
+	{
 		not_ok = true;
 		// warning message
-		UI (`ErrorPopup (_("Please enter your first name")));
-	    }
-	    else if (lookup (regdata, "name2", "") == "") {
+		UI::ErrorPopup (_("Please enter your last name"));
+	}
+	else if (lookup (regdata, "email", "") == "")
+	{
 		not_ok = true;
 		// warning message
-		UI (`ErrorPopup (_("Please enter your last name")));
-	    }
-	    else if (lookup (regdata, "email", "") == "") {
+		UI::ErrorPopup (_("Please enter your email address"));
+	}
+	else if (lookup (regdata, "regcode", "") == "")
+	{
 		not_ok = true;
 		// warning message
-		UI (`ErrorPopup (_("Please enter your email address")));
-	    }
-	    else if (lookup (regdata, "regcode", "") == "") {
+		UI::ErrorPopup (_("Please enter your registration code"));
+	}
+	else
+	{
+	    string email = lookup (regdata, "email", "");
+	    // email shoul be at least a@b.cc
+	    if ((size (email) < 6)
+		|| (findfirstof ("@", email) < 0)
+		|| (findfirstof (".", email) < 0))
+	    {
 		not_ok = true;
 		// warning message
-		UI (`ErrorPopup (_("Please enter your registration code")));
+		UI::ErrorPopup (_("Please enter a valid email address"));
 	    }
-	    else {
-		string email = lookup (regdata, "email", "");
-		// email shoul be at least a@b.cc
-		if ((size (email) < 6)
-		    || (findfirstof ("@", email) < 0)
-		    || (findfirstof (".", email) < 0)) {
-		    not_ok = true;
-		    // warning message
-		    UI (`ErrorPopup (_("Please enter a valid email address")));
-		}
-	    }
+	}
 
     } // while (not_ok)
 
     y2milestone (sformat ("exit '%1'", ret));
 
-    if (changed) {
+    if (changed)
+    {
 	regdata = add (regdata, "changed", true);
     }
 
