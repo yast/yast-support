@@ -110,16 +110,16 @@
     string help = _("<p><b>Support Question</b></p>\n");
 
         //helptext 2 of 5
-    help = help + _("<p>Please describe your problem briefly here, but still 
-as thoroughly as you can. Exact error messages and previous actions you have taken 
-are especially important for us.</p>
+    help = help + _("<p>Describe your problem briefly, but as thoroughly as possible. 
+Exact error messages and previous actions you have taken 
+are especially important.</p>
 ");
 
         //helptext 3 of 5
-    help = help + _("<p>Please do not include more than one question in a mail. 
-In other words, separate multiple requests, if that is the case, under different 
-subject blocks and write a specific request corresponding to each topic. This makes 
-them easier to process so accelerates our response.</p>
+    help = help + _("<p>Do not include more than one question in a mail. 
+Separate multiple requests into different 
+subject blocks and write a specific request for each topic. This makes 
+them easier to process, accelerating responses.</p>
 ");
 
         //helptext 4 of 5
