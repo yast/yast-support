@@ -77,9 +77,30 @@ transfer the data to another computer by floppy disk.</p>"));
 
     if (ret == `next) {
 	if (UI(`QueryWidget (`id(`online), `Value)) == true) {
-	    // popup message
-	    UI(`DisplayMessage (_("Sending data via Internet")));
-	    SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files));
+	    if (SCR(`Execute(.target.bash, "/usr/lib/YaST2/bin/is_suse_there.sh")) != 0) {
+		// cant connect to server, popup message 1 of 3
+		string message_text = UI(_("Can't connect to SuSE support server."));
+		// cant connect to server, popup message 2 of 3
+		message_text = message_text + "\n" + UI(_("Please check your internet connection"));
+		// cant connect to server, popup message 3 of 3
+		message_text = message_text + "\n" + UI(_("or choose 'save to disk' and send a printed copy by mail."));
+		UI(`DisplayMessage (message_text));
+		ret = `again;
+	    }
+	    else {
+		// popup message, about to connect to support server
+		UI(`DisplayMessage (_("Sending data via Internet")));
+		if (SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files)) != 0) {
+		    // failed to upload data to server, popup message 1 of 3
+		    string message_text = UI(_("Can't connect to SuSE support server."))
+		    // failed to upload data to server, popup message 2 of 3
+		    message_text = message_text + "\n" + UI(_("Please check your internet connection"));
+		    // failed to upload data to server, popup message 3 of 3
+		    message_text = message_text + "\n" + UI(_("or try again later."));
+		    UI(`DisplayMessage (message_text));
+		    ret = `again;
+		}
+	    }
 	}
 	else if (UI(`QueryWidget (`id(`disk), `Value)) == true) {
 	    string disk_file = "/tmp/support.request";
