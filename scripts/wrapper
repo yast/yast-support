@@ -8,6 +8,7 @@
 #
 #TODO:
 # /var/lib/YaST2/support/key
+# there is no check for output format
 
 use Getopt::Long;
 

@@ -26,7 +26,6 @@
 
     // set up and execute wrapper script
 
-    string tmpdir = SCR::Read(.target.tmpdir);
 
     string bindir = Directory::bindir;
 
@@ -193,8 +192,11 @@ transfer the data to another computer by floppy disk.</p>");
 	}
     }
 
-    SCR::Execute(.target.remove, user_file);
-    SCR::Execute(.target.remove, wrapper_file);
+    if (ret != `again)
+    {
+        SCR::Execute(.target.remove, user_file);
+        SCR::Execute(.target.remove, wrapper_file);
+    }
 
     return ret;
 }

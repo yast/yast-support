@@ -96,7 +96,7 @@
 			    `Label (keydata["name2"]:""),
 			    `HStretch (),
 			    // push button for changing key data
-			    `PushButton (`id(`ask_key), _("&Change"))
+                `PushButton (`id(`ask_key), _("&Change"))
 			  )
 			)
 		      ),
@@ -138,10 +138,13 @@ them easier to process, accelerating responses.</p>
 ");
 
         //helptext 4 of 5
-    help = help + _("<p>The hardware and software information serves to determine 
+/*    help = help + _("<p>The hardware and software information serves to determine 
 the basic system information and configuration on your computer. When in doubt, 
 this information can be helpful for support and should therefore only be deactivated 
 with good reason.</p>
+");*/
+    help = help + _("<p>The hardware and software information serves to determine 
+the basic system information and configuration on your computer.</p>
 ");
 
     string website = "http://www.suse.de/en/support/prof";

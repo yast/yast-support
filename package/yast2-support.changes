@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Tue Aug 27 19:49:38 CEST 2002 - jsuchome@suse.cz
+
+- hacked send_support_request.pl for running outside of suse.de
+- added siga to "Requires"
+- changed helptext in question dialog (#17098)
+- tmp files removed at the end
+ 
+-------------------------------------------------------------------
 Mon Aug 26 17:27:31 CEST 2002 - jsuchome@suse.cz
 
 - 2.6.6. 

@@ -27,7 +27,7 @@ use IO::Socket;
 
 my $HOST    = "support.suse.de";
 my $PORT    = 80;
-my $URL     = "/cgi-bin/yast/yast2_request80.pl";
+my $URL     = "/cgi-bin/yast/yast2_request81.pl";
 my $VERSION = "0.1.4";
 #------------------------------------------------------------------------
 sub abort {
@@ -76,7 +76,11 @@ sub submit {
     };
     abort(20, "Cannot connect to $HOST") unless ($socket);
 
+    # without this set the answer cannot be read from the socket (in suse.cz)
+    $socket->autoflush(1);
+    
     print $socket "POST $URL HTTP/1.0\n";
+    print $socket "Host: $HOST\n";
     print $socket "User-Agent: YaST2-Support-Request-Generator/$VERSION\n";
     print $socket "Content-type: application/x-www-form-urlencoded\n";
     print $socket "Content-length: $length\n";
