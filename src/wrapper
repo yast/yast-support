@@ -15,18 +15,23 @@ GetOptions (	'output=s'	=> \$output,
 		'ttn=s'	=> \$ttn,
 		'help'	=> \$printhelp,
 
-		'printer'	=> \$printer,
-		'isdn'	=> \$isdn,
-		'sound'	=> \$sound,
-		'modem'	=> \$modem,
-		'scanner'	=> \$scanner,
-		'dsl'	=> \$dsl,
 		'boot'	=> \$boot,
 		'cdr'	=> \$dsl,
-		'x11'	=> \$x11);
+		'dsl'	=> \$dsl,
+		'isdn'	=> \$isdn,
+		'install' => \$isdn,
+		'modem'	=> \$modem,
+		'printer'	=> \$printer,
+		'scanner'	=> \$scanner,
+		'sound'	=> \$sound,
+		'x11'	=> \$x11
+		);
+#user interface?
+#notebook?
+
 
 if ($printhelp) {
-	print "\nUSAGE:  wrapper [options]\n\n--output={html,plain,latex,send,floppy}\n--file=filename\n--all --printer --isdn --sound --x11 --modem --scanner --dsl --boot --cdr}\n";
+	print "\nUSAGE:  wrapper [options]\n\n--output={html,plain,latex,send,floppy}\n--file=filename\n--all --printer --isdn --sound --x11 --modem --scanner --dsl --boot --cdr --install}\n";
 	exit 0;
 }
 
@@ -101,10 +106,10 @@ sub support_whatever() {
 	}
 
 	if ($doitall) {
-		push @ret, $_ for (`/var/lib/support/support_all --output=$output`);
+		push @ret, $_ for (`/var/lib/support/support_all.pl --output=$output`);
 	}
 	else {
-		push @ret, $_ for (`/var/lib/support/support_modules --output=$output $myparams`);
+		push @ret, $_ for (`/var/lib/support/support_modules.pl --output=$output $myparams`);
 	}
 #	print "system support_all --$output" if ($doitall);
 	#print $_ for (@ret);
