@@ -44,11 +44,12 @@ transfer the data to another computer by floppy disk.</p>"));
 
     string reg_file = "/var/lib/support/rc.registration";
 
-    string user_data = "REGCODE "+ lookup (regdata, "regcode", "-none-") + "\n";
+//    string user_data = "REGCODE "+ lookup (regdata, "regcode", "-none-") + "\n";
 //    user_data = user_data + "NAME "+lookup (regdata, "name1", "") + " " + lookup (regdata, "name2", "") + "\n";
 //    user_data = user_data + "EMAIL "+lookup (regdata, "email", "") + "\n";
 //    user_data = user_data + "\nREGISTRIERDATEN ENDE\n";
-    user_data = user_data + "---\n" + lookup (regdata, "question", "") + "\n---\n";
+//    user_data = user_data + "---\n" + lookup (regdata, "question", "") + "\n---\n";
+    string user_data = "---\n" + lookup (regdata, "question", "") + "\n---\n";
     string user_file = tmpdir+"/user.out";
 
     SCR(`Write(.target.string, user_file, user_data));
