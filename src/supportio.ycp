@@ -12,7 +12,11 @@
     import "Directory";
     textdomain "support";
 
-    global define read_supportkey()
+    /**
+     * Reads the user's support data, should be in $vardir/support/key.
+     * @return support key data
+     */
+    global define map read_supportkey()
     ``{
 
     // Check if the "support key" file is present
@@ -39,7 +43,12 @@
 	return keydata;
     };
 
-    global define write_supportkey (map keydata)
+    /**
+     * Writes the support key data.
+     * @param keydata the data to write
+     * @return success
+     */
+    global define boolean write_supportkey (map keydata)
     ``{
 
 	SCR::Write(.support.key.KEY_NAME1,	keydata["name1"]:"");
@@ -58,10 +67,12 @@
 
     };
 
-    // check if support key data is complete.
-    // return non-empty message if somethings missing
-
-    global define check_supportkey (map keydata)
+    /**
+     * Check if support key data is complete.
+     * @param keydata the data to check
+     * @return non-empty message if somethings missing
+     */
+    global define string check_supportkey (map keydata)
     ``{
 
 	string message = "";
