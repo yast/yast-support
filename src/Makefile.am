@@ -1,12 +1,12 @@
 #
-# Makefile.am for y2c_update/src
+# Makefile.am for y2m_support/src
 #
 
 modulesdir = $(YAST2DIR)/clients
 menudir = $(YAST2DIR)/menuentries
 
-modules_SCRIPTS = boot.ycp
+modules_SCRIPTS = support.ycp
 
-menu_SCRIPTS = menuentry_boot.ycp
+menu_SCRIPTS = menuentry_support.ycp
 
 EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS)
