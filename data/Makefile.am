@@ -1,6 +1,4 @@
-#
-# Makefile.am for y2m_support/data
-#
+# Makefile.am for support/data
 
 keydir = $(ydatadir)/support
 
@@ -8,6 +6,6 @@ key_DATA = key filenames
 
 EXTRA_DIST = $(key_DATA)
 
-install-data-hook:
-	$(mkinstalldirs) $(keydir)
-	chmod 700 $(keydir)
+install-data-local:
+	mkdir -p $(DESTDIR)/$(keydir)
+	chmod 700 $(DESTDIR)/$(keydir)

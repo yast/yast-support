@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Feb  9 16:34:08 CET 2004 - msvec@suse.cz
+
+- make it compile and build
+- drop y2cc config files
+- 2.9.0
+
+-------------------------------------------------------------------
 Sun Sep 14 20:54:41 CEST 2003 - adrian@suse.de
 
 - make it working in kcontrol
