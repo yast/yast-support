@@ -32,7 +32,7 @@
         "--net"         : _("Net&work"),
         "--hw"          : _("&Hardware"),
 	"--install"	: _("I&nstallation"),
-        "--usb"         : _("&usb"),
+        "--usb"         : _("&USB"),
 	"--all"		: _("&Unspecified")
     ];
 
