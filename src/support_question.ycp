@@ -22,7 +22,7 @@
 		      `Left (`CheckBox (`id(`hwdata), _("&Send hardware data"), lookup (regdata, "hwdata", true))),
 		      `Left (`CheckBox (`id(`swdata), _("&Send software data"), lookup (regdata, "swdata", true))),
 		      `VSpacing (1.0),
-		      `TextEntry (`id(`question), _("&Your question for SuSE support:"), lookup (regdata, "question", "")),
+		      `MultiLineEdit (`id(`question), _("&Your question for SuSE support:"), lookup (regdata, "question", "")),
 		      `VStretch ()
 		    );
 

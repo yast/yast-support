@@ -42,7 +42,14 @@ make install
 
 %files
 
+%dir /var/lib/support
+/var/lib/support/rc.registration
 %dir @YAST2DIR@/clients
+@YAST2DIR@/clients/support.ycp
+@YAST2DIR@/clients/support_registration.ycp
+@YAST2DIR@/clients/support_question.ycp
+@YAST2DIR@/clients/support_send.ycp
 %dir @YAST2DIR@/menuentries
 @YAST2DIR@/menuentries/menuentry_support.ycp
-@YAST2DIR@/clients/support.ycp
+%dir @YAST2DIR@/include/support
+@YAST2DIR@/include/support/registration.ycp
