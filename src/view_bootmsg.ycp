@@ -1,0 +1,32 @@
+/* 
+ * view_messages.ycp
+ *
+ * small to for easy /var/log/messages viewing
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ */
+
+{
+    textdomain "support";
+
+//    include "installation_ui.ycp";
+    include "ui/common_popups.ycp";
+
+//    UI(`OpenDialog());
+
+    string messages = SCR(`Read (.target.string, ("/var/log/messages")));
+    if (size (messages) <= 0)
+    {
+	messages = UI(_("<strong>Error</strong><br>
+Can't access <tt>/var/log/messages</tt>, you need to be 'root' in order
+to read this file."));
+    }
+
+    UI(`LongTextPopup ("System log (/var/log/messages)",
+	`RichText ( messages), 80, 20));
+//    UI( `CloseDialog() );
+  
+    return `next;
+}
