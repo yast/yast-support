@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Mar 11 18:19:30 CET 2004 - msvec@suse.cz
+
+- fixes from Martin Lasarsch
+- 2.9.2
+
+-------------------------------------------------------------------
 Mon Feb  9 16:34:08 CET 2004 - msvec@suse.cz
 
 - make it compile and build
