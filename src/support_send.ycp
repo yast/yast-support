@@ -87,13 +87,13 @@
     string help = _("<p><b>Support Data</b></p>\n");
 
     //helptext 2 of 3
-    help = help + _("<p>Here, you will see an overview of the information
+    help = help + _("<p>Here, see an overview of the information
 transmitted. The transfer takes place by HTTP uploading.</p>
 ");
 
     //helptext 3 of 3
     help = help + _("<p>If you do not have Internet access on your Linux system,
-you can save the data instead to the hard drive (save to disk) and from there
+save the data instead to the hard drive (save to disk) and from there
 transfer the data to another computer by floppy disk.</p>");
 
     // support_question.ycp
