@@ -38,7 +38,7 @@
     }
 
     // get filename list
-    string filenames = (string)SCR::Read(.target.string, vardir + "/support/filenames");
+    string filenames = (string) SCR::Read(.target.string, vardir + "/support/filenames");
     if ((filenames == nil)
 	|| (size (filenames) <= 0))
     {
@@ -47,7 +47,7 @@
 
     // convert \n separated string to ycp list.
 
-    list all_files = splitstring (filenames, "\n");
+    list<string> all_files = splitstring (filenames, "\n");
 
     // check if default given as argument
 
@@ -63,9 +63,9 @@
 
     boolean set_default = false;
 
-    list combo_files = [];
+    list<term> combo_files = [];
     foreach (string name, all_files,
-    ``{
+    {
 	// empty lines or lines starting with "#" are ignored
 	if (name != ""
 	    && substring (name, 0, 1) != "#")
@@ -181,7 +181,7 @@
 
     // re-build list to get new default correct
     foreach (string file, all_files,
-    ``{
+    {
 	if (substring (file, 0, 1) == "*")
 	{
 	    string old_default = substring (file, 1);  // strip leading "*"
