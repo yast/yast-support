@@ -120,13 +120,14 @@ is not possible to e-mail you.</p>
 ");
 
 	//helptext 3 of 4
-        help = help + _("<p>To avoid additional inquiries, you should, in any case, review
+        help = help + _("<p>To avoid additional inquiries, review
 the support key you entered.</p>
 ");
 
 	//helptext 4 of 4
-        help = help + _("<p>You can find further information on installation support and
-what it has to offer in the appendix at the end of your manual.</p>");
+        help = help + _("<p>Find further information about installation support and
+what it offers in the appendix at the end of your manual.</p>
+");
 
     // screen caption
     Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
