@@ -147,11 +147,15 @@ with good reason.</p>
 the basic system information and configuration on your computer.</p>
 ");
 
-    string website = "http://www.suse.de/en/support/prof";
+    string website = "http://www.suse.de/en/support";
     string language = substring (UI::GetLanguage(true), 0, 2);
     if (language == "de")
     {
-	website = "http://www.suse.de/de/support/prof";
+	website = "http://www.suse.de/de/support";
+    }
+    if (language == "cs")
+    {
+	website = "http://www.suse.cz/cz/support";
     }
 
         //helptext 5 of 5
