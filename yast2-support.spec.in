@@ -28,6 +28,7 @@ Summary:      YaST2 module for support
 @clientdir@/*.ycp
 @yncludedir@/support
 @configdir@/*.y2cc
+@desktopdir@/*.desktop
 @ydatadir@/support
 @ybindir@/support
 %doc @docdir@
