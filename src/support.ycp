@@ -22,7 +22,8 @@
     // if no valid registration data present, ask !
 
     any retval = nil;
-    boolean ask_registration = (check_registration (regdata) != _(""));
+    // dummy string, dont translate
+    boolean ask_registration = (check_registration (regdata) != _("NIL"));
     boolean go_on = true;
 
     while (go_on) {
