@@ -1,9 +1,10 @@
-@commands = ("isdnctrl list all",
+@commands = ("/usr/sbin/isdnctrl list all",
 	"/sbin/route -n",
 	"/sbin/ifconfig",
 	"/sbin/lsmod",
 	"/sbin/lspci -v",
-	"/sbin/pnpdump"
+	"/sbin/pnpdump",
+	"/usr/sbin/isdnctrl list all"
 	);
 
 
@@ -14,5 +15,7 @@
 	"/etc/rc.config.d/i4l.rc.config",
 	"/etc/rc.config.d/i4l_hardware.rc.config",
 	"/etc/ppp/ioptions",
-	"/etc/ppp/options.ippp0"
+	"/etc/ppp/options.ippp0",
+	"/etc/ppp/options.ippp1",
+	"/etc/ppp/options.ippp2"
 	);

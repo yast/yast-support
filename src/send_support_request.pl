@@ -27,8 +27,8 @@ use IO::Socket;
 
 my $HOST    = "support.suse.de";
 my $PORT    = 80;
-my $URL     = "/cgi-bin/yast2_request2.pl";
-my $VERSION = "0.1.3";
+my $URL     = "/cgi-bin/yast/yast2_request73.pl";
+my $VERSION = "0.1.4";
 #------------------------------------------------------------------------
 sub abort {
     my $ErrorNumber = shift;
