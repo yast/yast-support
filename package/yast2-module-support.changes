@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Apr  6 16:13:02 CEST 2001 - kkaempf@suse.de
+
+- adapt to new common_popups
+- ask for category
+- use new data collection script
+
+-------------------------------------------------------------------
 Thu Apr  5 19:39:33 CEST 2001 - kkaempf@suse.de
 
 - package renamed to yast2-module-support
