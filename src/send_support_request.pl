@@ -86,14 +86,16 @@ sub submit {
 sub main {
     # Check arguments
     unless (@ARGV) {
-	print STDERR "Usage: $0 file1 [file2 [file3 [...]]]\n";
-	print STDERR "Version: $VERSION\n";
-	abort(10, "No input files.");
+#	print STDERR "Usage: $0 file1 [file2 [file3 [...]]]\n";
+#	print STDERR "Version: $VERSION\n";
+#	abort(10, "No input files.");
+	exit 0;
     }
     
     # Collect data
     my $data = join("", <>);
-    abort(11, "No data.") unless ($data);
+#    abort(11, "No data.") unless ($data);
+    exit 0 unless ($data);
 
     # Escape data
     $data = escape($data);
