@@ -17,9 +17,9 @@ Summary:      YaST2 Module for support
 
 @PREP@
 
-@BUILD-YCP@
+@BUILD@
 
-@INSTALL-YCP@
+@INSTALL@
 
 @CLEAN@
 
