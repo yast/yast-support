@@ -13,4 +13,4 @@
 */var/log/messages
 /var/log/faillog
 /var/log/warn
-/var/log/y2log
+/var/log/YaST2/y2log
