@@ -1,5 +1,5 @@
 #
-# Makefile.am for y2a_rcnf/conf
+# Makefile.am for y2m_support/conf
 #
 
 scrconfdir = $(YAST2DIR)/scrconf

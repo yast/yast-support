@@ -195,27 +195,27 @@ what it has to offer in the appendix at the end of your manual.</p>"));
 	if (lookup (regdata, "salutation", "") == "") {
 	    not_ok = true;
 	    // warning message
-	    UI (`DisplayMessage (_("Please check either Mrs or Mr")));
+	    UI (`ErrorPopup (_("Please check either Mrs or Mr")));
 	}
 	    else if (lookup (regdata, "name1", "") == "") {
 		not_ok = true;
 		// warning message
-		UI (`DisplayMessage (_("Please enter your first name")));
+		UI (`ErrorPopup (_("Please enter your first name")));
 	    }
 	    else if (lookup (regdata, "name2", "") == "") {
 		not_ok = true;
 		// warning message
-		UI (`DisplayMessage (_("Please enter your last name")));
+		UI (`ErrorPopup (_("Please enter your last name")));
 	    }
 	    else if (lookup (regdata, "email", "") == "") {
 		not_ok = true;
 		// warning message
-		UI (`DisplayMessage (_("Please enter your email address")));
+		UI (`ErrorPopup (_("Please enter your email address")));
 	    }
 	    else if (lookup (regdata, "regcode", "") == "") {
 		not_ok = true;
 		// warning message
-		UI (`DisplayMessage (_("Please enter your registration code")));
+		UI (`ErrorPopup (_("Please enter your registration code")));
 	    }
 	    else {
 		string email = lookup (regdata, "email", "");
@@ -225,7 +225,7 @@ what it has to offer in the appendix at the end of your manual.</p>"));
 		    || (findfirstof (".", email) < 0)) {
 		    not_ok = true;
 		    // warning message
-		    UI (`DisplayMessage (_("Please enter a valid email address")));
+		    UI (`ErrorPopup (_("Please enter a valid email address")));
 		}
 	    }
 
