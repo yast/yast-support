@@ -11,8 +11,12 @@
 {
     textdomain "support";
 
-    include "support/view_file.ycp";
+    include "ui/common_popups.ycp";
 
+    string filename = "/var/log/boot.msg";
+    
     // title for view window, %1 will be replaced by filename
-    return ViewFile (UI(_("Boot log (%1)")), "/var/log/boot.msg");
+    ShowFilePopup ( sformat( UI(_("Boot log (%1)") ), filename ), filename );
+
+    return true;
 }
