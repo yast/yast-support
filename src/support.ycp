@@ -8,7 +8,7 @@
     textdomain "support";
 
     integer current_stage = -1;
-    include "ui/wizard_dialog.ycp";
+    include "installation_ui.ycp";
 
     include "support/registration.ycp";
 
