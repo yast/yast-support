@@ -68,7 +68,6 @@ transfer the data to another computer by floppy disk.</p>"));
 
     // support_question.ycp
     // present/ask question data
-    locale data_caption = "";
 
     term contents = `Dummy();
     if (lookup (regdata, "--all", false))
@@ -77,7 +76,7 @@ transfer the data to another computer by floppy disk.</p>"));
     }
     else
     {
-	contents = `VBox (`LogView (`id(`data), data_caption, 7, 0));
+	contents = `VBox (`LogView (`id(`data), "", 7, 0));
     }
     contents = add (contents, `VSpacing (1.0));
     contents = add (contents, `RadioButtonGroup(

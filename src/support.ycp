@@ -24,8 +24,11 @@
     // if no valid registration data present, ask !
 
     any retval = nil;
-    // dummy string, dont translate
-    boolean ask_registration = (check_registration (regdata) != _("NIL"));
+
+    // use string->locale propagation
+    locale empty_locale = "";
+    boolean ask_registration = (check_registration (regdata) != empty_locale);
+
     boolean go_on = true;
 
     while (go_on) {

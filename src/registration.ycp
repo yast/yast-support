@@ -62,8 +62,7 @@
 
     global define check_registration (map regdata) ``{
 
-	// dummy string, dont translate
-	locale message = _("NIL");
+	locale message = "";
 
 	if (lookup (regdata, "salutation", "") == "")
 	{
