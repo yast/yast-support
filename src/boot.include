@@ -4,10 +4,10 @@
 	"/usr/sbin/hwinfo --storage_ctrl",
 	"/bin/mount",
 	"/bin/grep INITRD /etc/rc.config",
-	"/bin/ls -la /boot"
+	"/bin/ls -la /boot",
+	"/usr/bin/sed '/^ *password/s/=.*/ is set but hidden away/i' /etc/lilo.conf"
 	);
 
-@files = ("/etc/lilo.conf",
-	"/etc/fstab",
+@files = ("/etc/fstab",
 	"/var/log/boot.msg"
 	);
