@@ -3,6 +3,7 @@
 # Copyright (c) 2000 SuSE GmbH Nuernberg, Germany.  All rights reserved.
 #------------------------------------------------------------------------
 # Author   : Gregor Fischer <fischer@suse.de>
+#            Björn Jacke <bjacke@suse.de>
 # Created  : 13.12.2000
 # Modified : 14.14.2000
 #------------------------------------------------------------------------
@@ -27,7 +28,7 @@ use IO::Socket;
 my $HOST    = "support.suse.de";
 my $PORT    = 80;
 my $URL     = "/cgi-bin/yast2_request2.pl";
-my $VERSION = "0.1.2";
+my $VERSION = "0.1.3";
 #------------------------------------------------------------------------
 sub abort {
     my $ErrorNumber = shift;
@@ -102,6 +103,20 @@ sub main {
     my $data = join("", <>);
 #    abort(11, "No data.") unless ($data);
     exit 0 unless ($data);
+
+
+    # gzip data
+    my $i=0;
+    my $tmpfile="";
+    do {
+      $tmpfile="/tmp/.support".$i++;
+    } while (-e $tmpfile);
+    open (TFH, ">$tmpfile");
+    print TFH $data;
+    close TFH;
+
+    $data=`/usr/bin/gzip -c <$tmpfile`;
+    unlink $tmpfile;
 
     # Escape data
     $data = escape($data);
