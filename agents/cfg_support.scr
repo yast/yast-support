@@ -1,5 +1,5 @@
 .support.key
 
 `ag_ini(
-  SysConfigFile("/var/lib/YaST2/support/key")
+  `SysConfigFile("/var/lib/YaST2/support/key")
 )
