@@ -1,6 +1,8 @@
 @commands = ("/sbin/ifconfig",
 	"/sbin/route -n",
-	"/usr/bin/tail -n 200 /var/log/messages"
+	"/usr/bin/tail -n 200 /var/log/messages",
+	"/bin/grep 'NET\|IFC' /etc/rc.config",
+	"/bin/grep -v '^password '"
 	);
 
-@files = ("/etc/pppoed.conf");
+@files = ();

@@ -5,7 +5,8 @@
 	"/bin/grep lpd /var/log/messages | /usr/bin/tail -n 20",
 	"/bin/ps aux | /bin/grep lpd | /bin/grep -v grep",
 	"/bin/grep PRINTER= /etc/SuSEconfig/profile",
-	"/usr/sbin/lpc status lp"
+	"/usr/sbin/lpc status lp",
+	"/bin/grep usb /var/log/messages"
 	);
 
 @files = ("/proc/version",

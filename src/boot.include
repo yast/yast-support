@@ -1,5 +1,13 @@
-@commands = ("/sbin/lilo -tv",
+@commands = ("/sbin/lilo -t -v3",
 	"/sbin/fdisk -l",
 	"/usr/sbin/hwinfo --disk",
-	"/usr/sbin/hwinfo --storage_ctrl"
+	"/usr/sbin/hwinfo --storage_ctrl",
+	"/bin/mount",
+	"/bin/grep INITRD /etc/rc.config",
+	"/bin/ls -la /boot"
+	);
+
+@files = ("/etc/lilo.conf",
+	"/etc/fstab",
+	"/var/log/boot.msg"
 	);

@@ -2,7 +2,9 @@
 	"/usr/bin/procinfo",
 	"/bin/grep '^ *PCMCIA' /etc/rc.config",
 	"/sbin/cardctl ident",
-	"/bin/grep -A 30 'pcmcia_core' /var/log/messages"
+	"/bin/grep -A 30 'pcmcia_core' /var/log/messages",
+	"/usr/sbin/sysp -s mouse",
+	"/usr/sbin/sysp -c"
 	);
  
 @files = (); 

@@ -1,5 +1,6 @@
 @commands = ("/usr/sbin/hwinfo --cdrom",
-	"/usr/sbin/hwinfo --storage_ctrl"
+	"/usr/sbin/hwinfo --storage_ctrl",
+	"/sbin/lsmod"
 	);
 
 @files = ("/etc/lilo.conf",
