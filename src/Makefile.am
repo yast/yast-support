@@ -2,9 +2,9 @@
 # Makefile.am for support/src
 #
 
-supportdir = $(yncludedir)/support
+yncludedir = @yncludedir@/support
 
-support_HEADERS = supportio.ycp
+ynclude_DATA = supportio.ycp
 
 client_DATA =			\
 	support.ycp		\
@@ -18,4 +18,4 @@ config_DATA =		\
 	messages.y2cc	\
 	bootmsg.y2cc
 
-EXTRA_DIST = $(client_DATA) $(config_DATA)
+EXTRA_DIST = $(client_DATA) $(config_DATA) $(ynclude_DATA)
