@@ -27,9 +27,9 @@ include_HEADERS =		\
 	registration.ycp
 
 menu_SCRIPTS = 	\
-	menuentry_support.ycp	\
-	menuentry_messages.ycp	\
-	menuentry_bootmsg.ycp
+	menuentry_support.y2cc	\
+	menuentry_messages.y2cc	\
+	menuentry_bootmsg.y2cc
 
 EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS) \
 	     $(reg_DATA) $(reg_SCRIPTS)		\
