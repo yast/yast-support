@@ -82,15 +82,14 @@ diskette, transfer the data to another computer.</p>"));
 	}
 	else if (UI(`QueryWidget (`id(`disk), `Value)) == true) {
 	    string disk_file = "/tmp/support.request";
-	    // popup message
-	    UI(`DisplayMessage (_("Saving data to ")+ disk_file));
+	    // popup message about where the "saving to disk" file resides
+	    UI(`DisplayMessage (sformat (_("Saving data to %1"), disk_file)));
 	    SCR(`Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file));
 	}
     }
 
     SCR(`Execute(.target.remove, hw_file));
     SCR(`Execute(.target.remove, sw_file));
-    SCR(`Execute(.target.remove, disk_file));
 
     return ret;
 }
