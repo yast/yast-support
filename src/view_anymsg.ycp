@@ -38,7 +38,7 @@
     }
 
     // get filename list
-    string filenames = SCR::Read(.target.string, vardir + "/support/filenames");
+    string filenames = (string)SCR::Read(.target.string, vardir + "/support/filenames");
     if ((filenames == nil)
 	|| (size (filenames) <= 0))
     {
@@ -55,7 +55,7 @@
     if ((size(WFM::Args()) > 0)
 	&& is(WFM::Args(0), string))
     {
-	filename = WFM::Args(0);
+	filename = (string)WFM::Args(0);
     }
 
     // build up ComboBox
@@ -63,7 +63,7 @@
     boolean set_default = false;
 
     list combo_files = [];
-    foreach (`name, all_files,
+    foreach (string name, all_files,
     ``{
 	// empty lines or lines starting with "#" are ignored
 	if (name != ""
@@ -134,7 +134,7 @@
     while (go_on)
     {
 	// read file contents
-	file_contents = SCR::Read (.target.string, filename);
+	file_contents = (string)SCR::Read (.target.string, filename);
 
 	// Fill the LogView with file contents
 	UI::ChangeWidget( `id(`log ), `Value, file_contents );
@@ -144,7 +144,7 @@
 
 	// wait for user input
 
-	symbol ret = UI::UserInput();
+	symbol ret = (symbol)UI::UserInput();
 
 	// clicked "OK" -> exit
 
@@ -161,7 +161,7 @@
 	{
 	    // adapt to combo box settings
 
-	    string new_file = UI::QueryWidget(`id(`custom_file), `Value);
+	    string new_file = (string)UI::QueryWidget(`id(`custom_file), `Value);
 	    if (new_file != nil)
 	    {
 		filename = new_file;
@@ -175,11 +175,11 @@
 
     // write new list of filenames
 
-    list new_files = [];
+    list<string> new_files = [];
     set_default = false;
 
     // re-build list to get new default correct
-    foreach (`file, all_files,
+    foreach (string file, all_files,
     ``{
 	if (substring (file, 0, 1) == "*")
 	{
