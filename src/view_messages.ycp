@@ -1,7 +1,7 @@
 /* 
  * view_messages.ycp
  *
- * small to for easy /var/log/messages viewing
+ * small script for easy /var/log/messages viewing
  *
  * Author: Klaus Kaempf <kkaempf@suse.de>
  *
@@ -11,32 +11,8 @@
 {
     textdomain "support";
 
-    include "ui/wizard_dialog.ycp";
-    include "ui/common_popups.ycp";
-    include "ui/common_functions.ycp";
+    include "support/view_file.ycp";
 
-    string messages = SCR(`Read (.target.string, ("/var/log/messages")));
-    if (size (messages) <= 0)
-    {
-	messages = UI(`ErrorPopup (_("Can't access file '/var/log/messages',
-you need to be 'root' in order to read this file.")));
-    }
-    else
-    {
-	UI(`OpenDialog(
-	  `VBox (
-	    // window title for /var/log/messages viewer
-	    // don't translate "/var/log/messages" !!
-	    `LogView (`id(`log), _("System log (/var/log/messages)"),
-		20, 0),
-	    `PushButton(`opt(`default), OKButtonLabel())
-	  )
-	));
-	UI( `ChangeWidget (`id (`log), `Value, messages));
-        UI( `UserInput() );
-
-        UI( `CloseDialog() );
-    }
-
-    return `next;
+    // title for view window, %1 will be replaced by filename
+    return ViewFile (_("System log (%1)"), "/var/log/messages");
 }
