@@ -53,9 +53,9 @@ make install
 @YAST2DIR@/clients/support_send.ycp
 @YAST2DIR@/clients/view_messages.ycp
 @YAST2DIR@/clients/view_bootmsg.ycp
-@YAST2DIR@/menuentries/menuentry_support.ycp
-@YAST2DIR@/menuentries/menuentry_messages.ycp
-@YAST2DIR@/menuentries/menuentry_bootmsg.ycp
+@YAST2DIR@/menuentries/menuentry_support.y2cc
+@YAST2DIR@/menuentries/menuentry_messages.y2cc
+@YAST2DIR@/menuentries/menuentry_bootmsg.y2cc
 %dir @YAST2DIR@/include/support
 @YAST2DIR@/include/support/registration.ycp
 @YAST2DIR@/bin/is_suse_there.sh
