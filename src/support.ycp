@@ -7,20 +7,6 @@
 {
     textdomain "support";
 
-    // Menuentry for the YaST2 menu
-    if (Args() == [ "get_menuentry" ]) {
-	return [ 
-	    "support", $[
-		// menu label for support query module
-		"menuentry"    : UI(_("Post a support query")),
-		"arguments"    : [ ],
-		// explanation for support query module
-		"widget"       : `RichText(
-				       UI(_( "<P>Launch this module to post a support query.</P>"))),
-		"codefragment" : nil ]
-        ];
-    }
-
     integer current_stage = -1;
     include "ui/wizard_dialog.ycp";
 
