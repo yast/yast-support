@@ -128,7 +128,7 @@ this information can be helpful for support and should therefore only be de-acti
 with good reason.</p>"));
 
     string website = "http://www.suse.de/en/support/prof";
-    string language = substring (UI(`GetLanguage()), 0, 2);
+    string language = substring (UI(`GetLanguage(true)), 0, 2);
     if (language == "de")
 	website = "http://www.suse.de/de/support/prof";
 
