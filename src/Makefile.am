@@ -18,4 +18,9 @@ config_DATA =		\
 	messages.y2cc	\
 	bootmsg.y2cc
 
-EXTRA_DIST = $(client_DATA) $(config_DATA) $(ynclude_DATA)
+desktop_DATA =			\
+	support.desktop		\
+	messages.desktop	\
+	bootmsg.desktop
+
+EXTRA_DIST = $(client_DATA) $(config_DATA) $(ynclude_DATA) $(desktop_DATA)
