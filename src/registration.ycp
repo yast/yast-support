@@ -62,7 +62,8 @@
 
     define check_registration (map regdata) ``{
 
-	locale message = _("");
+	// dummy string, dont translate
+	locale message = _("NIL");
 
 	if (lookup (regdata, "salutation", "") == "") {
 	    message = _("Please check either Mrs or Mr");
