@@ -2,7 +2,7 @@
 # Makefile.am for support/src
 #
 
-supportdir = $(yincludedir)/support
+supportdir = $(yncludedir)/support
 
 support_HEADERS = supportio.ycp
 

@@ -1,5 +1,6 @@
 @HEADER-COMMENT@
-# neededforbuild yast2-devtools
+
+# neededforbuild  yast2-devtools
 
 @HEADER@
 Requires:	yast2
@@ -30,9 +31,9 @@ Summary:      YaST2 Module for support
 @clientdir@/support_question.ycp
 @clientdir@/support_send.ycp
 @clientdir@/view_anymsg.ycp
-@configdir@/menuentry_support.y2cc
-@configdir@/menuentry_messages.y2cc
-@configdir@/menuentry_bootmsg.y2cc
+@configdir@/support.y2cc
+@configdir@/messages.y2cc
+@configdir@/bootmsg.y2cc
 %dir @yncludedir@/support
 @yncludedir@/support/supportio.ycp
 @ybindir@/is_suse_there.sh
