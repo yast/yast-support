@@ -102,7 +102,7 @@
 
     // set up dialogue
 
-    UI::OpenDialog( `opt(`decorated ),
+    UI::OpenDialog( `opt(`decorated, `defaultsize ),
 		      `VBox(
 			    `HSpacing( 70 ),	// force width
 			    `HBox (`HSpacing (1.0), `ComboBox (`id(`custom_file), `opt(`editable, `notify, `hstretch), "", combo_files), `HStretch()),
