@@ -52,9 +52,9 @@
 			    //`CheckBox (`id(`male), _("&Mr")),
 			    //`CheckBox (`id(`female), _("Mr&s")),
 			    // radion button
-			    `RadioButton (`id(`male), _("&Mr."), (salutation == "male")),
+			    `RadioButton (`id(`male), _("Mr."), (salutation == "male")),
 			    // radion button
-			    `RadioButton (`id(`female), _("M&rs."), (salutation == "female")),
+			    `RadioButton (`id(`female), _("Mrs."), (salutation == "female")),
 			    `HStretch ()
 			  )),
 			  `HBox (
@@ -83,15 +83,15 @@
 			    // text entry
 			      `HWeight (20, `TextEntry (`id(`zip), _("&ZIP:"), zip)),
 			    // text entry
-			      `HWeight (80, `TextEntry (`id(`city), _("Cit&y:"), city)),
+			      `HWeight (80, `TextEntry (`id(`city), _("&City:"), city)),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			      `HWeight (20, `TextEntry (`id(`state), _("S&tate:"), state)),
+			      `HWeight (20, `TextEntry (`id(`state), _("&State:"), state)),
 			    // text entry
-			      `HWeight (80, `TextEntry (`id(`country), _("C&ountry:"), country)),
+			      `HWeight (80, `TextEntry (`id(`country), _("&Country:"), country)),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
@@ -103,7 +103,7 @@
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`key), _("Support &Key:"), key),
+			    `TextEntry (`id(`key), _("&Support Key:"), key),
 			    `HSpacing (0.5)
 			  )
 		        )
