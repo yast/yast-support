@@ -25,7 +25,7 @@
     {
         // Popup label (user is not root)
         Popup::Message(_("Log in as a root to run SuSE support."));
-        // return;
+        return;
     }
 
     // global - not necessary to read data again
