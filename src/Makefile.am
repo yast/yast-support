@@ -24,8 +24,7 @@ modules_SCRIPTS =			\
 	view_bootmsg.ycp
 
 include_HEADERS =		\
-	registration.ycp	\
-	view_file.ycp
+	registration.ycp
 
 menu_SCRIPTS = 	\
 	menuentry_support.ycp	\

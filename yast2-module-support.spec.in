@@ -16,7 +16,7 @@ Copyright:    (c) 2000 SuSE GmbH
 Group:        System Environment/YaST
 BuildArchitectures: noarch
 Requires:	yast2-trans-support yast2
-Provides:	y2m_support
+Provides:	y2m_support sitar
 Obsoletes:	y2m_support sitar
 Packager:     @MAINTAINER@
 
@@ -71,6 +71,4 @@ make install
 @YAST2DIR@/menuentries/menuentry_bootmsg.ycp
 %dir @YAST2DIR@/include/support
 @YAST2DIR@/include/support/registration.ycp
-@YAST2DIR@/include/support/view_file.ycp
 @YAST2DIR@/bin/is_suse_there.sh
-
