@@ -9,7 +9,7 @@ includedir = $(YAST2DIR)/include/support
 regdir = /var/lib/support
 
 reg_DATA = rc.registration
-reg_SCRIPTS = eo.sh
+reg_SCRIPTS = eo.pl send_support_request.pl
 
 modules_SCRIPTS =			\
 	support.ycp			\
