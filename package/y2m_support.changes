@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jan 19 12:40:31 CET 2001 - kkaempf@suse.de
+
+- protect /var/lib/support with chmod 700
+
+-------------------------------------------------------------------
 Tue Jan 16 17:30:09 CET 2001 - kkaempf@suse.de
 
 - honor back button in support_question
