@@ -1,5 +1,5 @@
-/* 
- * 
+/*
+ *
  *
  * $Id$
  */
@@ -13,6 +13,20 @@
     include "ui/common_popups.ycp";
 
     include "support/supportio.ycp";
+
+    /*
+     * exit when running for non-root
+     */
+
+    map res = SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
+    list l_res = splitstring(lookup(res, "stdout", ""), "\n");
+
+    if( size(l_res) > 0 &&  select(l_res, 0, "") != "root")
+    {
+        // Popup label (user is not root)
+        UI::MessagePopup(_("Log in as a root to run SuSE support."));
+        return;
+    }
 
     // keydata is global !
 
@@ -83,15 +97,16 @@
 	}
 	else if (retval == `next)
 	{
-	    retval = `again;
+	    retval = `first;
 	    // support_send might return `again, loop here
-	    while (retval == `again)
+        // but do not need to generate & read info again - only for first time
+	    while (retval == `again || retval == `first)
 	    {
 		retval = WFM::CallFunction (`support_send ());
 	    }
 	    if (retval == `next)
 	    {
-		// just a final text to give user a 'good' fealing
+		// just a final text to give user a 'good' feeling
 		UI::MessagePopup (_("Thank you for using SuSE support"));
 		go_on = false;
 	    }
@@ -105,8 +120,8 @@
 
 
     // --------------------------------------------------------------
- 
+
     Wizard::CloseDialog();
-  
+
     return `next;
 }

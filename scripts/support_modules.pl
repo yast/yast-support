@@ -28,7 +28,7 @@ for $par (@allparams) {
 for $par (@mypars) {
 	@commands=();
 	@files=();
-	do "/usr/lib/YaST2/support/$par.include";
+	do "/usr/lib/YaST2/bin/support/$par.include";
 
 	for (@commands) {
 		#push @outarr, "\n##Y2support-$_:\n";

@@ -1,15 +1,17 @@
 #
-# Makefile.am for y2m_support/scripts
+# Makefile.am for yast2-support/scripts
 #
 
-SUBDIRS = include
+scriptsdir = $(ybindir)/support
 
-ydata_DATA =			\
-	eo.pl			\
-	send_support_request.pl \
-	support_modules.pl	\
-	wrapper
+scripts_DATA =  \
+     *.include
+            
+scripts_SCRIPTS =   \
+     eo.*   \
+     is_suse_there.sh   \
+     send_support_request.pl    \
+     support_modules.pl \
+     wrapper
 
-ybin_SCRIPTS = is_suse_there.sh
-
-EXTRA_DIST = $(ydata_DATA) $(ybin_SCRIPTS)
+EXTRA_DIST = $(scripts_DATA) $(scripts_SCRIPTS)
