@@ -62,6 +62,9 @@
 	if (retval == `ask_registration) {
 	    ask_registration = true;
 	}
+	else if (retval == `back) {
+	    retval = `abort;
+	}
 	else if (retval == `next) {
 	    retval = `again;
 	    // support_send might return `again, loop here
