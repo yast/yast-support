@@ -36,4 +36,5 @@ EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS) \
 	     $(script_SCRIPTS)
 
 install-data-hook:
+	$(mkinstalldirs) $(regdir)
 	chmod 700 $(regdir)
