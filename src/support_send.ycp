@@ -83,7 +83,8 @@ diskette, transfer the data to another computer.</p>"));
 	else if (UI(`QueryWidget (`id(`disk), `Value)) == true) {
 	    string disk_file = "/tmp/support.request";
 	    // popup message about where the "saving to disk" file resides
-	    UI(`DisplayMessage (sformat (_("Saving data to %1"), disk_file)));
+	    string disk_message = sformat (UI(_("Saving data to %1")), disk_file);
+	    UI(`DisplayMessage (disk_message));
 	    SCR(`Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file));
 	}
     }
