@@ -15,9 +15,9 @@ Release:      1
 Copyright:    (c) 2000 SuSE GmbH
 Group:        System Environment/YaST
 BuildArchitectures: noarch
-Requires:	yast2-trans-support yast2
-Provides:	y2m_support sitar
-Obsoletes:	y2m_support sitar
+Requires:	yast2-trans-support yast2 sitar>=0.6.7
+Provides:	y2m_support
+Obsoletes:	y2m_support
 Packager:     @MAINTAINER@
 
 Summary:      YaST2 Module for support

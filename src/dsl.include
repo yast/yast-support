@@ -2,7 +2,7 @@
 	"/sbin/route -n",
 	"/usr/bin/tail -n 200 /var/log/messages",
 	"/bin/grep 'NET\|IFC' /etc/rc.config",
-	"/bin/grep -v '^password '"
+	"/bin/grep -v '^password ' /etc/pppoed.conf"
 	);
 
 @files = ();
