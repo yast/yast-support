@@ -46,9 +46,9 @@
 			    //`CheckBox (`id(`male), _("&Mr")),
 			    //`CheckBox (`id(`female), _("Mr&s")),
 			    // radion button
-			    `RadioButton (`id(`male), _("Mr"), (salutation == "male")),
+			    `RadioButton (`id(`male), _("Mr."), (salutation == "male")),
 			    // radion button
-			    `RadioButton (`id(`female), _("Mrs"), (salutation == "female")),
+			    `RadioButton (`id(`female), _("Mrs."), (salutation == "female")),
 			    `HStretch ()
 			  )),
 			  `HBox (
@@ -91,7 +91,7 @@
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`email), _("&E-Mail:"), email),
+			    `TextEntry (`id(`email), _("&E-mail:"), email),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
@@ -109,13 +109,15 @@
 
 	//helptext 2 of 4
         help = help + _("<p>Please enter your personal information as completely as possible 
-in this form. For one reason, this allows us to be able to reach you if, for instance, it 
-is not possible to e-mail you. Secondly, this will enable us to enter your information during 
-the registration process necessary for support.</p>");
+in this form. This allows us to reach you if, for example, it 
+is not possible to e-mail you. Also it will enable us to enter your information during 
+the registration process necessary for support.</p>
+");
 
 	//helptext 3 of 4
-        help = help + _("<p>To avoid additional inquiries, you should in any case review 
-the registration number you entered.</p>");
+        help = help + _("<p>To avoid additional inquiries, you should, in any case, review 
+the registration number you entered.</p>
+");
 
 	//helptext 4 of 4
         help = help + _("<p>You can find further information on installation support and 
@@ -210,7 +212,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Please check either Mrs or Mr"));
+	    UI::ErrorPopup (_("Please check either Mrs. or Mr."));
 	}
 	else if (lookup (regdata, "name1", "") == "")
 	{
@@ -228,7 +230,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	{
 		not_ok = true;
 		// warning message
-		UI::ErrorPopup (_("Please enter your email address"));
+		UI::ErrorPopup (_("Please enter your e-mail address"));
 	}
 	else if (lookup (regdata, "regcode", "") == "")
 	{
@@ -246,7 +248,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	    {
 		not_ok = true;
 		// warning message
-		UI::ErrorPopup (_("Please enter a valid email address"));
+		UI::ErrorPopup (_("Please enter a valid e-mail address"));
 	    }
 	}
 
