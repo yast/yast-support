@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Apr  9 15:58:55 CEST 2001 - kkaempf@suse.de
+
+- modularize view file functions
+
+-------------------------------------------------------------------
 Fri Apr  6 16:13:02 CEST 2001 - kkaempf@suse.de
 
 - adapt to new common_popups
