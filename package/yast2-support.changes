@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jun 27 14:54:22 CEST 2002 - kkaempf@suse.de
+
+- Rename to "yast2-support".
+
+-------------------------------------------------------------------
 Thu Mar 21 19:01:22 CET 2002 - kkaempf@suse.de
 
 - Add option(`hstretch) to ComboWidget so ncurses displays it with
