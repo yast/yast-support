@@ -12,12 +12,13 @@
     textdomain "support";
 
     map send_options = $[
-Versenden; mail
-Lokal speichern; file
-Auf Diskette speicher; floppy
-HTML; html
-TeX; tex
+	"mail"		: _("via &email"),
+	"file"		: _("&local file"),
+	"floppy"	: _("to &floppy disk"),
+	"html"		: _("&view"),
+	"tex"		: _("&TeX")
     ];
+
     // support_question.ycp
     // present/ask question data
 
@@ -99,12 +100,12 @@ transfer the data to another computer by floppy disk.</p>"));
 		message_text = message_text + "\n" + UI(_("Please check your internet connection"));
 		// cant connect to server, popup message 3 of 3
 		message_text = message_text + "\n" + UI(_("or choose 'save to disk' and send a printed copy by mail."));
-		UI(`DisplayMessage (message_text));
+		UI(`ErrorPopup (message_text));
 		ret = `again;
 	    }
 	    else {
 		// popup message, about to connect to support server
-		UI(`DisplayMessage (_("Sending data via Internet")));
+		UI(`MessagePopup (_("Sending data via Internet")));
 		if (SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files)) != 0) {
 		    // failed to upload data to server, popup message 1 of 3
 		    string message_text = UI(_("Can't connect to SuSE support server."));
@@ -112,7 +113,7 @@ transfer the data to another computer by floppy disk.</p>"));
 		    message_text = message_text + "\n" + UI(_("Please check your internet connection"));
 		    // failed to upload data to server, popup message 3 of 3
 		    message_text = message_text + "\n" + UI(_("or try again later."));
-		    UI(`DisplayMessage (message_text));
+		    UI(`ErrorPopup (message_text));
 		    ret = `again;
 		}
 	    }
@@ -121,7 +122,7 @@ transfer the data to another computer by floppy disk.</p>"));
 	    string disk_file = "/tmp/support.request";
 	    // popup message about where the "saving to disk" file resides
 	    string disk_message = sformat (UI(_("Saving data to %1")), disk_file);
-	    UI(`DisplayMessage (disk_message));
+	    UI(`MessagePopup (disk_message));
 	    SCR(`Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file));
 	}
     }

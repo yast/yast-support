@@ -8,8 +8,10 @@
     textdomain "support";
 
     integer current_stage = -1;
-    include "installation_ui.ycp";
+    include "ui/wizard_dialog.ycp";
     include "ui/common_popups.ycp";
+    include "ui/common_functions.ycp";
+    include "ui/common_messages.ycp";
     include "support/registration.ycp";
 
     // regata is global !
@@ -38,14 +40,14 @@
 		locale check_message = check_registration (regdata);
 		ask_registration = (check_message != _("NIL"));
 		if (ask_registration == true) {
-		    UI (`DisplayMessage (check_message));
+		    UI (`ErrorPopup (check_message));
 		}
 		else if (lookup (regdata, "changed", false)) {
 		    // popup when saving data
-		    UI (`DisplayMessage (_("Saving new registration data")));
+		    UI (`MessagePopup (_("Saving new registration data")));
 		    if (!write_registration (regdata)) {
 			// popup when saving failed
-			UI (`DisplayMessage (_("Saving of registration data failed !")));
+			UI (`ErrorPopup (_("Saving of registration data failed !")));
 		    }
 		    break;
 		}
@@ -73,7 +75,7 @@
 	    }
 	    if (retval == `next) {
 		// just a final text to give user a 'good' fealing
-		UI(`DisplayMessage(_("Thank you for using SuSE support")));
+		UI(`MessagePopup (_("Thank you for using SuSE support")));
 		go_on = false;
 	    }
 	}

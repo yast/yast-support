@@ -15,7 +15,7 @@ Release:      1
 Copyright:    (c) 2000 SuSE GmbH
 Group:        System Environment/YaST
 BuildArchitectures: noarch
-Requires:	yast2-trans-support
+Requires:	yast2-trans-support yast2
 Provides:	y2m_support
 Obsoletes:	y2m_support
 Packager:     @MAINTAINER@

@@ -14,13 +14,14 @@
     // support_question.ycp
 
     // checkbox labels to identify a support question
+    // keep the words short, 12 characters are maximum !
     map ask_options = $[
 	"--isdn"	: _("&ISDN"),
 	"--printer"	: _("&Printer"),
-	"--x11"		: _("&User Interface"),
+	"--x11"		: _("&KDE/X11"),
 	"--boot"	: _("&Booting"),
 	"--sound"	: _("&Sound"),
-	"--laptop" 	: _("&Notebook / Laptop"),
+	"--laptop" 	: _("&Notebook"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
 	"--cdr"		: _("&CD-Writer"),
@@ -29,54 +30,75 @@
 	"--all"		: _("&Unspecified")
     ];
 
+    string id_for_all = "--all";
+
     // frame label, around checkbuttons
-    term ui_category_left = `Vbox ();
-    term ui_category_right = `Vbox ();
+    term ui_category_all = `HBox (
+	    `Left (`CheckBox (`id(id_for_all), `opt(`notify), lookup (ask_options, id_for_all, ""), lookup (regdata, id_for_all, false))));
+
+    term ui_category_left = `VBox ();
+    term ui_category_middle = `VBox ();
+    term ui_category_right = `VBox ();
 
     integer side = 0;	// start left
 
     foreach (`ckey, `clabel, ask_options, ``{
-	if (ckey != "--all")
+	if (ckey != id_for_all)
 	{
 	    if (side == 0)
 	    {
 		side = 1;
 		ui_category_left = add (ui_category_left,
-		    `Left (`CheckBox (`id(ckey), clabel, lookup (regdata, ckey, true))));
+		    `Left (`CheckBox (`id(ckey), `opt(`notify), clabel, lookup (regdata, ckey, false))));
+	    }
+	    else if (side == 1)
+	    {
+		side = 2;
+		ui_category_middle = add (ui_category_middle,
+		    `Left (`CheckBox (`id(ckey), `opt(`notify), clabel, lookup (regdata, ckey, false))));
 	    }
 	    else
 	    {
 		side = 0;
 		ui_category_right = add (ui_category_right,
-		    `Left (`CheckBox (`id(ckey), clabel, lookup (regdata, ckey, true))));
+		    `Left (`CheckBox (`id(ckey), `opt(`notify), clabel, lookup (regdata, ckey, false))));
 	    }
 	}
     });
-
-    ui_category_left = add (ui_category_left,
-	    `Left (`CheckBox (`id("--all"), lookup (ask_options, "_", ""), lookup (regdata, "--all", true))));
 
     // present/ask question data
 
     term contents = `VBox (
 			// frame heading
-		      `Frame (_("Current registration data"),
-			`HBox (
-			  // label for regcode field
-			  `Label (_("Registration Code:")),
-			  `Label (lookup (regdata, "regcode", "")),
-			  `HSpacing (0.5),
-			  `Label (lookup (regdata, "name1", "")),
-			  `Label (lookup (regdata, "name2", "")),
-			  `HStretch (),
-			  // push button for changeing registration data
-			  `PushButton (`id(`ask_registration), _("&Change"))
-			 )
+		      `VBox (
+			`Left (
+			  `HBox (
+			    // label for regcode field
+			    `Label (_("Registration Code:")),
+			    `Label (lookup (regdata, "regcode", ""))
+			  )
+			),
+			`Left (
+			  `HBox (
+			    `Label (lookup (regdata, "name1", "")),
+			    `Label (lookup (regdata, "name2", "")),
+			    `HStretch (),
+			    // push button for changeing registration data
+			    `PushButton (`id(`ask_registration), _("&Change"))
+			  )
+			)
 		      ),
 		      `VSpacing (1.0),
 		      // frame label, around checkbuttons
 		      `Frame (_("Choose a category"),
-			`HBox (ui_category_left, ui_category_right)
+			`VBox (
+			  ui_category_all,
+			  `HBox (
+			    `Top(ui_category_left),
+			    `Top(ui_category_middle),
+			    `Top(ui_category_right)
+			  )
+			)
 		      ),
 		      `VSpacing (1.0),
 		      // label for multi line edit widget where user can
@@ -118,14 +140,54 @@ you can make use of the SuSE Professional Services as well. You will find more i
     // screen title
     UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
 
-    any ret = UI (`UserInput());
+    any ret = nil;
+    boolean go_on = true;
+    boolean ignore_all = false;
 
-    if (ret != `abort) {
-	regdata = add (regdata, "question", UI(`QueryWidget (`id(`question), `Value)));
-	foreach (`ckey, `clabel, ask_options, ``{
-	    regdata = add (regdata, ckey, UI(`QueryWidget (`id(ckey), `Value)));
-	});
+    while (go_on)
+    {
+	ret = UI (`UserInput());
+y2milestone ("UserInput %1", ret);
+
+	if (is (ret, string))
+	{
+	    boolean allstatus = UI(`QueryWidget (`id(id_for_all), `Value));
+	    if (ret == id_for_all)
+	    {
+		if (ignore_all == true)
+		{
+		    ignore_all = false;
+		}
+		else if (allstatus == true)
+		{
+		    foreach (`ckey, `clabel, ask_options, ``{
+			if (ckey != id_for_all)
+			{
+			    UI(`ChangeWidget (`id (ckey), `Value, false));
+			}
+		    });
+		}
+	    }
+	    else
+	    {
+		UI(`ChangeWidget (`id (id_for_all), `Value, false));
+		if (allstatus == true)
+		    ignore_all = true;
+	    }
+	}
+	else if (ret != `abort)
+	{
+	    regdata = add (regdata, "question", UI(`QueryWidget (`id(`question), `Value)));
+	    foreach (`ckey, `clabel, ask_options, ``{
+		regdata = add (regdata, ckey, UI(`QueryWidget (`id(ckey), `Value)));
+	    });
+	    go_on = false;
+	}
+	else
+	{
+	    go_on = false;
+	}
     }
-
+y2milestone ("returning %1", ret);
     return ret;
 }
