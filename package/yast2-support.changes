@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Aug 20 09:32:02 CEST 2003 - arvin@suse.de
+
+- added desktop file
+- use Popup and Label modules
+
+-------------------------------------------------------------------
 Mon Jun 23 11:12:12 CEST 2003 - arvin@suse.de
 
 - include directories in file list
