@@ -21,10 +21,11 @@
 
     // support_question.ycp
     // present/ask question data
+    locale data_caption = "";
 
     term contents = `VBox (
 		      // caption above view window
-		      `LogView (`id(`hwdata), _("Hardware data"), 7, 0),
+		      `LogView (`id(`data), data_caption, 7, 0),
 		      `VSpacing (1.0),
 		      `RadioButtonGroup(`id(`rb),
 			`VBox (
@@ -63,8 +64,7 @@ transfer the data to another computer by floppy disk.</p>"));
 
     SCR(`Write(.target.string, user_file, user_data));
 
-    string hw_data = "";
-    string hw_file = tmpdir+"/hardware.out";
+    string wrapper_file = tmpdir+"/wrapper.out";
     string wrapper_options = "";
     string output_format = "plain";
     foreach (`option, `optval, regdata, ``{
@@ -79,16 +79,20 @@ transfer the data to another computer by floppy disk.</p>"));
     string wrapper_cmd = "/var/lib/support/wrapper --output="
 	+ output_format
 	+ wrapper_options
-	+" >" + hw_file;
+	+" >"
+	+ wrapper_file;
     y2milestone ("running %1", wrapper_cmd);
     SCR(`Execute(.target.bash, wrapper_cmd));
-    hw_data = hw_data + SCR(`Read(.target.string, hw_file));
 
-    UI(`ChangeWidget(`id(`hwdata), `Value, hw_data));
+    // read output from wrapper
+
+    string wrapper_data = SCR(`Read(.target.string, wrapper_file));
+
+    UI(`ChangeWidget(`id(`data), `Value, wrapper_data));
 
     any ret = UI (`UserInput());
 
-    string all_files = reg_file + " " + user_file + " " + hw_file;
+    string all_files = reg_file + " " + user_file + " " + wrapper_file;
 
     if (ret == `next)
     {
