@@ -2,7 +2,7 @@
 
 keydir = $(ydatadir)/support
 
-key_DATA = key filenames
+key_DATA = key
 
 EXTRA_DIST = $(key_DATA)
 
