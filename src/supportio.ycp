@@ -1,0 +1,93 @@
+/**
+ * support/supportio.ycp
+ *
+ * functions for support key I/O
+ *
+ * read support key data from file
+ * return complete map
+ *
+ * $Id$
+ */
+{
+    textdomain "support";
+
+    global define read_supportkey()
+    ``{
+	map keydata = $[];
+
+	keydata["name1"]	= SCR::Read(.support.key.KEY_NAME1);
+	keydata["name2"]	= SCR::Read(.support.key.KEY_NAME2);
+	keydata["salutation"]	= SCR::Read(.support.key.KEY_SALUTATION);
+	keydata["company"]	= SCR::Read(.support.key.KEY_COMPANY);
+	keydata["street"]	= SCR::Read(.support.key.KEY_STREET);
+	keydata["zip"]		= SCR::Read(.support.key.KEY_ZIP);
+	keydata["country"]	= SCR::Read(.support.key.KEY_COUNTRY);
+	keydata["state"]	= SCR::Read(.support.key.KEY_STATE);
+	keydata["city"]		= SCR::Read(.support.key.KEY_CITY);
+	keydata["email"]	= SCR::Read(.support.key.KEY_EMAIL);
+	keydata["key"]		= SCR::Read(.support.key.KEY_CODE);
+
+	return keydata;
+    };
+
+    global define write_supportkey (map keydata)
+    ``{
+
+	SCR::Write(.support.key.KEY_NAME1,	keydata["name1"]:"");
+	SCR::Write(.support.key.KEY_NAME2,	keydata["name2"]:"");
+	SCR::Write(.support.key.KEY_SALUTATION,	keydata["salutation"]:"");
+	SCR::Write(.support.key.KEY_COMPANY,	keydata["company"]:"");
+	SCR::Write(.support.key.KEY_STREET,	keydata["street"]:"");
+	SCR::Write(.support.key.KEY_ZIP,	keydata["zip"]:"");
+	SCR::Write(.support.key.KEY_COUNTRY,	keydata["country"]:"");
+	SCR::Write(.support.key.KEY_STATE,	keydata["state"]:"");
+	SCR::Write(.support.key.KEY_CITY,	keydata["city"]:"");
+	SCR::Write(.support.key.KEY_EMAIL,	keydata["email"]:"");
+	SCR::Write(.support.key.KEY_CODE,	keydata["key"]:"");
+
+	return SCR::Write(.support.key, nil);
+
+    };
+
+    // check if support key data is complete.
+    // return non-empty message if somethings missing
+
+    global define check_supportkey (map keydata)
+    ``{
+
+	string message = "";
+
+	if (keydata["salutation"]:"" == "")
+	{
+	    message = _("Check either Mrs. or Mr.");
+	}
+	else if (keydata["name1"]:"" == "")
+	{
+	    message = _("Please enter your first name");
+	}
+	else if (keydata["name2"]:"" == "")
+	{
+	    message = _("Please enter your last name");
+	}
+	else if (keydata["email"]:"" == "")
+	{
+	    message = _("Enter your e-mail address.");
+	}
+	else if (size (keydata["key"]:"") < 14)
+	{
+	    // keep the term "support key" in german translation
+	    message = _("Please enter your support key");
+	}
+	else
+	{
+	    string email = keydata["email"]:"";
+	    if ((findfirstof ("@", email) < 0)
+		 || (findfirstof (".", email) < 0))
+	    {
+		message = _("Enter a valid e-mail address");
+	    }
+	}
+
+	return message;
+    };
+}

@@ -5,7 +5,7 @@
 ; $Id$
 ;
 
-[Y2Module view_bootmsg]
+[Y2Module view_anymsg]
 
 ; name of the entry, shown in y2cc
 Name = _("View start-up log")
@@ -21,7 +21,7 @@ Icon = startprotocol.png
 Helptext = _("This module displays the boot log (/var/log/boot.msg)")
 
 ; arguments, seperated by space
-Arguments = 
+Arguments = /var/log/boot.msg
 
 ; whether root privileges are required to run this module
 RequiresRoot = true

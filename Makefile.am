@@ -2,7 +2,7 @@
 # Makefile.am for modules/y2c_boot
 #
 
-SUBDIRS = conf src doc
+SUBDIRS = agents scripts data src doc
 
 VERSION = $(shell cat $(srcdir)/VERSION)
 

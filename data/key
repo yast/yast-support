@@ -1,0 +1,14 @@
+#
+# support key data
+#
+KEY_CODE=""
+KEY_SALUTATION=""
+KEY_NAME1=""
+KEY_NAME2=""
+KEY_COMPANY=""
+KEY_STREET=""
+KEY_ZIP=""
+KEY_COUNTRY=""
+KEY_STATE=""
+KEY_CITY=""
+KEY_EMAIL=""

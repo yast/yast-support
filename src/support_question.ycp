@@ -11,6 +11,9 @@
 {
     textdomain "support";
 
+    import "Wizard";
+    include "ui/common_popups.ycp";
+
     // support_question.ycp
 
     // checkbox labels to identify a support question
@@ -24,6 +27,9 @@
 	"--laptop" 	: _("&Notebook"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
+        "--cdr"         : _("&CD-R"),
+        "--net"         : _("Net&work"),
+        "--hw"          : _("&Hardware"),
 	"--install"	: _("I&nstallation"),
 	"--all"		: _("&Unspecified")
     ];
@@ -32,11 +38,11 @@
 
     // frame label, around checkbuttons
     term ui_category_all = `HBox (
-	    `Left (`CheckBox (`id(id_for_all), `opt(`notify), lookup (ask_options, id_for_all, ""), lookup (regdata, id_for_all, false))));
+	    `Left (`RadioButton (`id(id_for_all), `opt(`notify), ask_options[id_for_all]:"", keydata[id_for_all]:false)));
 
-    term ui_category_left = `VBox ();
+    term ui_category_left   = `VBox ();
     term ui_category_middle = `VBox ();
-    term ui_category_right = `VBox ();
+    term ui_category_right  = `VBox ();
 
     integer side = 0;	// start left
 
@@ -48,19 +54,19 @@
 	    {
 		side = 1;
 		ui_category_left = add (ui_category_left,
-		    `Left (`CheckBox (`id(ckey), `opt(`notify), clabel, lookup (regdata, ckey, false))));
+		    `Left (`RadioButton (`id(ckey), `opt(`notify), clabel, keydata[ckey]:false)));
 	    }
 	    else if (side == 1)
 	    {
 		side = 2;
 		ui_category_middle = add (ui_category_middle,
-		    `Left (`CheckBox (`id(ckey), `opt(`notify), clabel, lookup (regdata, ckey, false))));
+		    `Left (`RadioButton (`id(ckey), `opt(`notify), clabel, keydata[ckey]:false)));
 	    }
 	    else
 	    {
 		side = 0;
 		ui_category_right = add (ui_category_right,
-		    `Left (`CheckBox (`id(ckey), `opt(`notify), clabel, lookup (regdata, ckey, false))));
+		    `Left (`RadioButton (`id(ckey), `opt(`notify), clabel, keydata[ckey]:false)));
 	    }
 	}
     });
@@ -72,37 +78,42 @@
 		      `VBox (
 			`Left (
 			  `HBox (
-			    // label for regcode field
-			    `Label (_("Registration Code:")),
-			    `Label (lookup (regdata, "regcode", ""))
+			    // label for support key field
+			    // !! CAUTION !!
+			    // Check with SuSE if this should be translated
+			    // e.g. for germany, do _not_ translate it.
+			    `Label (_("Support Key:")),
+			    `Label (keydata["key"]:"")
 			  )
 			),
 			`Left (
 			  `HBox (
-			    `Label (lookup (regdata, "name1", "")),
-			    `Label (lookup (regdata, "name2", "")),
+			    `Label (keydata["name1"]:""),
+			    `Label (keydata["name2"]:""),
 			    `HStretch (),
-			    // push button for changeing registration data
-			    `PushButton (`id(`ask_registration), _("&Change"))
+			    // push button for changing key data
+			    `PushButton (`id(`ask_key), _("&Change"))
 			  )
 			)
 		      ),
 		      `VSpacing (1.0),
 		      // frame label, around checkbuttons
 		      `Frame (_("Choose a category"),
-			`VBox (
-			  ui_category_all,
-			  `HBox (
-			    `Top(ui_category_left),
-			    `Top(ui_category_middle),
-			    `Top(ui_category_right)
+			`RadioButtonGroup(`id(`categories),
+			  `VBox (
+			    ui_category_all,
+			    `HBox (
+			      `Top(ui_category_left),
+			      `Top(ui_category_middle),
+			      `Top(ui_category_right)
+			    )
 			  )
 			)
 		      ),
 		      `VSpacing (1.0),
 		      // label for multi line edit widget where user can
 		      // describe the problem
-		      `MultiLineEdit (`id(`question), _("&Your question for SuSE support:"), lookup (regdata, "question", "")),
+		      `MultiLineEdit (`id(`question), _("&Your question for SuSE support:"), keydata["question"]:""),
 		      `VStretch ()
 		    );
 
@@ -130,7 +141,7 @@ with good reason.</p>
 ");
 
     string website = "http://www.suse.de/en/support/prof";
-    string language = substring (UI(`GetLanguage(true)), 0, 2);
+    string language = substring (UI::GetLanguage(true), 0, 2);
     if (language == "de")
     {
 	website = "http://www.suse.de/de/support/prof";
@@ -142,49 +153,25 @@ with good reason.</p>
 you can make use of the SuSE Professional Services as well. You will find more information about this at %1</p>"), website);
 
     // screen title
-    UI::SetWizardContents (_("SuSE Support"), contents, help, true, true);
+    Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
 
     any ret = nil;
     boolean go_on = true;
-    boolean ignore_all = false;
 
     while (go_on)
     {
 	ret = UI::UserInput();
 
-	if (is (ret, string))
+	if (is(ret, string))
 	{
-	    boolean allstatus = UI::QueryWidget (`id(id_for_all), `Value);
-	    if (ret == id_for_all)
-	    {
-		if (ignore_all == true)
-		{
-		    ignore_all = false;
-		}
-		else if (allstatus == true)
-		{
-		    foreach (`ckey, `clabel, ask_options,
-		    ``{
-			if (ckey != id_for_all)
-			{
-			    UI::ChangeWidget (`id (ckey), `Value, false);
-			}
-		    });
-		}
-	    }
-	    else
-	    {
-		UI::ChangeWidget (`id (id_for_all), `Value, false);
-		if (allstatus == true)
-		    ignore_all = true;
-	    }
+	    go_on = true;	// dummy
 	}
-	else if (ret != `abort)
+	else if ((ret != `abort) && (ret != `cancel))
 	{
-	    regdata = add (regdata, "question", UI(`QueryWidget (`id(`question), `Value)));
+	    keydata["question"] = UI::QueryWidget (`id(`question), `Value);
 	    foreach (`ckey, `clabel, ask_options,
 	    ``{
-		regdata = add (regdata, ckey, UI(`QueryWidget (`id(ckey), `Value)));
+		keydata[ckey] = UI::QueryWidget (`id(ckey), `Value);
 	    });
 	    go_on = false;
 	}

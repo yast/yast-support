@@ -5,7 +5,7 @@
 ; $Id$
 ;
 
-[Y2Module view_messages]
+[Y2Module view_anymsg]
 
 ; name of the entry, shown in y2cc
 Name = _("View system log")
@@ -21,7 +21,7 @@ Icon = systemprotocol.png
 Helptext = _("This module displays the systems log (/var/log/messages)")
 
 ; arguments, seperated by space
-Arguments = 
+Arguments = /var/log/messages
 
 ; whether root privileges are required to run this module
 RequiresRoot = true

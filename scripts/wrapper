@@ -1,8 +1,13 @@
 #!/usr/bin/perl
 # Björn Jacke <bjacke@suse.de>, 2001
+# Martin Lasarsch <mlasars@suse.de> 2002
+# -added options (hw,net)
+# -changed support_whatever() to call siga
+#
+
 #
 #TODO:
-# /var/lib/support/rc.registration
+# /var/lib/support/key
 
 use Getopt::Long;
 
@@ -10,22 +15,24 @@ my $output = "";
 my $outfile = "";
 GetOptions (	'output=s'	=> \$output,
 		'file=s'	=> \$outfile,
-		'all'	=> \$doitall,
-		'reg'	=> \$regdata,
-		'ttn=s'	=> \$ttn,
-		'help'	=> \$printhelp,
+		'all'		=> \$doitall,
+		'reg'		=> \$regdata,
+		'ttn=s'		=> \$ttn,
 
-		'boot'	=> \$boot,
-		'cdr'	=> \$cdr,
-		'dsl'	=> \$dsl,
-		'isdn'	=> \$isdn,
+		'help'		=> \$printhelp,
+		'boot'		=> \$boot,
+		'cdr'		=> \$cdr,
+		'dsl'		=> \$dsl,
+		'isdn'		=> \$isdn,
 		'install'	=> \$install,
 		'laptop'	=> \$laptop,
-		'modem'	=> \$modem,
+		'modem'		=> \$modem,
 		'printer'	=> \$printer,
 		'scanner'	=> \$scanner,
-		'sound'	=> \$sound,
-		'x11'	=> \$x11
+		'sound'		=> \$sound,
+		'net'         	=> \$net,
+		'hw'         	=> \$hw,
+		'x11'		=> \$x11
 		);
 
 
@@ -41,10 +48,12 @@ my @params = qw(
 		boot
 		cdr
 		dsl
+		hw
 		install
 		isdn
 		laptop
 		modem
+		net
 		printer
 		scanner
 		sound
@@ -70,7 +79,7 @@ sub open_outfile() {
 		$outFH = FH;
 	}
 	elsif ($send) {
-		open (FH, "| /var/lib/support/send_support_request.pl");
+		open (FH, "| /usr/lib/YaST2/support/send_support_request.pl");
 		$outFH = FH;
 	}
 }
@@ -106,15 +115,21 @@ sub mountfloppy(){
 
 sub support_whatever() {
 	if ($regdata) {
-		open FH, "< /var/lib/support/rc.registration" or push @ret, "NO REGDATA" and last;
+		open FH, "< /var/lib/support/key" or push @ret, "NO REGDATA" and last;
 		push @ret, $_ while (<FH>);
 	}
 
 	if ($doitall) {
-		push @ret, $_ for (`/usr/sbin/support_all.pl --format=$output`);
+		push @ret, "\n##Y2support-/tmp/siga.txt:\n";
+ 		system ("siga no > /dev/null");
+               	push @ret, $_ for (`echo "<pre>" && cat /tmp/siga.txt`);
+		push @ret, "\n##Y2support-/tmp/siga.txt--\n";
 	}
 	else {
-		push @ret, $_ for (`/var/lib/support/support_modules.pl --output=$output $myparams`);
+		push @ret, "\n##Y2support-/tmp/siga.txt:\n";
+                push @ret, $_ for (`/usr/lib/YaST2/support/support_modules.pl --output=$output $myparams`);
+                push @ret, $_ for (`echo "<pre>" && cat /tmp/siga.txt`);
+		push @ret, "\n##Y2support-/tmp/siga.txt--\n";
 	}
 #	print "system support_all --$output" if ($doitall);
 	#print $_ for (@ret);
@@ -137,15 +152,15 @@ CASE:{
 	}
 	# Versenden (als plain Text)
 #	if ($output eq "send") {
-#		#system "/var/lib/support/send_support_request.pl ";
+#		#system "/usr/lib/YaST2/support/send_support_request.pl ";
 #		my @trash = support_whatever();
 #		for (@trash) {
 #			$out .= $_
 #		}
-#		#system "/var/lib/support/send_support_request.pl $out";
+#		#system "/usr/lib/YaST2/support/send_support_request.pl $out";
 #		#open (FF, "/bin/cat"." $out |");
 ##		open (FF, "| /bin/cat");
-#		open (FF, "| /var/lib/support/send_support_request.pl");
+#		open (FF, "| /usr/lib/YaST2/support/send_support_request.pl");
 #		print FF "$out";
 #		close(FF);
 #		next CASE;

@@ -1,45 +1,51 @@
+/**
+ * support_askkey.ycp
+ *
+ * present/ask support data
+ *
+ *  keydata = $["key"
+ * 		"salutation"
+ * 		"name1"
+ * 		"name2"
+ * 		"company"
+ * 		"street"
+ * 		"zip"
+ * 		"country"
+ * 		"state"
+ * 		"city"
+ * 		"email"
+ * 
+ * $Id$
+ */
 {
     textdomain "support";
+    import "Wizard";
+    include "ui/common_popups.ycp";
 
-    y2milestone ("regdata in '%1'", regdata);
+    y2milestone ("keydata in '%1'", keydata);
 
-    // support_regcode.ycp
-    // present/ask registration data
+    map old_keydata = keydata;
 
-    // regcode = $["regcode"
-    //		   "salutation"
-    //		   "name1"
-    //		   "name2"
-    //		   "company"
-    //		   "street"
-    //		   "zip"
-    //		   "country"
-    //		   "state"
-    //		   "city"
-    //		   "email"
-    //
+    string key		= keydata["key"]:"";
+    string salutation	= keydata["salutation"]:"";
+    string name1	= keydata["name1"]:"";
+    string name2	= keydata["name2"]:"";
+    string company	= keydata["company"]:"";
+    string street	= keydata["street"]:"";
+    string zip		= keydata["zip"]:"";
+    string country	= keydata["country"]:"";
+    string state	= keydata["state"]:"";
+    string city		= keydata["city"]:"";
+    string email	= keydata["email"]:"";
 
-    map old_regdata = regdata;
-
-    string regcode	= lookup (regdata, "regcode", "");
-    string salutation	= lookup (regdata, "salutation", "");
-    string name1	= lookup (regdata, "name1", "");
-    string name2	= lookup (regdata, "name2", "");
-    string company	= lookup (regdata, "company", "");
-    string street	= lookup (regdata, "street", "");
-    string zip		= lookup (regdata, "zip", "");
-    string country	= lookup (regdata, "country", "");
-    string state	= lookup (regdata, "state", "");
-    string city		= lookup (regdata, "city", "");
-    string email	= lookup (regdata, "email", "");
-
-    if (lookup (regdata, "changed", false)) {
-	regdata = add (regdata, "changed", false);
+    if (keydata["changed"]:false)
+    {
+	keydata["changed"] = false;
     }
 
     term contents = `VBox (
-		      // frame for registration data screen
-		      `Frame (_("Enter registration data"),
+		      // frame for support data screen
+		      `Frame (_("Enter support data"),
 			`VBox (
 			  `RadioButtonGroup(`id(`rb),
 			  `HBox (
@@ -97,7 +103,7 @@
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`regcode), _("&Registration Code:"), regcode),
+			    `TextEntry (`id(`key), _("&Support Key:"), key),
 			    `HSpacing (0.5)
 			  )
 		        )
@@ -110,13 +116,12 @@
 	//helptext 2 of 4
         help = help + _("<p>Enter your personal information as completely as possible 
 in this form. This allows us to reach you if, for example, it 
-is not possible to e-mail you. Also it will enable us to enter your information during 
-the registration process necessary for support.</p>
+is not possible to e-mail you.</p>
 ");
 
 	//helptext 3 of 4
         help = help + _("<p>To avoid additional inquiries, you should, in any case, review 
-the registration number you entered.</p>
+the support key you entered.</p>
 ");
 
 	//helptext 4 of 4
@@ -124,7 +129,7 @@ the registration number you entered.</p>
 what it has to offer in the appendix at the end of your manual.</p>");
 
     // screen caption
-    UI::SetWizardContents (_("SuSE Support"), contents, help, true, true);
+    Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
 
     boolean not_ok = true;
     boolean changed = false;
@@ -139,9 +144,11 @@ what it has to offer in the appendix at the end of your manual.</p>");
 
 	y2milestone (sformat ("ret '%1'", ret));
 
-	if ((ret == `back) || (ret == `abort))
+	if ((ret == `back)
+	    || (ret == `cancel)		// close window
+	    || (ret == `abort))
 	{
-	    regdata = old_regdata;
+	    keydata = old_keydata;
 	    break;
 	}
 
@@ -149,98 +156,100 @@ what it has to offer in the appendix at the end of your manual.</p>");
 
 	string value = "";
 
-	if (salutation != "male" && UI(`QueryWidget(`id(`male), `Value)) == true)
+	if (salutation != "male"
+	    && UI::QueryWidget(`id(`male), `Value) == true)
 	{
-	    regdata = add (regdata, "salutation", "male"); changed = true;
-	} else if (salutation != "female" && UI(`QueryWidget(`id(`female), `Value)) == true)
+	    keydata["salutation"] = "male"; changed = true;
+	} else if (salutation != "female"
+		   && UI::QueryWidget(`id(`female), `Value) == true)
 	{
-	    regdata = add (regdata, "salutation", "female"); changed = true;
+	    keydata["salutation"] = "female"; changed = true;
 	}
 
 	value = UI::QueryWidget(`id(`name1), `Value);
 	if (value != name1)
 	{
-	    regdata = add (regdata, "name1", value); changed = true;
+	    keydata["name1"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`name2), `Value);
 	if (value != name2)
 	{
-	    regdata = add (regdata, "name2", value); changed = true;
+	    keydata["name2"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`company), `Value);
 	if (value != company)
 	{
-	    regdata = add (regdata, "company", value); changed = true;
+	    keydata["company"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`street), `Value);
 	if (value != street)
 	{
-	   regdata = add (regdata, "street", value); changed = true;
+	    keydata["street"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`zip), `Value);
 	if (value != zip)
 	{
-	   regdata = add (regdata, "zip", value); changed = true;
+	    keydata["zip"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`city), `Value);
 	if (value != city)
 	{
-	   regdata = add (regdata, "city", value); changed = true;
+	    keydata["city"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`state), `Value);
 	if (value != state)
 	{
-	   regdata = add (regdata, "state", value); changed = true;
+	    keydata["state"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`country), `Value);
 	if (value != country)
 	{
-	   regdata = add (regdata, "country", value); changed = true;
+	    keydata["country"] = value; changed = true;
 	}
 	value = UI::QueryWidget(`id(`email), `Value);
 	if (value != email)
 	{
-	   regdata = add (regdata, "email", value); changed = true;
+	   keydata["email"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`regcode), `Value);
-	if (value != regcode)
+	value = UI::QueryWidget(`id(`key), `Value);
+	if (value != key)
 	{
-	   regdata = add (regdata, "regcode", value); changed = true;
+	   keydata["key"] = value; changed = true;
 	}
 
-	if (lookup (regdata, "salutation", "") == "")
+	if (keydata["salutation"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
 	    UI::ErrorPopup (_("Check either Mrs. or Mr."));
 	}
-	else if (lookup (regdata, "name1", "") == "")
+	else if (keydata["name1"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
 	    UI::ErrorPopup (_("Please enter your first name"));
 	}
-	else if (lookup (regdata, "name2", "") == "")
+	else if (keydata["name2"]:"" == "")
 	{
-		not_ok = true;
-		// warning message
-		UI::ErrorPopup (_("Please enter your last name"));
+	    not_ok = true;
+	    // warning message
+	    UI::ErrorPopup (_("Please enter your last name"));
 	}
-	else if (lookup (regdata, "email", "") == "")
+	else if (keydata["email"]:"" == "")
 	{
-		not_ok = true;
-		// warning message
-		UI::ErrorPopup (_("Enter your e-mail address."));
+	    not_ok = true;
+	    // warning message
+	    UI::ErrorPopup (_("Enter your e-mail address."));
 	}
-	else if (lookup (regdata, "regcode", "") == "")
+	else if (keydata["key"]:"" == "")
 	{
-		not_ok = true;
-		// warning message
-		UI::ErrorPopup (_("Please enter your registration code"));
+	    not_ok = true;
+	    // warning message
+	    UI::ErrorPopup (_("Please enter your support key"));
 	}
 	else
 	{
-	    string email = lookup (regdata, "email", "");
+	    string email = keydata["email"]:"";
 	    // email shoul be at least a@b.cc
 	    if ((size (email) < 6)
 		|| (findfirstof ("@", email) < 0)
@@ -258,10 +267,10 @@ what it has to offer in the appendix at the end of your manual.</p>");
 
     if (changed)
     {
-	regdata = add (regdata, "changed", true);
+	keydata["changed"] = true;
     }
 
-    y2milestone ("regdata out '%1'", regdata);
+    y2milestone ("keydata out '%1'", keydata);
 
     return ret;
 }

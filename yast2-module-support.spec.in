@@ -15,7 +15,7 @@ Release:      1
 Copyright:    (c) 2000 SuSE GmbH
 Group:        System Environment/YaST
 BuildArchitectures: noarch
-Requires:	yast2-trans-support yast2 sitar
+Requires:	yast2-trans-support yast2 yast2-lib-wizard
 Provides:	y2m_support
 Obsoletes:	y2m_support
 Packager:     @MAINTAINER@
@@ -42,20 +42,21 @@ make install
 
 %{?suse_check}
 
+
 %files
 
 %dir /var/lib/support
 /var/lib/support/*
-@YAST2DIR@/scrconf/rc_registration.scr
+@YAST2DIR@/support/*
+@YAST2DIR@/scrconf/cfg_support.scr
 @YAST2DIR@/clients/support.ycp
-@YAST2DIR@/clients/support_registration.ycp
+@YAST2DIR@/clients/support_askkey.ycp
 @YAST2DIR@/clients/support_question.ycp
 @YAST2DIR@/clients/support_send.ycp
-@YAST2DIR@/clients/view_messages.ycp
-@YAST2DIR@/clients/view_bootmsg.ycp
+@YAST2DIR@/clients/view_anymsg.ycp
 @YAST2DIR@/menuentries/menuentry_support.y2cc
 @YAST2DIR@/menuentries/menuentry_messages.y2cc
 @YAST2DIR@/menuentries/menuentry_bootmsg.y2cc
 %dir @YAST2DIR@/include/support
-@YAST2DIR@/include/support/registration.ycp
+@YAST2DIR@/include/support/supportio.ycp
 @YAST2DIR@/bin/is_suse_there.sh

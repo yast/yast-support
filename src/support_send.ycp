@@ -11,6 +11,9 @@
 {
     textdomain "support";
 
+    import "Wizard";
+    include "ui/common_popups.ycp";
+
     map send_options = $[
 	"mail"		: _("via &e-mail"),
 	"file"		: _("&local file"),
@@ -24,9 +27,19 @@
 
     string tmpdir = SCR::Read(.target.tmpdir);
 
-    string reg_file = "/var/lib/support/rc.registration";
+    string key_file = "/var/lib/support/key";
 
-    string user_data = "---\n" + lookup (regdata, "question", "") + "\n---\n";
+    string question = keydata["question"]:"";
+    if (question == "")
+	question = "-none-";
+
+    integer has_prelink = SCR::Read(.target.size, "/etc/prelink.cache");
+    if (has_prelink > 0)
+    {
+	question = "** /etc/prelink.cache > 0 **\n" + question;
+    }
+
+    string user_data = "---\n" + question + "\n---\n";
     string user_file = tmpdir + "/user.out";
 
     SCR::Write(.target.string, user_file, user_data);
@@ -34,7 +47,7 @@
     string wrapper_file = tmpdir+"/wrapper.out";
     string wrapper_options = "";
     string output_format = "plain";
-    foreach (`option, `optval, regdata,
+    foreach (`option, `optval, keydata,
     ``{
 	if ((substring (option, 0, 2) == "--")
 	    && (optval == true))
@@ -44,13 +57,16 @@
 	    wrapper_options = wrapper_options + " " + option;
 	}
     });
-    string wrapper_cmd = "/var/lib/support/wrapper --output="
+    string wrapper_cmd = "/usr/lib/YaST2/support/wrapper --output="
 	+ output_format
 	+ wrapper_options
 	+" >"
 	+ wrapper_file;
     y2milestone ("running %1", wrapper_cmd);
+
+    UI::OpenDialog (`opt(`decorated), `HBox(`HSpacing(1), `Label(UI::PleaseWaitMsg()), `HSpacing(1)));
     SCR::Execute(.target.bash, wrapper_cmd);
+    UI::CloseDialog();
 
     // read output from wrapper
     string wrapper_data = SCR::Read(.target.string, wrapper_file);
@@ -94,16 +110,29 @@ transfer the data to another computer by floppy disk.</p>");
 	));
 
     // screen caption
-    UI::SetWizardContents (_("SuSE Support"), contents, help, true, true);
+    Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
 
-    if (! lookup (regdata, "--all", false) != "")
+    if (! keydata["--all"]:false)
     {
 	UI::ChangeWidget(`id(`data), `Value, wrapper_data);
     }
 
-    any ret = UI::UserInput();
+    any ret = `dummy;
+    boolean go_on = true;
 
-    string all_files = reg_file + " " + user_file + " " + wrapper_file;
+    while (go_on)
+    {
+	ret = UI::UserInput();
+	if ((ret == `next)
+	    || (ret == `back)
+	    || (ret == `abort)
+	    || (ret == `cancel))
+	{
+	    go_on = false;
+	}
+    }
+
+    string all_files = key_file + " " + user_file + " " + wrapper_file;
 
     if (ret == `next)
     {
@@ -124,7 +153,7 @@ transfer the data to another computer by floppy disk.</p>");
 	    {
 		// popup message, about to connect to support server
 		UI::MessagePopup (_("Sending data via Internet"));
-		if (SCR::Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files) != 0)
+		if (SCR::Execute(.target.bash, "/usr/lib/YaST2/support/send_support_request.pl " + all_files) != 0)
 		{
 		    // failed to upload data to server, popup message 1 of 3
 		    string message_text = _("Can't connect to SuSE support server.");
@@ -144,6 +173,7 @@ transfer the data to another computer by floppy disk.</p>");
 	    string disk_message = sformat (_("Saving data to %1"), disk_file);
 	    UI::MessagePopup (disk_message);
 	    SCR::Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file);
+            SCR::Execute(.target.bash, "/bin/chmod 600 /tmp/support.request");
 	}
     }
 

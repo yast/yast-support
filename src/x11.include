@@ -1,6 +1,0 @@
-@commands = ("/sbin/lspci -vv");
- 
-@files = ("/var/log/SaX.log",
-	"/var/log/XFree86.0.log"
-	); 
-

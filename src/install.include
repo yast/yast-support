@@ -1,5 +1,0 @@
-@commands = ("/usr/sbin/hwinfo");
-
-@files = ("/var/log/boot.msg",
-	"/var/log/y2log"
-	);

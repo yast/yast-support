@@ -13,6 +13,8 @@ my @allparams = qw(
 		modem
 		printer
 		scanner
+		net
+		hw
 		sound
 		x11
 		);
@@ -26,18 +28,18 @@ for $par (@allparams) {
 for $par (@mypars) {
 	@commands=();
 	@files=();
-	do "/var/lib/support/$par.include";
+	do "/usr/lib/YaST2/support/$par.include";
 
 	for (@commands) {
-		push @outarr, "\n##Y2support-$_:\n";
+		#push @outarr, "\n##Y2support-$_:\n";
 		push @outarr, `$_ 2>&1`;
-		push @outarr, "\n##Y2support-$_--\n";
+		#push @outarr, "\n##Y2support-$_--\n";
 
 	}
 
 	for $file (@files) {
 		open FH, "< $file" or next;
-		push @outarr, "\n##Y2support-$file:\n";
+		#push @outarr, "\n##Y2support-$file:\n";
 		push @outarr, $_ while (<FH>);
 		close FH;
 		push @outarr, "\n##Y2support-$file--\n";

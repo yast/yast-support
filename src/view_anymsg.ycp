@@ -1,0 +1,219 @@
+/* 
+ * view_anymsg.ycp
+ *
+ * small script for easy /var/log/* and /proc/* viewing
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ *
+ * Reads a \n separated list of filenames from
+ * /var/lib/support/filenames
+ * Lines starting with "#" are ignored (comments)
+ * A line starting with "*" is taken as the default filename, the "*" is stripped
+ *
+ * All files are listed in an editable combo box, where the user can
+ * easily switch between files and even add a new file
+ *
+ * At finish, the list of filenames is written back to /var/lib/support/filenames
+ * adapting the default line (starting with "*") accordingly.
+ *
+ * The default is either given as Args(0) or is the file last viewed.
+ */
+
+{
+    textdomain "support";
+
+    include "ui/common_messages.ycp";
+
+    // get filename list
+
+    string filenames = SCR::Read(.target.string, "/var/lib/support/filenames");
+    if ((filenames == nil)
+	|| (size (filenames) <= 0))
+    {
+	filenames = "/var/log/boot.msg\n/var/log/messages\n";
+    }
+
+    // convert \n separated string to ycp list.
+
+    list all_files = splitstring (filenames, "\n");
+
+    // check if default given as argument
+
+    string filename = "";
+    if ((size(Args()) > 0)
+	&& is(Args(0), string))
+    {
+	filename = Args(0);
+    }
+
+    // build up ComboBox
+
+    boolean set_default = false;
+
+    list combo_files = [];
+    foreach (`name, all_files,
+    ``{
+	// empty lines or lines starting with "#" are ignored
+	if (name != ""
+	    && substring (name, 0, 1) != "#")
+	{
+	    // the default is either given via Args() -> filename != ""
+	    // or by a filename starting with "*"
+	    if (name == filename)
+	    {
+		combo_files = add (combo_files, `item(`id(name), name, true));
+		set_default = true;
+	    }
+	    else if (substring (name, 0, 1) == "*")
+	    {
+		name = substring (name, 1);	// strip leading "*"
+		if (filename == "")
+		    filename = name;
+		combo_files = add (combo_files, `item(`id(name), name, true));
+		set_default = true;
+	    }
+	    else
+	    {
+		combo_files = add (combo_files, `item(`id(name), name));
+	    }
+	}
+    });
+
+    if (!set_default
+	&& (filename != ""))
+    {
+	all_files = add (all_files, "*" + filename);
+	combo_files = add (combo_files, `item(`id(filename), filename));
+    }
+
+    // set up dialogue
+
+    UI::OpenDialog( `opt(`decorated ),
+		      `VBox(
+			    `HSpacing( 70 ),	// force width
+			    `HBox (`HSpacing (1.0), `ComboBox (`id(`custom_file), `opt(`editable, `notify, `hstretch), "", combo_files), `HStretch()),
+			    `VSpacing( 0.3 ),
+			    `VWeight( 1,
+				      `HBox(
+					    `VSpacing( 18 ),	// force height
+					    `HSpacing( 0.7 ),
+					    `LogView( `id(`log ),
+						      "",
+						      3,	// height
+						      0 ),	// number of lines to show
+					    `HSpacing( 0.7 )
+					    )
+				      ),
+			    `VSpacing( 0.3 ),
+			    `PushButton( `id(`ok), UI::OKButtonLabel() ),
+			    `VSpacing( 0.3 )
+			    )
+		      );
+
+
+    string file_contents = "";
+    boolean go_on = true;
+
+    // wait until user clicks "OK"
+    // check if ComboBox selected and change view accordingly
+
+    while (go_on)
+    {
+	// read file contents
+	file_contents = SCR::Read (.target.string, filename);
+
+	// Fill the LogView with file contents
+	UI::ChangeWidget( `id(`log ), `Value, file_contents );
+
+	string heading = sformat( _("System log (%1)"), filename );
+	UI::ChangeWidget( `id(`log ), `Label, heading);
+
+	// wait for user input
+
+	symbol ret = UI::UserInput();
+
+	// clicked "OK" -> exit
+
+	if (ret == `ok)
+	{
+	    go_on = false;
+	}
+	else if (ret == `cancel)		// close window
+	{
+	    UI::CloseDialog();
+	    return true;
+	}
+	else if (ret == `custom_file)
+	{
+	    // adapt to combo box settings
+
+	    string new_file = UI::QueryWidget(`id(`custom_file), `Value);
+	    if (new_file != nil)
+	    {
+		filename = new_file;
+	    }
+	}
+	else
+	{
+	    y2milestone ("bad UserInput (%1)", ret);
+	}
+    }
+
+    // write new list of filenames
+
+    list new_files = [];
+    set_default = false;
+
+    // re-build list to get new default correct
+    foreach (`file, all_files,
+    ``{
+	if (substring (file, 0, 1) == "*")
+	{
+	    string old_default = substring (file, 1);  // strip leading "*"
+	    if (old_default == filename)	// default unchanged
+	    {
+		new_files = add (new_files, file);
+		set_default = true;
+	    }
+	    else				// new default
+	    {
+		new_files = add (new_files, old_default);
+	    }
+	}
+	else if (file != "")
+	{
+	    if (file == filename)		// mark new default
+	    {
+		new_files = add (new_files, "*" + filename);
+		set_default = true;
+	    }
+	    else
+	    {
+		new_files = add (new_files, file);
+	    }
+	}
+    });
+
+    // if we don't have a default by now, it wasn't in the list before
+    // so add it here.
+
+    if (!set_default
+	&& (filename != ""))
+    {
+	new_files = add (new_files, "*" + filename);
+    }
+
+    new_files = toset (new_files);
+
+    // convert ycp list back to \n separated string
+
+    filenames = mergestring (new_files, "\n") + "\n";
+
+    SCR::Write(.target.string, "/var/lib/support/filenames", filenames);
+
+    UI::CloseDialog();
+
+    return true;
+}

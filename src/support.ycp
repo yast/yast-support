@@ -8,35 +8,35 @@
     textdomain "support";
 
     integer current_stage = -1;
-    include "ui/wizard_dialog.ycp";
+
+    import "Wizard";
     include "ui/common_popups.ycp";
-    include "ui/common_functions.ycp";
-    include "ui/common_messages.ycp";
-    include "support/registration.ycp";
 
-    // regata is global !
+    include "support/supportio.ycp";
 
-    map regdata = read_registration ();
+    // keydata is global !
 
-    UI::CreateWizardDialog();
-    UI::ReplaceWizardAbortButton(`Empty());
+    map keydata = read_supportkey ();
 
-    // if no valid registration data present, ask !
+    Wizard::CreateDialog();
+    Wizard::ReplaceAbortButton(`Empty());
+
+    // if no valid supportkey data present, ask !
 
     any retval = nil;
 
-    string check_message = check_registration (regdata);
+    string check_message = check_supportkey (keydata);
     y2milestone ("check_message '%1'", check_message);
-    boolean ask_registration = (check_message != "");
+    boolean ask_key = (check_message != "");
 
     boolean go_on = true;
 
     while (go_on)
     {
 
-	while (ask_registration)
+	while (ask_key)
 	{
-	    retval = CallFunction (`support_registration ());
+	    retval = CallFunction (`support_askkey());
 	    if (retval != `next)
 	    {
 		go_on = false;
@@ -44,21 +44,21 @@
 	    }
 	    else
 	    {
-		string check_message = check_registration (regdata);
+		string check_message = check_supportkey (keydata);
 		y2milestone ("check_message '%1'", check_message);
-		ask_registration = (check_message != "");
-		if (ask_registration == true)
+		ask_key = (check_message != "");
+		if (ask_key == true)
 		{
 		    UI::ErrorPopup (check_message);
 		}
-		else if (lookup (regdata, "changed", false))
+		else if (keydata["changed"]:false)
 		{
 		    // popup when saving data
-		    UI::MessagePopup (_("Saving new registration data"));
-		    if (!write_registration (regdata))
+		    UI::MessagePopup (_("Saving new supportkey data"));
+		    if (!write_supportkey (keydata))
 		    {
 			// popup when saving failed
-			UI::ErrorPopup (_("Saving of registration data failed !"));
+			UI::ErrorPopup (_("Saving of supportkey data failed !"));
 		    }
 		    break;
 		}
@@ -67,15 +67,15 @@
 		    break;
 		}
 	    }
-	} // while (ask_registration)
+	} // while (ask_key)
 
 	if (go_on == false)
 	    break;
 
 	retval = CallFunction (`support_question());
-	if (retval == `ask_registration)
+	if (retval == `ask_key)
 	{
-	    ask_registration = true;
+	    ask_key = true;
 	}
 	else if (retval == `back)
 	{
@@ -106,7 +106,7 @@
 
     // --------------------------------------------------------------
  
-    UI::CloseDialog();
+    Wizard::CloseDialog();
   
     return `next;
 }
