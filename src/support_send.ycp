@@ -64,7 +64,7 @@ transfer the data to another computer by floppy disk.</p>"));
     string sw_data = "";
     string sw_file = tmpdir+"/software.out";
     if (lookup (regdata, "swdata", false)) {
-	SCR(`Execute(.target.bash, "/var/lib/support/eo.pl -b -m -r -v -s >" + sw_file));
+	SCR(`Execute(.target.bash, "/var/lib/support/eo.pl -s -b -m -r -v -l -f -x -P -F >" + sw_file));
 	sw_data = sw_data + SCR(`Read(.target.string, sw_file));
     }
 
