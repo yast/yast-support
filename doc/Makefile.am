@@ -2,6 +2,8 @@
 # Makefile.am for y2m_support/doc
 #
 
+SUBDIRS = autodocs
+
 docdir = @DOCDIR@
 htmldir = $(docdir)
 
