@@ -1,5 +1,5 @@
 .support.key
 
 `ag_ini(
-  SysConfigFile("/var/lib/support/key")
+  SCR::SysConfigFile("/var/lib/support/key")
 )
