@@ -1,8 +1,13 @@
 -------------------------------------------------------------------
+Mon Jun 23 11:12:12 CEST 2003 - arvin@suse.de
+
+- include directories in file list
+
+-------------------------------------------------------------------
 Fri Mar 14 17:10:44 CET 2003 - sh@suse.de
 
 - V 2.7.4
-- Enable embedding to KDE control center 
+- Enable embedding to KDE control center
 
 -------------------------------------------------------------------
 Mon Mar  3 17:34:56 CET 2003 - kkaempf@suse.de
@@ -40,11 +45,11 @@ Tue Aug 27 19:49:38 CEST 2002 - jsuchome@suse.cz
 - added siga to "Requires"
 - changed helptext in question dialog (#17098)
 - tmp files removed at the end
- 
+
 -------------------------------------------------------------------
 Mon Aug 26 17:27:31 CEST 2002 - jsuchome@suse.cz
 
-- 2.6.6. 
+- 2.6.6.
 
 -------------------------------------------------------------------
 Thu Aug 22 17:37:08 CEST 2002 - jsuchome@suse.cz
@@ -55,7 +60,7 @@ Thu Aug 22 17:37:08 CEST 2002 - jsuchome@suse.cz
     /var/lib/YaST2/support is still used for variable data
 - supportio.ycp put to yncludedir
 - html output for wrapper script changed to plain
-- added check for root as a user 
+- added check for root as a user
 
 -------------------------------------------------------------------
 Thu Jul 18 16:37:37 CEST 2002 - kkaempf@suse.de
