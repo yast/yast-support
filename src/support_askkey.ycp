@@ -23,7 +23,7 @@
     import "Popup";
 
     include "support/supportio.ycp";
-    map<string, any> keydata = (map<string, any>) read_supportkey ();
+    map<string, any> keydata = read_supportkey ();
 
 define any support_askkey ()
 ``{
