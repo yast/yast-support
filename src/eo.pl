@@ -11,9 +11,10 @@ use Getopt::Std;
 #	-r rpm -qa
 #	-m lsmod
 #	-b /var/log/boot.msg
+#	-v /var/log/messages
 #	-s generic software config
 
-getopts('purmbs') or die "unknown option!";
+getopts('purmbsv') or die "unknown option!";
 
 
 ## PCI
@@ -76,23 +77,33 @@ if ($opt_b) {
 }
 
 
-## df
+## /var/log/messages
 
-push @out_df, "##Y2support-df:\n";
-for (`/bin/df`) {
-	push @out_df, $_;
+if ($opt_v) {
+	push @out_mess, "##Y2support-messages:\n";
+	push @out_mess, `/usr/bin/tail -n 250 /var/log/messages` or print "can't open /car/log/messages: $!";
+	my $len=$#out_mess;
+	push @out_mess, "##Y2support-messages--$len\n";
 }
-my $len=$#out_df;
-push @out_df, "##Y2support-df--$len\n";
 
-
-for (@out_boot,@out_mod,@out_pci,@out_rpm,@out_usb,@out_df,@out) {
-	print if $_;
-}
 
 if ($opt_s) {
+	
+	## df
+
+	push @out_df, "##Y2support-df:\n";
+	for (`/bin/df`) {
+	push @out_df, $_;
+	}
+	my $len=$#out_df;
+	push @out_df, "##Y2support-df--$len\n";
+
 	print `/usr/bin/uptime`;
 	open(REL, "< /etc/SuSE-release") or print "can't open /etc/SuSE-release: $!";
 	print while (<REL>);
 	close(REL);
+}
+
+for (@out_boot,@out_mess,@out_mod,@out_pci,@out_rpm,@out_usb,@out_df,@out) {
+	print if $_;
 }

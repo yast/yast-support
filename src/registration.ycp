@@ -34,7 +34,7 @@
 	regdata = add (regdata, "state",      SCR(`Read(.rc.registration.REG_STATE)));
 	regdata = add (regdata, "city",       SCR(`Read(.rc.registration.REG_CITY)));
 	regdata = add (regdata, "email",      SCR(`Read(.rc.registration.REG_EMAIL)));
-	regdata = add (regdata, "regcode",    SCR(`Read(.rc.registration.REG_CODE)));
+	regdata = add (regdata, "regcode",    SCR(`Read(.rc.registration.REGCODE)));
 
 	return regdata;
     };
