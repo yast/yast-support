@@ -1,6 +1,5 @@
 @HEADER-COMMENT@
-
-# neededforbuild  yast2-devtools
+# neededforbuild yast2-devel-packages
 
 @HEADER@
 Requires:	yast2
@@ -10,7 +9,7 @@ Obsoletes:	y2m_support yast2-module-support
 
 BuildArchitectures: noarch
 
-Summary:      YaST2 Module for support
+Summary:      YaST2 module for support
 
 %description
 -
@@ -35,6 +34,6 @@ Summary:      YaST2 Module for support
 @configdir@/messages.y2cc
 @configdir@/bootmsg.y2cc
 %dir @yncludedir@/support
-@yncludedir@/support/supportio.ycp
+@yncludedir@/support/*
 @ybindir@/is_suse_there.sh
 %doc @docdir@

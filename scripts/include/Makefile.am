@@ -2,6 +2,6 @@
 # Makefile.am for y2m_support/scripts/include
 #
 
-supportdir = $(YAST2DIR)/support
+ydata_DATA = *.include
 
-support_HEADERS = *.include
+EXTRA_DIST = $(ydata_DATA)

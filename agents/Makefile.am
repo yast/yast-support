@@ -2,8 +2,6 @@
 # Makefile.am for y2m_support/agents
 #
 
-confdir = $(YAST2DIR)/scrconf
+scrconf_DATA = *.scr
 
-conf_DATA = *.scr
-
-EXTRA_DIST = $(conf_DATA)
+EXTRA_DIST = $(scrconf_DATA)
