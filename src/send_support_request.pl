@@ -24,11 +24,11 @@
 use strict;
 use IO::Socket;
 
-my $HOST    = "support.suse.de";
-#my $HOST    = "pell.suse.de";
+#my $HOST    = "support.suse.de";
+my $HOST    = "pell.suse.de";
 my $PORT    = 80;
 my $URL     = "/cgi-bin/yast2_request-test.pl";
-my $VERSION = "0.1.2";
+my $VERSION = "0.1.1";
 #------------------------------------------------------------------------
 sub abort {
     my $ErrorNumber = shift;
@@ -89,6 +89,13 @@ sub main {
 #	print STDERR "Usage: $0 file1 [file2 [file3 [...]]]\n";
 #	print STDERR "Version: $VERSION\n";
 #	abort(10, "No input files.");
+	my $data = "";
+	while (<STDIN>) {
+		$data = $data.$_;
+	}
+	exit 0 unless ($data);
+	$data = escape($data);
+	submit("data=$data");
 	exit 0;
     }
     
