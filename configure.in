@@ -26,5 +26,6 @@ AC_PROG_MAKE_SET
 
 AC_OUTPUT(Makefile
 	package/yast2-module-support.spec:yast2-module-support.spec.in
+	cont/Makefile
 	src/Makefile
 	doc/Makefile)

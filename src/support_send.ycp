@@ -1,6 +1,23 @@
+/**
+ * support_send.ycp
+ *
+ * sending a support question
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ *
+ */
 {
     textdomain "support";
 
+    map send_options = $[
+Versenden; mail
+Lokal speichern; file
+Auf Diskette speicher; floppy
+HTML; html
+TeX; tex
+    ];
     // support_question.ycp
     // present/ask question data
 
