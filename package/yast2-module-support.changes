@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon May 14 11:21:12 CEST 2001 - mge@suse.de
+
+- "wrapper": don't print "Buttons:" if --all
+
+-------------------------------------------------------------------
 Mon May 14 10:21:06 CEST 2001 - kkaempf@suse.de
 
 - re-enable "--output=html", "plain" breaks in wrapper

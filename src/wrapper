@@ -55,8 +55,10 @@ my $myparams = "";
 for (@params) {
 	$myparams .= " --$_" if ($$_);
 }
-print "\nButtons: $myparams";
 
+if( $myparams ne "" ) {
+	print "\nButtons: $myparams";
+}
 
 sub open_outfile() {
 	if ($output eq "send") {
