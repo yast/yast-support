@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed May  2 18:56:49 CEST 2001 - kkaempf@suse.de
+
+- use RichText widget for HTML output
+
+-------------------------------------------------------------------
 Tue May  1 16:08:39 CEST 2001 - bjacke@suse.de
 
 - correct include files and support_module
