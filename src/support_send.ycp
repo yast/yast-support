@@ -19,41 +19,8 @@
 	"tex"		: _("&TeX")
     ];
 
-    // support_question.ycp
-    // present/ask question data
-    locale data_caption = "";
 
-    term contents = `VBox (
-		      // caption above view window
-		      `LogView (`id(`data), data_caption, 7, 0),
-		      `VSpacing (1.0),
-		      `RadioButtonGroup(`id(`rb),
-			`VBox (
-			`Left (`HBox (
-			    // radio button
-			    `RadioButton (`id(`online), _("transmission via Internet to SuSE Support"), true),
-			    // radio button
-			    `RadioButton (`id(`disk), _("save to disk"), false)
-			  )
-			)
-		        )
-		      )
-		    );
-
-    // helptext 1 of 3
-    string help = UI(_("<p><b>Support Data</b></p>\n"));
-
-	//helptext 2 of 3
-        help = help + UI(_("<p>Here you will see an overview of the information you 
-transmitted. The transfer takes place by HTTP uploading.</p>"));
-
-	//helptext 3 of 3
-        help = help + UI(_("<p>If you do not have Internet access on your Linux system, 
-you can save the data instead to the hard drive (save to disk) and from there 
-transfer the data to another computer by floppy disk.</p>"));
-
-    // screen caption
-    UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
+    // set up and execute wrapper script
 
     string tmpdir = SCR(`Read(.target.tmpdir));
 
@@ -85,10 +52,53 @@ transfer the data to another computer by floppy disk.</p>"));
     SCR(`Execute(.target.bash, wrapper_cmd));
 
     // read output from wrapper
-
     string wrapper_data = SCR(`Read(.target.string, wrapper_file));
 
-    UI(`ChangeWidget(`id(`data), `Value, wrapper_data));
+    // helptext 1 of 3
+    string help = UI(_("<p><b>Support Data</b></p>\n"));
+
+    //helptext 2 of 3
+    help = help + UI(_("<p>Here you will see an overview of the information you 
+transmitted. The transfer takes place by HTTP uploading.</p>"));
+
+    //helptext 3 of 3
+    help = help + UI(_("<p>If you do not have Internet access on your Linux system, 
+you can save the data instead to the hard drive (save to disk) and from there 
+transfer the data to another computer by floppy disk.</p>"));
+
+    // support_question.ycp
+    // present/ask question data
+    locale data_caption = "";
+
+    term contents = `Dummy();
+    if (lookup (regdata, "--all", false))
+    {
+	contents = `VBox (`RichText (wrapper_data));
+    }
+    else
+    {
+	contents = `VBox (`LogView (`id(`data), data_caption, 7, 0));
+    }
+    contents = add (contents, `VSpacing (1.0));
+    contents = add (contents, `RadioButtonGroup(
+	`id(`rb),
+	`VBox (
+	    `Left (`HBox (
+		// radio button
+		`RadioButton (`id(`online), _("transmission via Internet to SuSE Support"), true),
+		// radio button
+		`RadioButton (`id(`disk), _("save to disk"), false)
+	    ))
+	)
+	));
+
+    // screen caption
+    UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
+
+    if (! lookup (regdata, "--all", false) != "")
+    {
+	UI(`ChangeWidget(`id(`data), `Value, wrapper_data));
+    }
 
     any ret = UI (`UserInput());
 
