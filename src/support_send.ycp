@@ -92,7 +92,7 @@ transfer the data to another computer by floppy disk.</p>"));
 		UI(`DisplayMessage (_("Sending data via Internet")));
 		if (SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files)) != 0) {
 		    // failed to upload data to server, popup message 1 of 3
-		    string message_text = UI(_("Can't connect to SuSE support server."))
+		    string message_text = UI(_("Can't connect to SuSE support server."));
 		    // failed to upload data to server, popup message 2 of 3
 		    message_text = message_text + "\n" + UI(_("Please check your internet connection"));
 		    // failed to upload data to server, popup message 3 of 3
