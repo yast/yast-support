@@ -58,6 +58,7 @@
 	filename = (string)WFM::Args(0);
     }
 
+
     // build up ComboBox
 
     boolean set_default = false;
@@ -72,9 +73,9 @@
 	    // the default is either given via WFM::Args() -> filename != ""
 	    // or by a filename starting with "*"
 	    if (!set_default
-		&& (name == filename))
+		&& (filename != ""))
 	    {
-		combo_files = add (combo_files, `item(`id(name), name, true));
+		combo_files = add (combo_files, `item(`id(filename), filename));
 		set_default = true;
 	    }
 	    else if (!set_default

@@ -2,13 +2,14 @@
 
 yncludedir = @yncludedir@/support
 
-ynclude_DATA = supportio.ycp
+ynclude_DATA = 			\
+	supportio.ycp		\
+	support_askkey.ycp      \
+        support_question.ycp    \
+	support_send.ycp
 
 client_DATA =			\
 	support.ycp		\
-	support_askkey.ycp	\
-	support_question.ycp	\
-	support_send.ycp	\
 	view_anymsg.ycp
 
 desktop_DATA =			\

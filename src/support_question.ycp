@@ -13,11 +13,14 @@
 
     import "Wizard";
 
+    define any support_question ()
+``{
+
     // support_question.ycp
 
     // checkbox labels to identify a support question
     // keep the words short, 12 characters are maximum !
-    map ask_options = $[
+    map<string, string> ask_options = $[
 	"--isdn"	: _("&ISDN"),
 	"--printer"	: _("&Printer"),
 	"--x11"		: _("&KDE/X11"),
@@ -51,7 +54,7 @@
 
     integer side = 0;	// start left
 
-    foreach (`ckey, `clabel, ask_options,
+    foreach ( string ckey, string clabel, ask_options,
     ``{
 	if (ckey != id_for_all)
 	{
@@ -183,7 +186,7 @@ consider using the SUSE Professional Services. Find more information about this 
 	else if ((ret != `abort) && (ret != `cancel))
 	{
 	    keydata["question"] = UI::QueryWidget (`id(`question), `Value);
-	    foreach (`ckey, `clabel, ask_options,
+	    foreach (string ckey, string clabel, ask_options,
 	    ``{
 		keydata[ckey] = UI::QueryWidget (`id(ckey), `Value);
 	    });
@@ -196,4 +199,5 @@ consider using the SUSE Professional Services. Find more information about this 
     }
 
     return ret;
+}
 }
