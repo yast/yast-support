@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Apr  2 17:10:38 CEST 2004 - msvec@suse.cz
+
+- fixed log viewer in ncurses menu (#38088)
+- changed license to GPL
+- updated testsuite
+- 2.9.3
+
+-------------------------------------------------------------------
 Thu Mar 11 18:19:30 CET 2004 - msvec@suse.cz
 
 - fixes from Martin Lasarsch
