@@ -14,12 +14,11 @@ Name:         @RPMNAME@
 Release:      1
 Copyright:    (c) 2000 SuSE GmbH
 Group:        System Environment/YaST
-Requires:	y2c_boot
 BuildArchitectures: noarch
 
 Packager:     @MAINTAINER@
 
-Summary:      YaST2 Modules for installation
+Summary:      YaST2 Module for support
 Version:      @VERSION@
 Source0:      @RPMNAME@-@VERSION@.tar.gz
 
@@ -45,5 +44,5 @@ make install
 
 %dir @YAST2DIR@/clients
 %dir @YAST2DIR@/menuentries
-@YAST2DIR@/menuentries/menuentry_boot.ycp
-@YAST2DIR@/clients/boot.ycp
+@YAST2DIR@/menuentries/menuentry_support.ycp
+@YAST2DIR@/clients/support.ycp
