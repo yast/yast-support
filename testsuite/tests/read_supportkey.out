@@ -1,0 +1,45 @@
+Read	.target.stat "/var/lib/YaST2/support/key" $["size":227]
+Read	.support.key.KEY_NAME1 "Washington"
+Read	.support.key.KEY_NAME2 "Irwing"
+Read	.support.key.KEY_SALUTATION "male"
+Read	.support.key.KEY_COMPANY ""
+Read	.support.key.KEY_STREET ""
+Read	.support.key.KEY_ZIP ""
+Read	.support.key.KEY_COUNTRY ""
+Read	.support.key.KEY_STATE ""
+Read	.support.key.KEY_CITY ""
+Read	.support.key.KEY_EMAIL "wi@iw.jh"
+Read	.support.key.KEY_CODE "WI-CATCH22-Yo-Yo"
+Return	$["city":"", "company":"", "country":"", "email":"wi@iw.jh", "key":"WI-CATCH22-Yo-Yo", "name1":"Washington", "name2":"Irwing", "salutation":"male", "state":"", "street":"", "zip":""]
+Dump	----------------------
+Read	.target.stat "/var/lib/YaST2/support/key" $[]
+Execute	.target.mkdir "/var/lib/YaST2/support" true
+Execute	.target.bash "/bin/cp /usr/share/YaST2/data/support/key /var/lib/YaST2/support/key" 0
+Read	.support.key.KEY_NAME1 ""
+Read	.support.key.KEY_NAME2 ""
+Read	.support.key.KEY_SALUTATION ""
+Read	.support.key.KEY_COMPANY ""
+Read	.support.key.KEY_STREET ""
+Read	.support.key.KEY_ZIP ""
+Read	.support.key.KEY_COUNTRY ""
+Read	.support.key.KEY_STATE ""
+Read	.support.key.KEY_CITY ""
+Read	.support.key.KEY_EMAIL ""
+Read	.support.key.KEY_CODE ""
+Return	$["city":"", "company":"", "country":"", "email":"", "key":"", "name1":"", "name2":"", "salutation":"", "state":"", "street":"", "zip":""]
+Dump	----------------------
+Read	.target.stat "/var/lib/YaST2/support/key" $[]
+Execute	.target.mkdir "/var/lib/YaST2/support" true
+Execute	.target.bash "/bin/cp /usr/share/YaST2/data/support/key /var/lib/YaST2/support/key" 1
+Read	.support.key.KEY_NAME1 nil
+Read	.support.key.KEY_NAME2 nil
+Read	.support.key.KEY_SALUTATION nil
+Read	.support.key.KEY_COMPANY nil
+Read	.support.key.KEY_STREET nil
+Read	.support.key.KEY_ZIP nil
+Read	.support.key.KEY_COUNTRY nil
+Read	.support.key.KEY_STATE nil
+Read	.support.key.KEY_CITY nil
+Read	.support.key.KEY_EMAIL nil
+Read	.support.key.KEY_CODE nil
+Return	$["city":nil, "company":nil, "country":nil, "email":nil, "key":nil, "name1":nil, "name2":nil, "salutation":nil, "state":nil, "street":nil, "zip":nil]
