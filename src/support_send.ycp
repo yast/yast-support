@@ -12,7 +12,7 @@
     textdomain "support";
 
     map send_options = $[
-	"mail"		: _("via &email"),
+	"mail"		: _("via &e-mail"),
 	"file"		: _("&local file"),
 	"floppy"	: _("to &floppy disk"),
 	"html"		: _("&view"),
@@ -59,8 +59,9 @@
     string help = _("<p><b>Support Data</b></p>\n");
 
     //helptext 2 of 3
-    help = help + _("<p>Here you will see an overview of the information you 
-transmitted. The transfer takes place by HTTP uploading.</p>");
+    help = help + _("<p>Here, you will see an overview of the information 
+transmitted. The transfer takes place by HTTP uploading.</p>
+");
 
     //helptext 3 of 3
     help = help + _("<p>If you do not have Internet access on your Linux system, 
@@ -113,7 +114,7 @@ transfer the data to another computer by floppy disk.</p>");
 		// cant connect to server, popup message 1 of 3
 		string message_text = _("Can't connect to SuSE support server.");
 		// cant connect to server, popup message 2 of 3
-		message_text = message_text + "\n" + _("Please check your internet connection");
+		message_text = message_text + "\n" + _("Please check your Internet connection");
 		// cant connect to server, popup message 3 of 3
 		message_text = message_text + "\n" + _("or choose 'save to disk' and send a printed copy by mail.");
 		UI::ErrorPopup (message_text);
@@ -128,7 +129,7 @@ transfer the data to another computer by floppy disk.</p>");
 		    // failed to upload data to server, popup message 1 of 3
 		    string message_text = _("Can't connect to SuSE support server.");
 		    // failed to upload data to server, popup message 2 of 3
-		    message_text = message_text + "\n" + _("Please check your internet connection");
+		    message_text = message_text + "\n" + _("Please check your Internet connection");
 		    // failed to upload data to server, popup message 3 of 3
 		    message_text = message_text + "\n" + _("or try again later.");
 		    UI::ErrorPopup (message_text);
