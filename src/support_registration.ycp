@@ -44,11 +44,14 @@
     term contents = `VBox (
 		      `Frame (_("Enter registration data"),
 			`VBox (
+			  `RadioButtonGroup(`id(`rb),
 			  `HBox (
-			    `CheckBox (`id(`male), _("&Mr"), (salutation == "male")),
-			    `CheckBox (`id(`female), _("Mr&s"), (salutation == "female")),
+			    //`CheckBox (`id(`male), _("&Mr"), (salutation == "male")),
+			    //`CheckBox (`id(`female), _("Mr&s"), (salutation == "female")),
+			    `RadioButton (`id(`male), _("Mr")),
+			    `RadioButton (`id(`female), _("Mrs")),
 			    `HStretch ()
-			  ),
+			  )),
 			  `HBox (
 			    `HSpacing (0.5),
 			    `TextEntry (`id(`name1), _("&First name:"), name1),
