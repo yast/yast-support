@@ -1,3 +1,5 @@
+// testedfiles: supportio.ycp
+
 {
 
     include "testsuite.ycp";
