@@ -47,12 +47,12 @@ make install
 /var/lib/support/rc.registration
 /var/lib/support/eo.pl
 /var/lib/support/send_support_request.pl
-%dir @YAST2DIR@/clients
 @YAST2DIR@/clients/support.ycp
 @YAST2DIR@/clients/support_registration.ycp
 @YAST2DIR@/clients/support_question.ycp
 @YAST2DIR@/clients/support_send.ycp
-%dir @YAST2DIR@/menuentries
 @YAST2DIR@/menuentries/menuentry_support.ycp
 %dir @YAST2DIR@/include/support
 @YAST2DIR@/include/support/registration.ycp
+@YAST2DIR@/bin/is_suse_there.sh
+

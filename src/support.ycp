@@ -56,7 +56,11 @@
 	    ask_registration = true;
 	}
 	else if (retval == `next) {
-	    retval = CallFunction (`support_send ());
+	    retval = `again;
+	    // support_send might return `again, loop here
+	    while (retval == `again) {
+		retval = CallFunction (`support_send ());
+	    }
 	    if (retval == `next) {
 		// just a final text to give user a 'good' fealing
 		UI(`DisplayMessage(_("Thank you for using SuSE support")));
