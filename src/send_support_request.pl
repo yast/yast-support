@@ -45,6 +45,21 @@ sub escape {
     return $data;
 }
 #------------------------------------------------------------------------
+sub compress {
+	my $data = shift;
+	my $i=0;
+	my $tmpfile="";
+	do {
+	  $tmpfile="/tmp/.support".$i++;
+	} while (-e $tmpfile);
+	open (TFH, ">$tmpfile");
+	print TFH $data;
+	close TFH;
+	$data=`/usr/bin/gzip -c <$tmpfile`;
+	unlink $tmpfile;
+	return $data;
+}
+#------------------------------------------------------------------------
 sub submit {
     my $data = shift;
 
@@ -94,7 +109,7 @@ sub main {
 		$data = $data.$_;
 	}
 	exit 0 unless ($data);
-	$data = escape($data);
+	$data = escape(compress($data));
 	submit("data=$data");
 	exit 0;
     }
@@ -105,21 +120,8 @@ sub main {
     exit 0 unless ($data);
 
 
-    # gzip data
-    my $i=0;
-    my $tmpfile="";
-    do {
-      $tmpfile="/tmp/.support".$i++;
-    } while (-e $tmpfile);
-    open (TFH, ">$tmpfile");
-    print TFH $data;
-    close TFH;
-
-    $data=`/usr/bin/gzip -c <$tmpfile`;
-    unlink $tmpfile;
-
-    # Escape data
-    $data = escape($data);
+    # Gzip & Escape data
+    $data = escape(compress($data));
 
     # Send data
     submit("data=$data");
