@@ -16,7 +16,7 @@
      * Reads the user's support data, should be in $vardir/support/key.
      * @return support key data
      */
-    global define map read_supportkey()
+    define map read_supportkey()
     ``{
 
     // Check if the "support key" file is present
@@ -48,7 +48,7 @@
      * @param keydata the data to write
      * @return success
      */
-    global define boolean write_supportkey (map keydata)
+    define boolean write_supportkey (map keydata)
     ``{
 
 	SCR::Write(.support.key.KEY_NAME1,	keydata["name1"]:"");
@@ -72,7 +72,7 @@
      * @param keydata the data to check
      * @return non-empty message if somethings missing
      */
-    global define string check_supportkey (map keydata)
+    define string check_supportkey (map keydata)
     ``{
 
 	string message = "";
@@ -101,8 +101,10 @@
 	else
 	{
 	    string email = keydata["email"]:"";
-	    if ((findfirstof ("@", email) < 0)
-		 || (findfirstof (".", email) < 0))
+	    if(email == nil) email = "";
+
+	    if ((findfirstof (email, "@") == nil)
+		 || (findfirstof (email, ".") == nil))
 	    {
 		message = _("Enter a valid e-mail address");
 	    }
