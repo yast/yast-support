@@ -204,21 +204,28 @@ if ($opt_v) {
 }
 
 
+## df etc. al
 if ($opt_s) {
-	
-	## df
-
 	push @out_df, "##Y2support-df:\n";
 	for (`/bin/df`) {
-	push @out_df, $_;
+		push @out_df, $_;
 	}
 	my $len=$#out_df;
 	push @out_df, "##Y2support-df--$len\n";
 
-	print `/usr/bin/uptime`;
+	push @out_df, "##Y2support-uptime:\n";
+	for (`/usr/bin/uptime`) {
+		push @out_df, $_;
+	}
+	$len=$#out_df;
+	push @out_df, "##Y2support-uptime--$len\n";
+	
+	push @out_df, "##Y2support-release:\n";
 	open(REL, "< /etc/SuSE-release") or print "can't open /etc/SuSE-release: $!";
-	print while (<REL>);
+	push @out_df, $_ while (<REL>);
 	close(REL);
+	my $len=$#out_df;
+	push @out_df, "##Y2support-release--$len\n";
 }
 
 for (@out_boot,@out_mess,@out_mod,@out_pci,@out_rpm,@out_usb,@out_df,@out_lilo,@out_print,@out_X,@out_Xlog,@out_fstab,@out_rcconfig,@out_modconf,@out_fdisk) {
