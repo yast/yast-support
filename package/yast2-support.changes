@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Feb 28 17:11:46 CET 2005 - visnov@suse.cz
+
+- Adapted for SUSE Linux 9.3
+- 2.11.1 
+
+-------------------------------------------------------------------
 Mon Jan 17 17:51:26 CET 2005 - jsuchome@suse.cz
 
 - move client for viewing logs to yast2-repair
