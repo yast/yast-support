@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Sep 18 18:39:44 CEST 2001 - bjacke@suse.de
+
+- fix dependency for sitar and remove a password from config file
+
+-------------------------------------------------------------------
 Fri Sep 14 20:05:57 CEST 2001 - kkaempf@suse.de
 
 - adapt to new ycp syntax, fix translations.
