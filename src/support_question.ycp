@@ -147,7 +147,6 @@ you can make use of the SuSE Professional Services as well. You will find more i
     while (go_on)
     {
 	ret = UI (`UserInput());
-y2milestone ("UserInput %1", ret);
 
 	if (is (ret, string))
 	{
@@ -188,6 +187,6 @@ y2milestone ("UserInput %1", ret);
 	    go_on = false;
 	}
     }
-y2milestone ("returning %1", ret);
+
     return ret;
 }
