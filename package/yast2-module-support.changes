@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Sep 20 17:31:09 CEST 2001 - gs@suse.de
+
+- new icons for startup log and system log
+
+-------------------------------------------------------------------
 Tue Sep 18 18:39:44 CEST 2001 - bjacke@suse.de
 
 - fix dependency for sitar and remove a password from config file
