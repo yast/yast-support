@@ -27,7 +27,7 @@ use IO::Socket;
 
 my $HOST    = "support.suse.de";
 my $PORT    = 80;
-my $URL     = "/cgi-bin/yast/yast2_request81.pl";
+my $URL     = "/cgi-bin/yast/yast2_request82.pl";
 my $VERSION = "0.1.4";
 #------------------------------------------------------------------------
 sub abort {
@@ -50,7 +50,7 @@ sub compress {
 	my $i=0;
 	my $tmpfile="";
 	do {
-	  $tmpfile="/tmp/.support".$i++;
+	  $tmpfile="/tmp/siga/.support".$i++;
 	} while (-e $tmpfile);
 	open (TFH, ">$tmpfile");
 	print TFH $data;
