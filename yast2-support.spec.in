@@ -33,7 +33,8 @@ Summary:      YaST2 module for support
 @configdir@/support.y2cc
 @configdir@/messages.y2cc
 @configdir@/bootmsg.y2cc
-%dir @yncludedir@/support
-@yncludedir@/support/*
-@ybindir@/is_suse_there.sh
+%dir @ydatadir@/support/
+@ydatadir@/support/filenames
+@ydatadir@/support/key
+@ybindir@/support/*
 %doc @docdir@

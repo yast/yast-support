@@ -1,4 +1,4 @@
-/* 
+/*
  * view_anymsg.ycp
  *
  * small script for easy /var/log/* and /proc/* viewing
@@ -8,27 +8,37 @@
  * $Id$
  *
  * Reads a \n separated list of filenames from
- * /var/lib/support/filenames
+ * /var/lib/YaST2/support/filenames
  * Lines starting with "#" are ignored (comments)
  * A line starting with "*" is taken as the default filename, the "*" is stripped
  *
  * All files are listed in an editable combo box, where the user can
  * easily switch between files and even add a new file
  *
- * At finish, the list of filenames is written back to /var/lib/support/filenames
+ * At finish, the list of filenames is written back to
+ * /var/lib/YaST2/support/filenames
  * adapting the default line (starting with "*") accordingly.
  *
  * The default is either given as WFM::Args(0) or is the file last viewed.
  */
 
 {
+    import "Directory";
     textdomain "support";
 
     include "ui/common_messages.ycp";
 
-    // get filename list
+    string vardir = Directory::vardir;
 
-    string filenames = SCR::Read(.target.string, "/var/lib/support/filenames");
+    // Check if the filename list is present
+    if (SCR::Read(.target.stat, vardir + "/support/filenames") == $[])
+    {
+        SCR::Execute(.target.mkdir, vardir + "/support");
+        SCR::Execute(.target.bash, "/bin/cp " + Directory::ydatadir + "/support/filenames " + vardir + "/support/filenames");
+    }
+
+    // get filename list
+    string filenames = SCR::Read(.target.string, vardir + "/support/filenames");
     if ((filenames == nil)
 	|| (size (filenames) <= 0))
     {
@@ -211,7 +221,7 @@
 
     filenames = mergestring (new_files, "\n") + "\n";
 
-    SCR::Write(.target.string, "/var/lib/support/filenames", filenames);
+    SCR::Write(.target.string, vardir + "/support/filenames", filenames);
 
     UI::CloseDialog();
 

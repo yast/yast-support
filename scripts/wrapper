@@ -7,7 +7,7 @@
 
 #
 #TODO:
-# /var/lib/support/key
+# /var/lib/YaST2/support/key
 
 use Getopt::Long;
 
@@ -79,7 +79,7 @@ sub open_outfile() {
 		$outFH = FH;
 	}
 	elsif ($send) {
-		open (FH, "| /usr/lib/YaST2/support/send_support_request.pl");
+		open (FH, "| /usr/lib/YaST2/bin/support/send_support_request.pl");
 		$outFH = FH;
 	}
 }
@@ -115,7 +115,7 @@ sub mountfloppy(){
 
 sub support_whatever() {
 	if ($regdata) {
-		open FH, "< /var/lib/support/key" or push @ret, "NO REGDATA" and last;
+		open FH, "< /var/lib/YaST2/support/key" or push @ret, "NO REGDATA" and last;
 		push @ret, $_ while (<FH>);
 	}
 
@@ -127,7 +127,7 @@ sub support_whatever() {
 	}
 	else {
 		push @ret, "\n##Y2support-/tmp/siga.txt:\n";
-                push @ret, $_ for (`/usr/lib/YaST2/support/support_modules.pl --output=$output $myparams`);
+                push @ret, $_ for (`/usr/lib/YaST2/bin/support/support_modules.pl --output=$output $myparams`);
                 push @ret, $_ for (`echo "<pre>" && cat /tmp/siga.txt`);
 		push @ret, "\n##Y2support-/tmp/siga.txt--\n";
 	}
@@ -152,15 +152,15 @@ CASE:{
 	}
 	# Versenden (als plain Text)
 #	if ($output eq "send") {
-#		#system "/usr/lib/YaST2/support/send_support_request.pl ";
+#		#system "/usr/lib/YaST2/bin/support/send_support_request.pl ";
 #		my @trash = support_whatever();
 #		for (@trash) {
 #			$out .= $_
 #		}
-#		#system "/usr/lib/YaST2/support/send_support_request.pl $out";
+#		#system "/usr/lib/YaST2/bin/support/send_support_request.pl $out";
 #		#open (FF, "/bin/cat"." $out |");
 ##		open (FF, "| /bin/cat");
-#		open (FF, "| /usr/lib/YaST2/support/send_support_request.pl");
+#		open (FF, "| /usr/lib/YaST2/bin/support/send_support_request.pl");
 #		print FF "$out";
 #		close(FF);
 #		next CASE;

@@ -22,15 +22,15 @@
 	"--isdn"	: _("&ISDN"),
 	"--printer"	: _("&Printer"),
 	"--x11"		: _("&KDE/X11"),
-	"--boot"	: _("&Booting"),
+	"--boot"	: _("B&ooting"),
 	"--sound"	: _("&Sound"),
-	"--laptop" 	: _("&Notebook"),
+	"--laptop"	: _("No&tebook"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
         "--cdr"         : _("&CD-R"),
         "--net"         : _("Net&work"),
-        "--hw"          : _("&Hardware"),
-	"--install"	: _("I&nstallation"),
+        "--hw"          : _("H&ardware"),
+	"--install"	: _("Insta&llation"),
 	"--all"		: _("&Unspecified")
     ];
 
@@ -38,7 +38,11 @@
 
     // frame label, around checkbuttons
     term ui_category_all = `HBox (
+	    `Left (`RadioButton (`id(id_for_all), `opt(`notify), ask_options[id_for_all]:"", keydata[id_for_all]:true)));
+    /*
 	    `Left (`RadioButton (`id(id_for_all), `opt(`notify), ask_options[id_for_all]:"", keydata[id_for_all]:false)));
+    One radiobutton has to be checked, otherwise wrapper doesn't generate output
+    */
 
     term ui_category_left   = `VBox ();
     term ui_category_middle = `VBox ();
@@ -92,7 +96,7 @@
 			    `Label (keydata["name2"]:""),
 			    `HStretch (),
 			    // push button for changing key data
-			    `PushButton (`id(`ask_key), _("&Change"))
+			    `PushButton (`id(`ask_key), _("C&hange"))
 			  )
 			)
 		      ),
@@ -154,6 +158,7 @@ you can make use of the SuSE Professional Services as well. You will find more i
 
     // screen title
     Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
+//    UI::ChangeWidget("
 
     any ret = nil;
     boolean go_on = true;

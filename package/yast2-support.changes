@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Thu Aug 22 16:09:56 CEST 2002 - jsuchome@suse.cz
+
+- changed install paths:
+    /usr/lib/YaST2/bin/support for scripts
+    /usr/share/YaST2/data/support for initial data
+    /var/lib/YaST2/support is still used for variable data
+- html output for wrapper script changed to plain
+- added check for root as a user 
+
+-------------------------------------------------------------------
 Thu Jul 18 16:37:37 CEST 2002 - kkaempf@suse.de
 
 - obsolete yast2-trans-support (#16886)

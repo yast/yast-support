@@ -2,7 +2,7 @@
 # Makefile.am for y2m_support/data
 #
 
-keydir = $(DESTDIR)/var/lib/support
+keydir = $(ydatadir)/support
 
 key_DATA = key filenames
 

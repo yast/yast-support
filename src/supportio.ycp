@@ -9,10 +9,19 @@
  * $Id$
  */
 {
+    import "Directory";
     textdomain "support";
 
     global define read_supportkey()
     ``{
+
+    // Check if the "support key" file is present
+    if (SCR::Read(.target.stat, Directory::vardir + "/support/key") == $[])
+    {
+        SCR::Execute(.target.mkdir, Directory::vardir + "/support");
+        SCR::Execute(.target.bash, "/bin/cp " + Directory::ydatadir + "/support/key " + Directory::vardir + "/support/key");
+    }
+
 	map keydata = $[];
 
 	keydata["name1"]	= SCR::Read(.support.key.KEY_NAME1);
