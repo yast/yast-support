@@ -5,7 +5,7 @@
    textdomain "support";
 
    
-   return([ "view_messages.ycp",
+   return([ "view_messages",
    $[
          
      ////////////////////////////////////////////////////////////////////////////////
