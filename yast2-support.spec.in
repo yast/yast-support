@@ -24,8 +24,6 @@ Summary:      YaST2 Module for support
 
 %files
 %defattr(-,root,root)
-%dir /var/lib/support
-/var/lib/support/*
 @scrconfdir@/cfg_support.scr
 @clientdir@/support.ycp
 @clientdir@/support_askkey.ycp
