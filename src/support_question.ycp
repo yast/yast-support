@@ -24,8 +24,6 @@
 	"--laptop" 	: _("&Notebook"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
-	"--cdr"		: _("&CD-Writer"),
-	"--scanner"	: _("Sc&anner"),
 	"--install"	: _("I&nstallation"),
 	"--all"		: _("&Unspecified")
     ];

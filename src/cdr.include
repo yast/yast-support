@@ -1,5 +1,6 @@
+@commands = ("/usr/sbin/hwinfo --cdrom",
+	"/usr/sbin/hwinfo --storage_ctrl"
+	);
 
-@commands = ("/usr/sbin/hwinfo --cdrom", "/usr/sbin/hwinfo --storage_ctrl");
-
-
-@files = ("/etc/lilo.conf", "/etc/init.d/boot.local");
+@files = ("/etc/lilo.conf",
+	"/etc/init.d/boot.local");

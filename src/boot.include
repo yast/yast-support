@@ -1,1 +1,5 @@
-@commands = ("/sbin/lilo -tv", "/sbin/fdisk -l", "/usr/sbin/hwinfo --disk", "/usr/sbin/hwinfo --storage_ctrl");
+@commands = ("/sbin/lilo -tv",
+	"/sbin/fdisk -l",
+	"/usr/sbin/hwinfo --disk",
+	"/usr/sbin/hwinfo --storage_ctrl"
+	);

@@ -1,5 +1,10 @@
 
-@commands = ("/sbin/lspci -v", "/sbin/pnpdump", "/bin/setserial -g /dev/ttyS*", "/usr/bin/tail -n 200 /var/log/messages", "/usr/bin/procinfo");
+@commands = ("/sbin/lspci -v",
+	"/sbin/pnpdump",
+	"/bin/setserial -g /dev/ttyS*",
+	"/usr/bin/tail -n 200 /var/log/messages",
+	"/usr/bin/procinfo"
+	);
 
 
 @files = ();

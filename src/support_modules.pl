@@ -30,7 +30,7 @@ for $par (@mypars) {
 
 	for (@commands) {
 		push @outarr, "\n##Y2support-$_:\n";
-		push @outarr, `$_`;
+		push @outarr, `$_ 2>&1`;
 		push @outarr, "\n##Y2support-$_--\n";
 
 	}

@@ -1,5 +1,6 @@
-
-@commands = ("/sbin/ifconfig", "/sbin/route -n", "/usr/bin/tail -n 200 /var/log/messages");
-
+@commands = ("/sbin/ifconfig",
+	"/sbin/route -n",
+	"/usr/bin/tail -n 200 /var/log/messages"
+	);
 
 @files = ("/etc/pppoed.conf");
