@@ -1,5 +1,21 @@
-@commands = ("/sbin/lsmod", "/sbin/lspci -v | /bin/grep -A 3 -i usb", "/bin/grep -v ^# /etc/printcap", "/bin/grep parport /var/log/messages | tail -n 20", "/bin/grep lpd /var/log/messages | /usr/bin/tail -n 20", "/bin/ps aux | /bin/grep lpd | /bin/grep -v grep", "/usr/sbin/lpc status lp");
+@commands = ("/sbin/lsmod",
+	"/sbin/lspci -v | /bin/grep -A 3 -i usb",
+	"/bin/grep -v ^# /etc/printcap",
+	"/bin/grep parport /var/log/messages | /usr/bin/tail -n 20",
+	"/bin/grep lpd /var/log/messages | /usr/bin/tail -n 20",
+	"/bin/ps aux | /bin/grep lpd | /bin/grep -v grep",
+	"/bin/grep PRINTER= /etc/SuSEconfig/profile",
+	"/usr/sbin/lpc status lp"
+	);
 
-
-@files = ("/proc/version", "/proc/interrupts", "/proc/ioports", "/proc/devices", "/proc/parport/0/hardware", "/proc/parport/0/autoprobe", "/proc/bus/usb/devices", "/etc/gs.upp/y2prn_lp.upp");
+@files = ("/proc/version",
+	"/proc/interrupts",
+	"/proc/ioports",
+	"/proc/devices",
+	"/proc/sys/dev/parport/parport0/autoprobe",
+	"/proc/sys/dev/parport/parport0/modes",
+	"/proc/sys/dev/parport/parport0/dma",
+	"/proc/bus/usb/devices",
+	"/etc/gs.upp/y2prn_lp.upp"
+	);
 
