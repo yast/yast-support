@@ -1,7 +1,3 @@
 @commands = ("/sbin/hwinfo --scanner", "/sbin/hwinfo --usb");
 
-
-# Welche Files sollen mit "cat" in die Anfrage uebernommen werden.
-#  @files = ("no");   moeglich 
-
 @files = ();

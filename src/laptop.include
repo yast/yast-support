@@ -1,0 +1,5 @@
+
+@commands = ("/sbin/lspci -vv", "/usr/bin/procinfo", "/bin/grep ^ *PCMCIA /etc/rc.config", "/sbin/cardctl ident");
+ 
+@files = (); 
+

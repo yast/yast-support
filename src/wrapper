@@ -16,18 +16,17 @@ GetOptions (	'output=s'	=> \$output,
 		'help'	=> \$printhelp,
 
 		'boot'	=> \$boot,
-		'cdr'	=> \$dsl,
+		'cdr'	=> \$cdr,
 		'dsl'	=> \$dsl,
 		'isdn'	=> \$isdn,
-		'install' => \$isdn,
+		'install'	=> \$install,
+		'laptop'	=> \$laptop,
 		'modem'	=> \$modem,
 		'printer'	=> \$printer,
 		'scanner'	=> \$scanner,
 		'sound'	=> \$sound,
 		'x11'	=> \$x11
 		);
-#user interface?
-#notebook?
 
 
 if ($printhelp) {
@@ -44,6 +43,7 @@ my @params = qw(
 		dsl
 		install
 		isdn
+		laptop
 		modem
 		printer
 		scanner
@@ -52,7 +52,10 @@ my @params = qw(
 		);
 
 my $myparams = "";
-#$myparams .= $_ if ($$_) for ($params);
+for (@params) {
+	$myparams .= " --$_" if ($$_);
+}
+print "\nButtons: $myparams";
 
 
 sub open_outfile() {
@@ -158,4 +161,3 @@ CASE:{
 		next CASE;
 	}
 } #CASE
-#print "\nxx output: $output, file: $outfile\n";
