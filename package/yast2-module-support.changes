@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon May 14 10:21:06 CEST 2001 - kkaempf@suse.de
+
+- re-enable "--output=html", "plain" breaks in wrapper
+
+-------------------------------------------------------------------
 Sat May 12 16:42:56 CEST 2001 - kkaempf@suse.de
 
 - drop "--output=html" for 'unspecified'
