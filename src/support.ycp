@@ -36,6 +36,7 @@
     map keydata = read_supportkey ();
 
     Wizard::CreateDialog();
+    Wizard::SetDesktopIcon("support");
     Wizard::HideAbortButton();
 
     // if no valid supportkey data present, ask !
