@@ -24,11 +24,10 @@
 use strict;
 use IO::Socket;
 
-#my $HOST    = "support.suse.de";
-my $HOST    = "pell.suse.de";
+my $HOST    = "support.suse.de";
 my $PORT    = 80;
-my $URL     = "/cgi-bin/yast2_request-test.pl";
-my $VERSION = "0.1.1";
+my $URL     = "/cgi-bin/yast2_request2.pl";
+my $VERSION = "0.1.2";
 #------------------------------------------------------------------------
 sub abort {
     my $ErrorNumber = shift;

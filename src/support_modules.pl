@@ -9,6 +9,7 @@ my @allparams = qw(
 		dsl
 		install
 		isdn
+		laptop
 		modem
 		printer
 		scanner
@@ -25,7 +26,7 @@ for $par (@allparams) {
 for $par (@mypars) {
 	@commands=();
 	@files=();
-	do "/usr/lib/YaST2/include/support/$par.include";
+	do "/var/lib/support/$par.include";
 
 	for (@commands) {
 		push @outarr, "\n##Y2support-$_:\n";
