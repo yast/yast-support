@@ -22,7 +22,7 @@ include_HEADERS =	\
 
 menu_SCRIPTS = menuentry_support.ycp
 
-EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS) $(reg_DATA)
+EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS) $(reg_DATA) $(reg_SCRIPTS)
 
 install-data-hook:
 	chgrp users $(regdir)
