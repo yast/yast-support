@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Sat May 12 16:42:56 CEST 2001 - kkaempf@suse.de
+
+- drop "--output=html" for 'unspecified'
+- drop scanner and cd-writer as options
+
+-------------------------------------------------------------------
 Thu May 10 22:11:34 CEST 2001 - kkaempf@suse.de
 
 - suppress empty/unused locales (translations)
