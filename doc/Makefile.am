@@ -1,9 +1,9 @@
 #
-# Makefile.am for y2c_boot/doc
+# Makefile.am for y2m_support/doc
 #
 
 docdir = @DOCDIR@
-htmldir = $(docdir)/y2c_boot
+htmldir = $(docdir)
 
 html_DATA =
 
