@@ -16,6 +16,9 @@
     import "Label";
     import "Popup";
 
+    define any support_send(any retval)
+``{
+
     map send_options = $[
 	"mail"		: _("via &e-mail"),
 	"file"		: _("&local file"),
@@ -27,16 +30,16 @@
 
     // set up and execute wrapper script
 
-
     string bindir = Directory::bindir;
 
     string key_file = Directory::vardir + "/support/key";
+    string tmpdir = (string) SCR::Read(.target.tmpdir);
 
     string question = keydata["question"]:"";
     if (question == "")
 	question = "-none-";
 
-    integer has_prelink = SCR::Read(.target.size, "/etc/prelink.cache");
+    integer has_prelink = (integer) SCR::Read(.target.size, "/etc/prelink.cache");
     if (has_prelink > 0)
     {
 	question = "** /etc/prelink.cache > 0 **\n" + question;
@@ -49,8 +52,9 @@
 
     string wrapper_file = tmpdir+"/wrapper.out";
     string wrapper_options = "";
+    any wrapper_data = "";
     string output_format = "plain";
-    foreach (`option, `optval, keydata,
+    foreach (string option, any optval, keydata,
     ``{
 	if ((substring (option, 0, 2) == "--")
 	    && (optval == true))
@@ -60,6 +64,7 @@
 		    output_format = "html";
         */
 	    wrapper_options = wrapper_options + " " + option;
+            //wrapper_options = wrapper_options " " option;
 	}
     });
 
@@ -200,4 +205,5 @@ transfer the data to another computer by floppy disk.</p>");
     }
 
     return ret;
+}
 }

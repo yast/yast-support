@@ -22,9 +22,15 @@
     import "Wizard";
     import "Popup";
 
+    include "support/supportio.ycp";
+    map<string, any> keydata = (map<string, any>) read_supportkey ();
+
+define any support_askkey ()
+``{
+
     y2milestone ("keydata in '%1'", keydata);
 
-    map old_keydata = keydata;
+    map<string, any> old_keydata = keydata;
 
     string key		= keydata["key"]:"";
     string salutation	= keydata["salutation"]:"";
@@ -111,16 +117,16 @@
 		    );
 
     // helptext 1 of 3
-    string help = _("<p><b>Support Module</b></p>\n") +
+    string help = _("<p><b>Support Module</b></p>\n");
 
     // helptext 2 of 3
     help = help + _("<p>Enter your personal information as completely as possible
-in this form. This allows us to reach you if, for example, it
-is not possible to e-mail you.</p>") +
+                     in this form. This allows us to reach you if, for example, it 
+                     is not possible to e-mail you.</p>");
 
     // helptext 3 of 3
     help = help + _("<p>To avoid additional inquiries, review
-the support key you entered.</p>");
+                        the support key you entered.</p>");
 
     // screen caption
     Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
@@ -160,52 +166,52 @@ the support key you entered.</p>");
 	    keydata["salutation"] = "female"; changed = true;
 	}
 
-	value = UI::QueryWidget(`id(`name1), `Value);
+	value = (string) UI::QueryWidget(`id(`name1), `Value);
 	if (value != name1)
 	{
 	    keydata["name1"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`name2), `Value);
+	value = (string) UI::QueryWidget(`id(`name2), `Value);
 	if (value != name2)
 	{
 	    keydata["name2"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`company), `Value);
+	value = (string) UI::QueryWidget(`id(`company), `Value);
 	if (value != company)
 	{
 	    keydata["company"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`street), `Value);
+	value = (string) UI::QueryWidget(`id(`street), `Value);
 	if (value != street)
 	{
 	    keydata["street"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`zip), `Value);
+	value = (string) UI::QueryWidget(`id(`zip), `Value);
 	if (value != zip)
 	{
 	    keydata["zip"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`city), `Value);
+	value = (string) UI::QueryWidget(`id(`city), `Value);
 	if (value != city)
 	{
 	    keydata["city"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`state), `Value);
+	value = (string) UI::QueryWidget(`id(`state), `Value);
 	if (value != state)
 	{
 	    keydata["state"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`country), `Value);
+	value = (string) UI::QueryWidget(`id(`country), `Value);
 	if (value != country)
 	{
 	    keydata["country"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`email), `Value);
+	value = (string) UI::QueryWidget(`id(`email), `Value);
 	if (value != email)
 	{
 	   keydata["email"] = value; changed = true;
 	}
-	value = UI::QueryWidget(`id(`key), `Value);
+	value = (string) UI::QueryWidget(`id(`key), `Value);
 	if (value != key)
 	{
 	   keydata["key"] = value; changed = true;
@@ -267,4 +273,5 @@ the support key you entered.</p>");
     y2milestone ("keydata out '%1'", keydata);
 
     return ret;
+}
 }

@@ -13,6 +13,9 @@
     import "Popup";
 
     include "support/supportio.ycp";
+    include "support/support_askkey.ycp";
+    include "support/support_question.ycp";
+    include "support/support_send.ycp";
 
     /*
      * exit when running for non-root
@@ -33,7 +36,7 @@
     string tmpdir = (string) SCR::Read(.target.tmpdir);
 
     // keydata is global !
-    map keydata = read_supportkey ();
+    // map keydata = read_supportkey ();
 
     Wizard::CreateDialog();
     Wizard::SetDesktopIcon("support");
@@ -54,7 +57,7 @@
 
 	while (ask_key)
 	{
-	    retval = WFM::CallFunction ("support_askkey", []);
+		retval = support_askkey();	    
 	    if (retval != `next)
 	    {
 		go_on = false;
@@ -89,8 +92,7 @@
 
 	if (go_on == false)
 	    break;
-
-	retval = WFM::CallFunction ("support_question", []);
+	retval = support_question ();
 	if (retval == `ask_key)
 	{
 	    ask_key = true;
@@ -106,7 +108,7 @@
         // but do not need to generate & read info again - only for first time
 	    while (retval == `again || retval == `first)
 	    {
-		retval = WFM::CallFunction ("support_send", [] );
+		retval = support_send (retval);
 	    }
 	    if (retval == `next)
 	    {
