@@ -1,0 +1,73 @@
+# Konfiguration fuer die Verwendung ab XFree86 4.0
+#
+# $Id$
+#
+#: $d_x11new
+# example: $d_isdn
+# Durch diese Variable wird definiert, welcher Klartext fuer dieses 
+# Modul angezeigt werden soll
+
+ 
+# Soll geprueft werden, ob der gebootete Kernel ein SuSE Standardkernel ist?
+# yes / no   (funktioniert momentan nur bei Verwendung von LILO)
+
+$kernelcheck = "no";
+
+ 
+# Ueberpruefung, ob diese Pakete installiert sind. Wenn nichts ueberprueft 
+# werden soll:
+#  @i_modules = ("no"); 
+
+@i_modules = ("sax2");
+ 
+ 
+# Welche Pakete enthalten veraenderte Dateien. 
+# Diese Pakete werden mit rpm --verify ueberprueft.
+#  @m_modules = ("no");  ist hier auch moeglich
+
+@m_modules = ("sax2", "xf86");
+ 
+ 
+# Welche Kommandos ausgefuehrt werden, dessen Ausgabe in die Supportanfrage
+# reinsoll.
+#  @commands = ("no"); ist wiederum moeglich
+
+@commands = ("lspci -vv");
+ 
+ 
+# Welche Files sollen mit "cat" in die Anfrage uebernommen werden.
+#  @files = ("no");   moeglich
+
+@files = ("/var/log/SaX.log", "/var/log/XFree86.*.log"); 
+
+ 
+# Welche Directory-Listings im long-format sollen in die Anfrage. 
+# @ls = ("no"); moeglich
+
+@ls = ("/usr/X11R6/bin/X", "/var/X11R6/bin/X");
+
+ 
+# Was soll ausgefuehrt werden, bevor die /var/log/messages ausgewertet wird?
+# Die Liste @messages kann leer bleiben: @messages = ("");
+# $message ist entweder ein Suchbegriff, nach dem rueckwaerts in der messages
+# gesucht wird, und der danach folgende Teil wird in die Anfrage gestellt,
+# ein "tail -n <zeilen>" für soviele Zeilen vom Ende her, oder ein no.
+
+@messages = ("");
+$message = "no";                                  
+
+################################################################################
+# $Log$
+# Revision 1.1  2001/04/12 13:06:01  mge
+# added: 		support_all.pl	(AKA sitar.pl)
+# added: 		*.include	(AKA pads config files)
+# changed:	yast2-module-support.spec.in src/Makefile.am
+# 				according to these additions
+#
+# Revision 1.4  2000/08/24 08:35:01  stark
+# changed package name xf86_40 -> xf86
+#
+# Revision 1.3  2000/06/29 11:25:08  tw
+# minor changes for RCS
+#
+#
