@@ -9,13 +9,10 @@ ynclude_DATA = 			\
 	support_send.ycp
 
 client_DATA =			\
-	support.ycp		\
-	view_anymsg.ycp
+	support.ycp
 
 desktop_DATA =			\
-	support.desktop		\
-	messages.desktop	\
-	bootmsg.desktop
+	support.desktop
 
 EXTRA_DIST = $(client_DATA) $(ynclude_DATA) $(desktop_DATA)
 
