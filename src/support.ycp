@@ -25,9 +25,7 @@
 
     any retval = nil;
 
-    // use string->locale propagation
-
-    locale check_message = check_registration (regdata);
+    string check_message = check_registration (regdata);
     y2milestone ("check_message '%1'", check_message);
     boolean ask_registration = (check_message != "");
 
@@ -47,8 +45,8 @@
 	    else
 	    {
 		string check_message = check_registration (regdata);
-		y2milestone ("empty_locale '%1', check_message '%2'", empty_locale, check_message);
-		ask_registration = (check_message != empty_locale);
+		y2milestone ("check_message '%1'", check_message);
+		ask_registration = (check_message != "");
 		if (ask_registration == true)
 		{
 		    UI::ErrorPopup (check_message);
