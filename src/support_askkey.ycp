@@ -126,7 +126,8 @@ define any support_askkey ()
 
     // helptext 3 of 3
     help = help + _("<p>To avoid additional inquiries, review
-                        the support key you entered.</p>");
+                        the support key entered.</p>
+");
 
     // screen caption
     Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
