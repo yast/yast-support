@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 12 17:09:51 CEST 2001 - kkaempf@suse.de
+
+- update probing tools
+  use yast2-lib-wizard functions
+
+-------------------------------------------------------------------
 Mon Apr  9 15:58:55 CEST 2001 - kkaempf@suse.de
 
 - modularize view file functions
