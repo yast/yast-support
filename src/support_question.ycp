@@ -85,7 +85,7 @@
 			  `HBox (
 			    // label for support key field
 			    // !! CAUTION !!
-			    // Check with SuSE if this should be translated
+			    // Check with SUSE if this should be translated
 			    // e.g. for germany, do _not_ translate it.
 			    `Label (_("Support Key:")),
 			    `Label (keydata["key"]:"")
@@ -118,7 +118,7 @@
 		      `VSpacing (1.0),
 		      // label for multi line edit widget where user can
 		      // describe the problem
-		      `MultiLineEdit (`id(`question), _("&Your question for SuSE support:"), keydata["question"]:""),
+		      `MultiLineEdit (`id(`question), _("&Your question for SUSE support:"), keydata["question"]:""),
 		      `VStretch ()
 		    );
 
@@ -162,11 +162,11 @@ the basic system information and configuration on your computer.</p>
         //helptext 5 of 5
 	// keep the '%1' in the text, it will be replaced by an URL at runtime !
     help = help + sformat (_("<p>If you need further support for individual problems,
-consider using the SuSE Professional Services. Find more information about this at %1.</p>
+consider using the SUSE Professional Services. Find more information about this at %1.</p>
 "), website);
 
     // screen title
-    Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
 //    UI::ChangeWidget("
 
     any ret = nil;

@@ -110,27 +110,20 @@
 		      )
 		    );
 
-    // helptext 1 of 4
-    string help = _("<p><b>Support Module</b></p>\n");
+    // helptext 1 of 3
+    string help = _("<p><b>Support Module</b></p>\n") +
 
-	//helptext 2 of 4
-        help = help + _("<p>Enter your personal information as completely as possible
+    // helptext 2 of 3
+    help = help + _("<p>Enter your personal information as completely as possible
 in this form. This allows us to reach you if, for example, it
-is not possible to e-mail you.</p>
-");
+is not possible to e-mail you.</p>") +
 
-	//helptext 3 of 4
-        help = help + _("<p>To avoid additional inquiries, review
-the support key you entered.</p>
-");
-
-	//helptext 4 of 4
-        help = help + _("<p>Find further information about installation support and
-what it offers in the appendix at the end of your manual.</p>
-");
+    // helptext 3 of 3
+    help = help + _("<p>To avoid additional inquiries, review
+the support key you entered.</p>");
 
     // screen caption
-    Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
 
     boolean not_ok = true;
     boolean changed = false;

@@ -3,7 +3,13 @@ Mon Feb  9 16:34:08 CET 2004 - msvec@suse.cz
 
 - make it compile and build
 - drop y2cc config files
-- 2.9.0
+- 2.9.1
+
+-------------------------------------------------------------------
+Mon Sep 15 13:46:42 CEST 2003 - mlasars@suse.de
+
+- removed obsolete text (bug #30372)
+- point send script to 9.0 url
 
 -------------------------------------------------------------------
 Sun Sep 14 20:54:41 CEST 2003 - adrian@suse.de

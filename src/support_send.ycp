@@ -119,7 +119,7 @@ transfer the data to another computer by floppy disk.</p>");
 	`VBox (
 	    `Left (`HBox (
 		// radio button
-		`RadioButton (`id(`online), _("transmission via Internet to SuSE Support"), true),
+		`RadioButton (`id(`online), _("transmission via Internet to SUSE Support"), true),
 		// radio button
 		`RadioButton (`id(`disk), _("save to disk"), false)
 	    ))
@@ -127,7 +127,7 @@ transfer the data to another computer by floppy disk.</p>");
 	));
 
     // screen caption
-    Wizard::SetContents (_("SuSE Support"), contents, help, true, true);
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
 
 	UI::ChangeWidget(`id(`data), `Value, wrapper_data);
 
@@ -157,7 +157,7 @@ transfer the data to another computer by floppy disk.</p>");
 	    if (SCR::Execute(.target.bash, bindir + "/support/is_suse_there.sh") != 0)
 	    {
 		// cant connect to server, popup message 1 of 3
-		string message_text = _("Can't connect to SuSE support server.");
+		string message_text = _("Can't connect to SUSE support server.");
 		// cant connect to server, popup message 2 of 3
 		message_text = message_text + "\n" + _("Check your Internet connection");
 		// cant connect to server, popup message 3 of 3
@@ -172,7 +172,7 @@ transfer the data to another computer by floppy disk.</p>");
 		if (SCR::Execute(.target.bash, bindir + "/support/send_support_request.pl " + all_files) != 0)
 		{
 		    // failed to upload data to server, popup message 1 of 3
-		    string message_text = _("Can't connect to SuSE support server.");
+		    string message_text = _("Can't connect to SUSE support server.");
 		    // failed to upload data to server, popup message 2 of 3
 		    message_text = message_text + "\n" + _("Check your Internet connection");
 		    // failed to upload data to server, popup message 3 of 3
