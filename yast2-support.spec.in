@@ -24,18 +24,10 @@ Summary:      YaST2 module for support
 
 %files
 %defattr(-,root,root)
-@scrconfdir@/cfg_support.scr
-@clientdir@/support.ycp
-@clientdir@/support_askkey.ycp
-@clientdir@/support_question.ycp
-@clientdir@/support_send.ycp
-@clientdir@/view_anymsg.ycp
-@yncludedir@/support/supportio.ycp
-@configdir@/support.y2cc
-@configdir@/messages.y2cc
-@configdir@/bootmsg.y2cc
-%dir @ydatadir@/support/
-@ydatadir@/support/filenames
-@ydatadir@/support/key
-@ybindir@/support/*
+@scrconfdir@/*.scr
+@clientdir@/*.ycp
+@yncludedir@/support
+@configdir@/*.y2cc
+@ydatadir@/support
+@ybindir@/support
 %doc @docdir@
