@@ -32,25 +32,35 @@
 		      `VStretch ()
 		    );
 
-        //helptext 1 of 4
+        //helptext 1 of 5
     string help = UI(_("<p><b>Support Question</b></p>\n"));
 
-        //helptext 2 of 4
-        help = help + UI(_("<p>Please describe your problem briefly here, but still 
+        //helptext 2 of 5
+    help = help + UI(_("<p>Please describe your problem briefly here, but still 
 as thoroughly as you can. Exact error messages and previous action you have taken 
 are especially important for us to know.</p>"));
- 
-        //helptext 3 of 4
-        help = help + UI(_("<p>Please do not include more than one question in a mail. 
+
+        //helptext 3 of 5
+    help = help + UI(_("<p>Please do not include more than one question in a mail. 
 In other words, separate multiple requests, if that is the case, under different 
 subject blocks, and write a specific request corresponding to each topic. This makes 
 them easier to process and thus accelerates our response.</p>"));
- 
-        //helptext 4 of 4
-        help = help + UI(_("<p>The hard- and software information serves to determine 
+
+        //helptext 4 of 5
+    help = help + UI(_("<p>The hard- and software information serves to determine 
 the basic system information and configuration on your computer. In case of doubt, 
 this information can be helpful for support and should therefore only be de-activated 
 with good reason.</p>"));
+
+    string website = "http://www.suse.de/en/support/prof";
+    string language = substring (UI(`GetLanguage()), 0, 2);
+    if (language == "de")
+	website = "http://www.suse.de/de/support/prof";
+
+        //helptext 5 of 5
+	// keep the '%1' in the text, it will be replaced by an URL at runtime !
+    help = help + sformat (UI(_("<p>If you need further support for individual problems, 
+you can make use of the SuSE Professional Services as well. You will find more information about this at %1</p>")), website);
 
     // screen title
     UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
