@@ -24,13 +24,7 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-dnl Allow conditionals in .am files
-AM_CONDITIONAL(ISIX86, [case `uname -m` in i*86) true;; *) false;; esac])
-AM_CONDITIONAL(ISALPHA, test `uname -m` = alpha)
-AM_CONDITIONAL(ISSPARC, test `uname -m` = sparc)
-AM_CONDITIONAL(ISPPC, test `uname -m` = ppc)
-
 AC_OUTPUT(Makefile
-	package/y2m_support.spec:y2m_support.spec.in
+	package/yast2-module-support.spec:yast2-module-support.spec.in
 	src/Makefile
 	doc/Makefile)
