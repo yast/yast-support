@@ -16,7 +16,7 @@
     string filename = "/var/log/boot.msg";
     
     // title for view window, %1 will be replaced by filename
-    ShowFilePopup ( sformat( _("Boot log (%1)"), filename ), filename );
+    ShowFilePopup ( sformat( _("Boot Log (%1)"), filename ), filename );
 
     return true;
 }
