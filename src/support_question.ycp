@@ -1,8 +1,6 @@
 {
     textdomain "support";
 
-    include "installation_ui.ycp";
-
     // support_question.ycp
 
     // present/ask question data

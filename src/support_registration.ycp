@@ -1,10 +1,6 @@
 {
     textdomain "support";
 
-    include "installation_ui.ycp";
-
-    include "support/registration.ycp";
-
     y2milestone ("regdata in '%1'", regdata);
 
     // support_regcode.ycp
