@@ -14,7 +14,7 @@
 		$[ "key": false ]
 	];
 
-    map keydata =
+    map<string,any> keydata =
     $[ "name1": "Washington",
        "name2": "Irwing",
        "salutation": "male",
