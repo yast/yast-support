@@ -27,10 +27,12 @@ GetOptions (	'output=s'	=> \$output,
 		'isdn'		=> \$isdn,
 		'install'	=> \$install,
 		'laptop'	=> \$laptop,
+		'mail'          => \$mail,
 		'modem'		=> \$modem,
 		'printer'	=> \$printer,
 		'scanner'	=> \$scanner,
 		'sound'		=> \$sound,
+		'usb'           => \$usb,
 		'net'         	=> \$net,
 		'hw'         	=> \$hw,
 		'x11'		=> \$x11
@@ -38,7 +40,7 @@ GetOptions (	'output=s'	=> \$output,
 
 
 if ($printhelp) {
-	print "\nUSAGE:  wrapper [options]\n\n--output={html,plain,latex,send,floppy}\n--file=filename\n--all --printer --isdn --sound --x11 --modem --scanner --dsl --boot --cdr --install}\n";
+	print "\nUSAGE:  wrapper [options]\n\n--output={html,plain,latex,send,floppy}\n--file=filename\n--all --printer --isdn --sound --x11 --mail --modem --usb --scanner --dsl --boot --cdr --install}\n";
 	exit 0;
 }
 
@@ -53,11 +55,13 @@ my @params = qw(
 		install
 		isdn
 		laptop
+		mail
 		modem
 		net
 		printer
 		scanner
 		sound
+		usb
 		x11
 		);
 
@@ -121,16 +125,16 @@ sub support_whatever() {
 	}
 
 	if ($doitall) {
-		push @ret, "\n##Y2support-/tmp/siga.txt:\n";
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt:\n";
  		system ("siga no > /dev/null");
-               	push @ret, $_ for (`echo "<pre>" && cat /tmp/siga.txt`);
-		push @ret, "\n##Y2support-/tmp/siga.txt--\n";
+               	push @ret, $_ for (`echo "<pre>" && cat /tmp/siga/siga.txt`);
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt--\n";
 	}
 	else {
-		push @ret, "\n##Y2support-/tmp/siga.txt:\n";
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt:\n";
                 push @ret, $_ for (`/usr/lib/YaST2/bin/support/support_modules.pl --output=$output $myparams`);
-                push @ret, $_ for (`echo "<pre>" && cat /tmp/siga.txt`);
-		push @ret, "\n##Y2support-/tmp/siga.txt--\n";
+                push @ret, $_ for (`echo "<pre>" && cat /tmp/siga/siga.txt`);
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt--\n";
 	}
 #	print "system support_all --$output" if ($doitall);
 	#print $_ for (@ret);

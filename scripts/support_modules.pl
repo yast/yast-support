@@ -10,11 +10,13 @@ my @allparams = qw(
 		install
 		isdn
 		laptop
+		mail
 		modem
 		printer
 		scanner
 		net
 		hw
+		usb
 		sound
 		x11
 		);

@@ -25,12 +25,14 @@
 	"--boot"	: _("&Booting"),
 	"--sound"	: _("&Sound"),
 	"--laptop"	: _("&Notebook"),
+	"--mail"        : _("Mai&l"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
         "--cdr"         : _("&CD-R"),
         "--net"         : _("Net&work"),
         "--hw"          : _("&Hardware"),
 	"--install"	: _("I&nstallation"),
+        "--usb"         : _("&usb"),
 	"--all"		: _("&Unspecified")
     ];
 

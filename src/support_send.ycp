@@ -183,12 +183,12 @@ transfer the data to another computer by floppy disk.</p>");
 	}
 	else if (UI::QueryWidget (`id(`disk), `Value) == true)
 	{
-	    string disk_file = "/tmp/support.request";
+	    string disk_file = "/tmp/siga/support.request";
 	    // popup message about where the "saving to disk" file resides
 	    string disk_message = sformat (_("Saving data to %1"), disk_file);
 	    UI::MessagePopup (disk_message);
 	    SCR::Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file);
-            SCR::Execute(.target.bash, "/bin/chmod 600 /tmp/support.request");
+            SCR::Execute(.target.bash, "/bin/chmod 600 /tmp/siga/support.request");
 	}
     }
 
