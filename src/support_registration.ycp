@@ -93,7 +93,23 @@
 		        )
 		      )
 		    );
-    locale help = _("<p><b>Support Module</b>\n");
+    locale help = _("<p><b>Support Module</b></p>\n");
+
+	//helptext
+        help = help + _("<p>Please enter your personal information as completely as possible 
+in this form. For one reason, this allows us to be able to reach you if, for instance, it 
+is not possible to e-mail you. Secondly, this will enable us to enter your information during 
+the registration process necessary for support.</p>");
+
+	//helptext
+        help = help + _("<p>To avoid additional inquiries, you should in any case review 
+the registration number you entered.</p>");
+
+	//helptext
+        help = help + _("<p>You can find further information on installation support and 
+what it has to offer in the appendix at the end of your manual.</p>");
+
+
 
     UI(`SetWizardContents (_("SuSE Support"), contents, help, false, true));
 

@@ -24,7 +24,18 @@
 		      )
 		    );
 
-    locale help = _("<p><b>Support Data</b>\n");
+    locale help = _("<p><b>Support Data</b></p>\n");
+
+	//helptext
+        help = help + _("<p>Here you will see an overview of the information you 
+transmitted. The transfer takes place via HTTP uploading and can be encrypted or 
+un-encrypted.</p>");
+
+	//helptext
+        help = help + _("<p>If you do not have Internet access on your Linux system, 
+you can save the data instead to the hard drive (save to disk) and from there, via 
+diskette, transfer the data to another computer.</p>");
+
 
     UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
 

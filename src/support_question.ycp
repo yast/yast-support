@@ -27,7 +27,26 @@
 		      `VStretch ()
 		    );
 
-    locale help = _("<p><b>Support Question</b>\n");
+    locale help = _("<p><b>Support Question</b></p>\n");
+
+        //helptext
+        help = help + _("<p>Please describe your problem briefly here, but still 
+as thoroughly as you can. Exact error messages and previous action you have taken 
+are especially important for us to know.</p>");
+ 
+        //helptext
+        help = help + _("<p>Please do not include more than one question in a mail. 
+In other words, separate multiple requests, if that is the case, under different 
+subject blocks, and write a specific request corresponding to each topic. This makes 
+them easier to process and thus accelerates our response.</p>");
+ 
+        //helptext
+        help = help + _("<p>The hard- and software information serves to determine 
+the basic system information and configuration on your computer. In case of doubt, 
+this information can be helpful for support and should therefore only be de-activated 
+with good reason.</p>");
+                                                  
+
 
     UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
 
