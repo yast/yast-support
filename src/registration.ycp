@@ -8,7 +8,7 @@
     // read registration data from file
     // return complete map
 
-    define read_registration () ``{
+    global define read_registration () ``{
 	map regdata = $[];
 
 	// check forename, surname
@@ -39,7 +39,7 @@
 	return regdata;
     };
 
-    define write_registration (map regdata) ``{
+    global define write_registration (map regdata) ``{
 
 	SCR(`Write(.rc.registration.REG_NAME1,	lookup (regdata, "name1", "")));
 	SCR(`Write(.rc.registration.REG_NAME2,	lookup (regdata, "name2", "")));
@@ -60,32 +60,39 @@
     // check if registration data is complete.
     // return non-empty message if somethings missing
 
-    define check_registration (map regdata) ``{
+    global define check_registration (map regdata) ``{
 
 	// dummy string, dont translate
 	locale message = _("NIL");
 
-	if (lookup (regdata, "salutation", "") == "") {
+	if (lookup (regdata, "salutation", "") == "")
+	{
 	    message = _("Please check either Mrs or Mr");
 	}
-	else if (lookup (regdata, "name1", "") == "") {
-		message = _("Please enter your first name");
+	else if (lookup (regdata, "name1", "") == "")
+	{
+	    message = _("Please enter your first name");
 	}
-	else if (lookup (regdata, "name2", "") == "") {
-		message = _("Please enter your last name");
+	else if (lookup (regdata, "name2", "") == "")
+	{
+	    message = _("Please enter your last name");
 	}
-	else if (lookup (regdata, "email", "") == "") {
-		message = _("Please enter your email address");
+	else if (lookup (regdata, "email", "") == "")
+	{
+	    message = _("Please enter your email address");
 	}
-	else if (size (lookup (regdata, "regcode", "")) < 14) {
-		message = _("Please enter your registration code");
+	else if (size (lookup (regdata, "regcode", "")) < 14)
+	{
+	    message = _("Please enter your registration code");
 	}
-	else {
-		string email = lookup (regdata, "email", "");
-		if ((findfirstof ("@", email) < 0)
-		    || (findfirstof (".", email) < 0)) {
-		    message = _("Please enter a valid email address");
-		}
+	else
+	{
+	    string email = lookup (regdata, "email", "");
+	    if ((findfirstof ("@", email) < 0)
+		 || (findfirstof (".", email) < 0))
+	    {
+		message = _("Please enter a valid email address");
+	    }
 	}
 
 	return message;

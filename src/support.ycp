@@ -9,7 +9,7 @@
 
     integer current_stage = -1;
     include "installation_ui.ycp";
-
+    include "ui/common_popups.ycp";
     include "support/registration.ycp";
 
     // regata is global !
