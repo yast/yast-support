@@ -60,5 +60,6 @@ make install
 @YAST2DIR@/menuentries/menuentry_bootmsg.ycp
 %dir @YAST2DIR@/include/support
 @YAST2DIR@/include/support/registration.ycp
+@YAST2DIR@/include/support/view_file.ycp
 @YAST2DIR@/bin/is_suse_there.sh
 
