@@ -7,13 +7,17 @@
     // present/ask question data
 
     term contents = `VBox (
+		      // caption above view window
 		      `LogView (`id(`hwdata), _("Hardware data"), 7, 0),
+		      // caption above view window
 		      `LogView (`id(`swdata), _("Software data"), 7, 0),
 		      `VSpacing (1.0),
 		      `RadioButtonGroup(`id(`rb),
 			`VBox (
 			`Left (`HBox (
+			    // radio button
 			    `RadioButton (`id(`online), _("transmission via Internet to SuSE Support"), true),
+			    // radio button
 			    `RadioButton (`id(`disk), _("save to disk"), false)
 			  )
 			)
@@ -34,7 +38,7 @@ un-encrypted.</p>"));
 you can save the data instead to the hard drive (save to disk) and from there, via 
 diskette, transfer the data to another computer.</p>"));
 
-
+    // screen caption
     UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
 
     string tmpdir = SCR(`Read(.target.tmpdir));
@@ -72,11 +76,13 @@ diskette, transfer the data to another computer.</p>"));
 
     if (ret == `next) {
 	if (UI(`QueryWidget (`id(`online), `Value)) == true) {
-	    UI(`DisplayMessage (_("Sending crypted data via Internet")));
+	    // popup message
+	    UI(`DisplayMessage (_("Sending data via Internet")));
 	    SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files));
 	}
 	else if (UI(`QueryWidget (`id(`disk), `Value)) == true) {
 	    string disk_file = "/tmp/support.request";
+	    // popup message
 	    UI(`DisplayMessage (_("Saving data to ")+ disk_file));
 	    SCR(`Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file));
 	}

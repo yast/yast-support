@@ -8,21 +8,28 @@
     // present/ask question data
 
     term contents = `VBox (
+			// frame heading
 		      `Frame (_("Current registration data"),
 			`HBox (
+			  // label for regcode field
 			  `Label (_("Registration Code:")),
 			  `Label (lookup (regdata, "regcode", "")),
 			  `HSpacing (0.5),
 			  `Label (lookup (regdata, "name1", "")),
 			  `Label (lookup (regdata, "name2", "")),
 			  `HStretch (),
+			  // push button for changeing registration data
 			  `PushButton (`id(`ask_registration), _("&Change"))
 			 )
 		      ),
 		      `VSpacing (1.0),
+		      // checkbox for sending hardware data
 		      `Left (`CheckBox (`id(`hwdata), _("&Send hardware data"), lookup (regdata, "hwdata", true))),
+		      // checkbox for sending software data
 		      `Left (`CheckBox (`id(`swdata), _("&Send software data"), lookup (regdata, "swdata", true))),
 		      `VSpacing (1.0),
+		      // label for multi line edit widget where user can
+		      // describe the problem
 		      `MultiLineEdit (`id(`question), _("&Your question for SuSE support:"), lookup (regdata, "question", "")),
 		      `VStretch ()
 		    );
@@ -47,6 +54,7 @@ the basic system information and configuration on your computer. In case of doub
 this information can be helpful for support and should therefore only be de-activated 
 with good reason.</p>"));
 
+    // screen title
     UI(`SetWizardContents (_("SuSE Support"), contents, help, true, true));
 
     any ret = UI (`UserInput());
