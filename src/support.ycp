@@ -17,6 +17,7 @@
     map regdata = read_registration ();
 
     UI(`CreateWizardDialog());
+    UI(`ReplaceWizardAbortButton(`Empty()));
 
     // if no valid registration data present, ask !
 

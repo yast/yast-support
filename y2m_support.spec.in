@@ -44,7 +44,8 @@ make install
 
 %dir /var/lib/support
 /var/lib/support/rc.registration
-/var/lib/support/eo.sh
+/var/lib/support/eo.pl
+/var/lib/support/send_support_request.pl
 %dir @YAST2DIR@/clients
 @YAST2DIR@/clients/support.ycp
 @YAST2DIR@/clients/support_registration.ycp
