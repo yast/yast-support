@@ -14,5 +14,5 @@
     include "support/view_file.ycp";
 
     // title for view window, %1 will be replaced by filename
-    return ViewFile (_("Boot log (%1)"), "/var/log/boot.msg");
+    return ViewFile (UI(_("Boot log (%1)")), "/var/log/boot.msg");
 }

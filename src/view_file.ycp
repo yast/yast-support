@@ -15,7 +15,7 @@
     include "ui/common_popups.ycp";
     include "ui/common_functions.ycp";
 
-    define ViewFile (locale title, string filename) ``{
+    global define ViewFile (string title, string filename) ``{
 
 	string messages = SCR(`Read (.target.string, (filename)));
 	if (size (messages) <= 0)
