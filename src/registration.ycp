@@ -77,7 +77,7 @@
 	else if (lookup (regdata, "email", "") == "") {
 		message = _("Please enter your email address");
 	}
-	else if (lookup (regdata, "regcode", "") == "") {
+	else if (size (lookup (regdata, "regcode", "")) < 14) {
 		message = _("Please enter your registration code");
 	}
 	else {
