@@ -21,8 +21,8 @@
 	if (size (messages) <= 0)
 	{
 	    // Error in reading file, "%1" will be replaced by the filename
-	    messages = UI(`ErrorPopup (sformat (_("Can't access file '%1',
-you need to be 'root' in order to read this file.")), filename));
+	    messages = UI(`ErrorPopup (sformat (UI(_("Can't access file '%1',
+you need to be 'root' in order to read this file.")), filename)));
 	}
 	else
 	{
