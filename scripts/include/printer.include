@@ -1,2 +1,0 @@
-@commands = ("/usr/bin/siga no -print > /dev/null");
-@files = ();

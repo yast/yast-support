@@ -1,2 +1,0 @@
-@commands = ("/usr/bin/siga no -cdr > /dev/null");
-@files = ();
