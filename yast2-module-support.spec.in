@@ -1,50 +1,29 @@
-#
-# spec file for package @RPMNAME@
-# 
-# Copyright  (c)  2000  SuSE GmbH  Nuernberg, Germany.
-#
-# please send bugfixes or comments to @MAINTAINER@
-#
-
+@HEADER-COMMENT@
 # neededforbuild  autoconf automake ydoc
 
-Vendor:       SuSE GmbH, Nuernberg, Germany
-Distribution: SuSE Linux 7.0 (i386)
-Name:         @RPMNAME@
-Release:      1
-Copyright:    (c) 2000 SuSE GmbH
-Group:        System Environment/YaST
-BuildArchitectures: noarch
+@HEADER@
 Requires:	yast2-trans-support yast2 yast2-lib-wizard
+
 Provides:	y2m_support
 Obsoletes:	y2m_support
-Packager:     @MAINTAINER@
+
+BuildArchitectures: noarch
 
 Summary:      YaST2 Module for support
-Version:      @VERSION@
-Source0:      @RPMNAME@-@VERSION@.tar.bz2
 
 %description
 -
 
-%prep
+@PREP@
 
-%setup -n @RPMNAME@-@VERSION@
+@BUILD-YCP@
 
-%build
+@INSTALL-YCP@
 
-./configure
-make
-
-%install
-
-make install
-
-%{?suse_check}
-
+@CLEAN@
 
 %files
-
+%defattr(-,root,root)
 %dir /var/lib/support
 /var/lib/support/*
 @YAST2DIR@/support/*
@@ -60,3 +39,4 @@ make install
 %dir @YAST2DIR@/include/support
 @YAST2DIR@/include/support/supportio.ycp
 @YAST2DIR@/bin/is_suse_there.sh
+%doc @DOCDIR@
