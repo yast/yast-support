@@ -14,13 +14,13 @@
  * 		"state"
  * 		"city"
  * 		"email"
- * 
+ *
  * $Id$
  */
 {
     textdomain "support";
     import "Wizard";
-    include "ui/common_popups.ycp";
+    import "Popup";
 
     y2milestone ("keydata in '%1'", keydata);
 
@@ -114,18 +114,18 @@
     string help = _("<p><b>Support Module</b></p>\n");
 
 	//helptext 2 of 4
-        help = help + _("<p>Enter your personal information as completely as possible 
-in this form. This allows us to reach you if, for example, it 
+        help = help + _("<p>Enter your personal information as completely as possible
+in this form. This allows us to reach you if, for example, it
 is not possible to e-mail you.</p>
 ");
 
 	//helptext 3 of 4
-        help = help + _("<p>To avoid additional inquiries, you should, in any case, review 
+        help = help + _("<p>To avoid additional inquiries, you should, in any case, review
 the support key you entered.</p>
 ");
 
 	//helptext 4 of 4
-        help = help + _("<p>You can find further information on installation support and 
+        help = help + _("<p>You can find further information on installation support and
 what it has to offer in the appendix at the end of your manual.</p>");
 
     // screen caption
@@ -221,31 +221,31 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Check either Mrs. or Mr."));
+	    Popup::Error (_("Check either Mrs. or Mr."));
 	}
 	else if (keydata["name1"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Please enter your first name"));
+	    Popup::Error (_("Please enter your first name"));
 	}
 	else if (keydata["name2"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Please enter your last name"));
+	    Popup::Error (_("Please enter your last name"));
 	}
 	else if (keydata["email"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Enter your e-mail address."));
+	    Popup::Error (_("Enter your e-mail address."));
 	}
 	else if (keydata["key"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Please enter your support key"));
+	    Popup::Error (_("Please enter your support key"));
 	}
 	else
 	{
@@ -257,7 +257,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	    {
 		not_ok = true;
 		// warning message
-		UI::ErrorPopup (_("Enter a valid e-mail address"));
+		Popup::Error (_("Enter a valid e-mail address"));
 	    }
 	}
 

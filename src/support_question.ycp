@@ -12,7 +12,6 @@
     textdomain "support";
 
     import "Wizard";
-    include "ui/common_popups.ycp";
 
     // support_question.ycp
 
@@ -127,25 +126,25 @@
     string help = _("<p><b>Support Question</b></p>\n");
 
         //helptext 2 of 5
-    help = help + _("<p>Describe your problem briefly, but as thoroughly as possible. 
-Exact error messages and previous actions you have taken 
+    help = help + _("<p>Describe your problem briefly, but as thoroughly as possible.
+Exact error messages and previous actions you have taken
 are especially important.</p>
 ");
 
         //helptext 3 of 5
-    help = help + _("<p>Do not include more than one question in a mail. 
-Separate multiple requests into different 
-subject blocks and write a specific request for each topic. This makes 
+    help = help + _("<p>Do not include more than one question in a mail.
+Separate multiple requests into different
+subject blocks and write a specific request for each topic. This makes
 them easier to process, accelerating responses.</p>
 ");
 
         //helptext 4 of 5
-/*    help = help + _("<p>The hardware and software information serves to determine 
-the basic system information and configuration on your computer. When in doubt, 
-this information can be helpful for support and should therefore only be deactivated 
+/*    help = help + _("<p>The hardware and software information serves to determine
+the basic system information and configuration on your computer. When in doubt,
+this information can be helpful for support and should therefore only be deactivated
 with good reason.</p>
 ");*/
-    help = help + _("<p>The hardware and software information serves to determine 
+    help = help + _("<p>The hardware and software information serves to determine
 the basic system information and configuration on your computer.</p>
 ");
 
@@ -162,7 +161,7 @@ the basic system information and configuration on your computer.</p>
 
         //helptext 5 of 5
 	// keep the '%1' in the text, it will be replaced by an URL at runtime !
-    help = help + sformat (_("<p>If you need further support for individual problems, 
+    help = help + sformat (_("<p>If you need further support for individual problems,
 you can make use of the SuSE Professional Services as well. You will find more information about this at %1</p>"), website);
 
     // screen title

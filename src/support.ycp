@@ -10,7 +10,7 @@
     integer current_stage = -1;
 
     import "Wizard";
-    include "ui/common_popups.ycp";
+    import "Popup";
 
     include "support/supportio.ycp";
 
@@ -24,7 +24,7 @@
     if( size(l_res) > 0 &&  select(l_res, 0, "") != "root")
     {
         // Popup label (user is not root)
-        UI::MessagePopup(_("Log in as a root to run SuSE support."));
+        Popup::Message(_("Log in as a root to run SuSE support."));
         return;
     }
 
@@ -66,16 +66,16 @@
 		ask_key = (check_message != "");
 		if (ask_key == true)
 		{
-		    UI::ErrorPopup (check_message);
+		    Popup::Error (check_message);
 		}
 		else if (keydata["changed"]:false)
 		{
 		    // popup when saving data
-		    UI::MessagePopup (_("Saving new supportkey data"));
+		    Popup::Message (_("Saving new supportkey data"));
 		    if (!write_supportkey (keydata))
 		    {
 			// popup when saving failed
-			UI::ErrorPopup (_("Saving of supportkey data failed !"));
+			Popup::Error (_("Saving of supportkey data failed !"));
 		    }
 		    break;
 		}
@@ -110,7 +110,7 @@
 	    if (retval == `next)
 	    {
 		// just a final text to give user a 'good' feeling
-		UI::MessagePopup (_("Thank you for using SuSE support"));
+		Popup::Message (_("Thank you for using SuSE support"));
 		go_on = false;
 	    }
 	}

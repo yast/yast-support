@@ -13,7 +13,8 @@
 
     import "Wizard";
     import "Directory";
-    include "ui/common_popups.ycp";
+    import "Label";
+    import "Popup";
 
     map send_options = $[
 	"mail"		: _("via &e-mail"),
@@ -73,7 +74,7 @@
 
     y2milestone ("running %1", wrapper_cmd);
 
-    UI::OpenDialog (`opt(`decorated), `HBox(`HSpacing(1), `Label(UI::PleaseWaitMsg()), `HSpacing(1)));
+    UI::OpenDialog (`opt(`decorated), `HBox(`HSpacing(1), `Label(Label::PleaseWaitMsg()), `HSpacing(1)));
     SCR::Execute(.target.bash, wrapper_cmd);
     UI::CloseDialog();
 
@@ -86,13 +87,13 @@
     string help = _("<p><b>Support Data</b></p>\n");
 
     //helptext 2 of 3
-    help = help + _("<p>Here, you will see an overview of the information 
+    help = help + _("<p>Here, you will see an overview of the information
 transmitted. The transfer takes place by HTTP uploading.</p>
 ");
 
     //helptext 3 of 3
-    help = help + _("<p>If you do not have Internet access on your Linux system, 
-you can save the data instead to the hard drive (save to disk) and from there 
+    help = help + _("<p>If you do not have Internet access on your Linux system,
+you can save the data instead to the hard drive (save to disk) and from there
 transfer the data to another computer by floppy disk.</p>");
 
     // support_question.ycp
@@ -161,13 +162,13 @@ transfer the data to another computer by floppy disk.</p>");
 		message_text = message_text + "\n" + _("Check your Internet connection");
 		// cant connect to server, popup message 3 of 3
 		message_text = message_text + "\n" + _("or choose 'save to disk' and send a printed copy by mail.");
-		UI::ErrorPopup (message_text);
+		Popup::Error (message_text);
 		ret = `again;
 	    }
 	    else
 	    {
 		// popup message, about to connect to support server
-		UI::MessagePopup (_("Sending data via Internet"));
+		Popup::Message (_("Sending data via Internet"));
 		if (SCR::Execute(.target.bash, bindir + "/support/send_support_request.pl " + all_files) != 0)
 		{
 		    // failed to upload data to server, popup message 1 of 3
@@ -176,7 +177,7 @@ transfer the data to another computer by floppy disk.</p>");
 		    message_text = message_text + "\n" + _("Check your Internet connection");
 		    // failed to upload data to server, popup message 3 of 3
 		    message_text = message_text + "\n" + _("or try again later.");
-		    UI::ErrorPopup (message_text);
+		    Popup::Error (message_text);
 		    ret = `again;
 		}
 	    }
@@ -186,7 +187,7 @@ transfer the data to another computer by floppy disk.</p>");
 	    string disk_file = "/tmp/siga/support.request";
 	    // popup message about where the "saving to disk" file resides
 	    string disk_message = sformat (_("Saving data to %1"), disk_file);
-	    UI::MessagePopup (disk_message);
+	    Popup::Message (disk_message);
 	    SCR::Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file);
             SCR::Execute(.target.bash, "/bin/chmod 600 /tmp/siga/support.request");
 	}

@@ -26,7 +26,7 @@
     import "Directory";
     textdomain "support";
 
-    include "ui/common_messages.ycp";
+    import "Label";
 
     string vardir = Directory::vardir;
 
@@ -119,7 +119,7 @@
 					    )
 				      ),
 			    `VSpacing( 0.3 ),
-			    `PushButton( `id(`ok), UI::OKButtonLabel() ),
+			    `PushButton( `id(`ok), Label::OKButton() ),
 			    `VSpacing( 0.3 )
 			    )
 		      );
