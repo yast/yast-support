@@ -1,3 +1,15 @@
-@commands = ("/sbin/lspci -v", "/sbin/lspci -n", "/sbin/lsmod", "/usr/bin/procinfo", "/sbin/pnpdump");
+@commands = ("/sbin/lspci -v",
+	"/sbin/lspci -n",
+	"/sbin/lsmod",
+	"/usr/bin/procinfo",
+	"/sbin/pnpdump"
+	);
 
-@files = ("/proc/version", "/proc/interrupts", "/proc/ioports", "/proc/dma", "/proc/sndstat", "/proc/asound/sndstat", "/etc/modules.conf");
+@files = ("/proc/version",
+	"/proc/interrupts",
+	"/proc/ioports",
+	"/proc/dma",
+	"/proc/sndstat",
+	"/proc/asound/sndstat",
+	"/etc/modules.conf"
+	);

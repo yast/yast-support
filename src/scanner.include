@@ -1,3 +1,5 @@
-@commands = ("/sbin/hwinfo --scanner", "/sbin/hwinfo --usb");
+@commands = ("/sbin/hwinfo --scanner",
+	"/sbin/hwinfo --usb"
+	);
 
 @files = ();

@@ -1,5 +1,9 @@
-
-@commands = ("/sbin/lspci -vv", "/usr/bin/procinfo", "/bin/grep ^ *PCMCIA /etc/rc.config", "/sbin/cardctl ident");
+@commands = ("/sbin/lspci -vv",
+	"/usr/bin/procinfo",
+	"/bin/grep '^ *PCMCIA' /etc/rc.config",
+	"/sbin/cardctl ident",
+	"/bin/grep -A 30 'pcmcia_core' /var/log/messages"
+	);
  
 @files = (); 
 

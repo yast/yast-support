@@ -1,4 +1,18 @@
-@commands = ("isdnctrl list all", "/sbin/route -n", "/sbin/ifconfig", "/sbin/lsmod", "/sbin/lspci -v", "/sbin/pnpdump");
+@commands = ("isdnctrl list all",
+	"/sbin/route -n",
+	"/sbin/ifconfig",
+	"/sbin/lsmod",
+	"/sbin/lspci -v",
+	"/sbin/pnpdump"
+	);
 
 
-@files = ("/proc/version", "/etc/route.conf", "/etc/resolv.conf", "/proc/interrupts", "/etc/rc.config.d/i4l.rc.config", "/etc/rc.config.d/i4l_hardware.rc.config", "/etc/ppp/ioptions", "/etc/ppp/options.ippp0");
+@files = ("/proc/version",
+	"/etc/route.conf",
+	"/etc/resolv.conf",
+	"/proc/interrupts",
+	"/etc/rc.config.d/i4l.rc.config",
+	"/etc/rc.config.d/i4l_hardware.rc.config",
+	"/etc/ppp/ioptions",
+	"/etc/ppp/options.ippp0"
+	);
