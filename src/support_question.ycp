@@ -4,6 +4,7 @@
     include "ui/wizard_message.ycp";
 
     // support_question.ycp
+
     // present/ask question data
 
     term contents = `VBox (

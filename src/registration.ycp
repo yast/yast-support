@@ -5,6 +5,9 @@
 
     // functions for registration I/O
 
+    // read registration data from file
+    // return complete map
+
     define read_registration () ``{
 	map regdata = $[];
 
@@ -53,6 +56,9 @@
 	return SCR(`Write(.rc.registration, nil));
 
     };
+
+    // check if registration data is complete.
+    // return non-empty message if somethings missing
 
     define check_registration (map regdata) ``{
 
