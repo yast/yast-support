@@ -1,7 +1,7 @@
 {
     textdomain "support";
 
-    include "ui/wizard_message.ycp";
+    include "installation_ui.ycp";
 
     // support_question.ycp
 
