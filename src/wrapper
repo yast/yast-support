@@ -1,0 +1,156 @@
+#!/usr/bin/perl
+# Björn Jacke <bjacke@suse.de>, 2001
+#
+#TODO:
+# /var/lib/support/rc.registration
+
+use Getopt::Long;
+
+my $output = "";
+my $outfile = "";
+GetOptions (	'output=s'	=> \$output,
+		'file=s'	=> \$outfile,
+		'all'	=> \$doitall,
+		'reg'	=> \$regdata,
+		'ttn=s'	=> \$ttn,
+		'help'	=> \$printhelp,
+
+		'printer'	=> \$printer,
+		'isdn'	=> \$isdn,
+		'sound'	=> \$sound,
+		'modem'	=> \$modem,
+		'scanner'	=> \$scanner,
+		'dsl'	=> \$dsl,
+		'boot'	=> \$boot,
+		'cdr'	=> \$dsl,
+		'x11'	=> \$x11);
+
+if ($printhelp) {
+	print "\nUSAGE:  wrapper [options]\n\n--output={html,plain,latex,send,floppy}\n--file=filename\n--all --printer --isdn --sound --x11 --modem --scanner --dsl --boot --cdr}\n";
+	exit 0;
+}
+
+print STDERR "ignoring file name when output=floppy !" if ($output eq "floppy" and $outfile);
+$outFH = STDOUT;
+
+my @params = qw(
+		boot
+		cdr
+		dsl
+		install
+		isdn
+		modem
+		printer
+		scanner
+		sound
+		x11
+		);
+
+my $myparams = "";
+#$myparams .= $_ if ($$_) for ($params);
+
+
+sub open_outfile() {
+	if ($output eq "send") {
+		$output = plain;
+		$send = 1;
+	}
+	if ($outfile) {
+		open FH, ">$outfile" or die "Can't open $file: $!";
+		$outFH = FH;
+	}
+	elsif ($send) {
+		open (FH, "| /var/lib/support/send_support_request.pl");
+		$outFH = FH;
+	}
+}
+sub close_outfile() {
+	close $outFH unless ($outFH eq STDIN);
+}
+
+sub getfloppy() {
+	my @fstab=();
+	open FSTAB, "</etc/fstab" or die "Can't open fstab";
+	push (@fstab, $_) while (<FSTAB>);
+	close FSTAB;
+	my @floppies = grep (/^\s*\/dev\/fd0/, @fstab);
+	$floppy = $floppies[0];
+	$floppy =~ s/\s+/\t/g;
+	@floppies = split (/\t/, $floppy);
+	$floppy = $floppies[1];
+	print "\nFloppy: $floppy\n";
+}
+
+sub mountfloppy(){
+	open MTAB, "</etc/mtab" or die "Can't open mtab";
+	while (<MTAB>) {
+		if ($_ =~ m/\/dev\/fd0/) {
+			#print "Please unmount/remove floppy then hit RETURN");
+			die "already mounted floppy";
+		}
+	}
+	close MTAB;
+	system "/bin/mount $floppy";
+
+}
+
+sub support_whatever() {
+	if ($regdata) {
+		open FH, "< /var/lib/support/rc.registration" or push @ret, "NO REGDATA" and last;
+		push @ret, $_ while (<FH>);
+	}
+
+	if ($doitall) {
+		push @ret, $_ for (`/var/lib/support/support_all --output=$output`);
+	}
+	else {
+		push @ret, $_ for (`/var/lib/support/support_modules --output=$output $myparams`);
+	}
+#	print "system support_all --$output" if ($doitall);
+	#print $_ for (@ret);
+	return @ret;
+}
+
+
+###################################################################
+CASE:{
+	# Text-Datei (auf Diskette)
+	if ($output eq "floppy") {
+		getfloppy();
+		mountfloppy();
+		$outfile = "$floppy/data";
+		open_outfile();
+		support_whatever();
+		close_outfile();
+		system "/bin/umount $floppy";
+		next CASE;
+	}
+	# Versenden (als plain Text)
+#	if ($output eq "send") {
+#		#system "/var/lib/support/send_support_request.pl ";
+#		my @trash = support_whatever();
+#		for (@trash) {
+#			$out .= $_
+#		}
+#		#system "/var/lib/support/send_support_request.pl $out";
+#		#open (FF, "/bin/cat"." $out |");
+##		open (FF, "| /bin/cat");
+#		open (FF, "| /var/lib/support/send_support_request.pl");
+#		print FF "$out";
+#		close(FF);
+#		next CASE;
+#	}
+	# LaTeX or HTML or plain
+	if (($output eq "latex") or ($output eq "html") or ($output eq "plain") or ($output eq "send")) {
+		my @trash = support_whatever();
+		for (@trash) {
+			$out .= $_;
+		}
+		print $out;
+		&open_outfile();
+		print $outFH $out;
+		&close_outfile();
+		next CASE;
+	}
+} #CASE
+#print "\nxx output: $output, file: $outfile\n";
