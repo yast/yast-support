@@ -76,11 +76,12 @@ transfer the data to another computer by floppy disk.</p>"));
 	    wrapper_options = wrapper_options + " " + option;
 	}
     });
-    SCR(`Execute(.target.bash,
-	"/var/lib/support/wrapper --output="
+    string wrapper_cmd = "/var/lib/support/wrapper --output="
 	+ output_format
 	+ wrapper_options
-	+" >" + hw_file));
+	+" >" + hw_file;
+    y2milestone ("running %1", wrapper_cmd);
+    SCR(`Execute(.target.bash, wrapper_cmd));
     hw_data = hw_data + SCR(`Read(.target.string, hw_file));
 
     UI(`ChangeWidget(`id(`hwdata), `Value, hw_data));

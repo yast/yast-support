@@ -2,6 +2,7 @@
 Mon Apr 30 17:24:05 CEST 2001 - kkaempf@suse.de
 
 - correctly use "wrapper" script
+  fix filelist in specfile
 
 -------------------------------------------------------------------
 Thu Apr 12 17:09:51 CEST 2001 - kkaempf@suse.de

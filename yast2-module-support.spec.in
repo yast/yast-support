@@ -45,20 +45,7 @@ make install
 %files
 
 %dir /var/lib/support
-/var/lib/support/rc.registration
-/var/lib/support/eo.pl
-/var/lib/support/send_support_request.pl
-/var/lib/support/support_all.pl
-/var/lib/support/boot.include
-/var/lib/support/cdr.include
-/var/lib/support/dsl.include
-/var/lib/support/install.include
-/var/lib/support/isdn.include
-/var/lib/support/modem.include
-/var/lib/support/printer.include
-/var/lib/support/scanner.include
-/var/lib/support/sound.include
-/var/lib/support/x11.include
+/var/lib/support/*
 @YAST2DIR@/scrconf/rc_registration.scr
 @YAST2DIR@/clients/support.ycp
 @YAST2DIR@/clients/support_registration.ycp
