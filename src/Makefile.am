@@ -18,12 +18,17 @@ modules_SCRIPTS =			\
 	support.ycp			\
 	support_registration.ycp	\
 	support_question.ycp		\
-	support_send.ycp
+	support_send.ycp		\
+	view_messages.ycp		\
+	view_bootmsg.ycp
 
 include_HEADERS =	\
 	registration.ycp
 
-menu_SCRIPTS = menuentry_support.ycp
+menu_SCRIPTS = 	\
+	menuentry_support.ycp	\
+	menuentry_messages.ycp	\
+	menuentry_bootmsg.ycp
 
 EXTRA_DIST = $(modules_SCRIPTS) $(menu_SCRIPTS) \
 	     $(reg_DATA) $(reg_SCRIPTS)		\
