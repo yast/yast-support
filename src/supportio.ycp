@@ -16,7 +16,7 @@
      * Reads the user's support data, should be in $vardir/support/key.
      * @return support key data
      */
-    define map read_supportkey()
+    define map<string,any> read_supportkey()
     ``{
 
     // Check if the "support key" file is present
@@ -26,7 +26,7 @@
         SCR::Execute(.target.bash, "/bin/cp " + Directory::ydatadir + "/support/key " + Directory::vardir + "/support/key");
     }
 
-	map keydata = $[];
+	map<string, any> keydata = $[];
 
 	keydata["name1"]	= SCR::Read(.support.key.KEY_NAME1);
 	keydata["name2"]	= SCR::Read(.support.key.KEY_NAME2);
@@ -48,7 +48,7 @@
      * @param keydata the data to write
      * @return success
      */
-    define boolean write_supportkey (map keydata)
+    define boolean write_supportkey (map<string, any> keydata)
     ``{
 
 	SCR::Write(.support.key.KEY_NAME1,	keydata["name1"]:"");
@@ -72,7 +72,7 @@
      * @param keydata the data to check
      * @return non-empty message if somethings missing
      */
-    define string check_supportkey (map keydata)
+    define string check_supportkey (map<string, any> keydata)
     ``{
 
 	string message = "";
