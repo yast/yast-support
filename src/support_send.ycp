@@ -114,7 +114,7 @@ transfer the data to another computer by floppy disk.</p>");
 		// cant connect to server, popup message 1 of 3
 		string message_text = _("Can't connect to SuSE support server.");
 		// cant connect to server, popup message 2 of 3
-		message_text = message_text + "\n" + _("Please check your Internet connection");
+		message_text = message_text + "\n" + _("Check your Internet connection");
 		// cant connect to server, popup message 3 of 3
 		message_text = message_text + "\n" + _("or choose 'save to disk' and send a printed copy by mail.");
 		UI::ErrorPopup (message_text);
@@ -129,7 +129,7 @@ transfer the data to another computer by floppy disk.</p>");
 		    // failed to upload data to server, popup message 1 of 3
 		    string message_text = _("Can't connect to SuSE support server.");
 		    // failed to upload data to server, popup message 2 of 3
-		    message_text = message_text + "\n" + _("Please check your Internet connection");
+		    message_text = message_text + "\n" + _("Check your Internet connection");
 		    // failed to upload data to server, popup message 3 of 3
 		    message_text = message_text + "\n" + _("or try again later.");
 		    UI::ErrorPopup (message_text);

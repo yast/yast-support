@@ -108,7 +108,7 @@
     string help = _("<p><b>Support Module</b></p>\n");
 
 	//helptext 2 of 4
-        help = help + _("<p>Please enter your personal information as completely as possible 
+        help = help + _("<p>Enter your personal information as completely as possible 
 in this form. This allows us to reach you if, for example, it 
 is not possible to e-mail you. Also it will enable us to enter your information during 
 the registration process necessary for support.</p>
@@ -212,7 +212,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	{
 	    not_ok = true;
 	    // warning message
-	    UI::ErrorPopup (_("Please check either Mrs. or Mr."));
+	    UI::ErrorPopup (_("Check either Mrs. or Mr."));
 	}
 	else if (lookup (regdata, "name1", "") == "")
 	{
@@ -230,7 +230,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	{
 		not_ok = true;
 		// warning message
-		UI::ErrorPopup (_("Please enter your e-mail address"));
+		UI::ErrorPopup (_("Enter your e-mail address."));
 	}
 	else if (lookup (regdata, "regcode", "") == "")
 	{
@@ -248,7 +248,7 @@ what it has to offer in the appendix at the end of your manual.</p>");
 	    {
 		not_ok = true;
 		// warning message
-		UI::ErrorPopup (_("Please enter a valid e-mail address"));
+		UI::ErrorPopup (_("Enter a valid e-mail address"));
 	    }
 	}
 
