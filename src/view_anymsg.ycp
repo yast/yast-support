@@ -71,12 +71,14 @@
 	{
 	    // the default is either given via WFM::Args() -> filename != ""
 	    // or by a filename starting with "*"
-	    if (name == filename)
+	    if (!set_default
+		&& (name == filename))
 	    {
 		combo_files = add (combo_files, `item(`id(name), name, true));
 		set_default = true;
 	    }
-	    else if (substring (name, 0, 1) == "*")
+	    else if (!set_default
+		     && (substring (name, 0, 1) == "*"))
 	    {
 		name = substring (name, 1);	// strip leading "*"
 		if (filename == "")
