@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri May  7 16:40:43 CEST 2004 - mvidner@suse.cz
+
+- Merged messages from proofreading.
+- 2.9.4
+
+-------------------------------------------------------------------
 Fri Apr  2 17:10:38 CEST 2004 - msvec@suse.cz
 
 - fixed log viewer in ncurses menu (#38088)

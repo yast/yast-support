@@ -121,7 +121,7 @@
 		      `VSpacing (1.0),
 		      // label for multi line edit widget where user can
 		      // describe the problem
-		      `MultiLineEdit (`id(`question), _("&Your question for SUSE support:"), keydata["question"]:""),
+		      `MultiLineEdit (`id(`question), _("&Your Question for SUSE Support:"), keydata["question"]:""),
 		      `VStretch ()
 		    );
 
