@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jan 11 16:12:24 CET 2001 - kkaempf@suse.de
+
+- gather more system informations
+
+-------------------------------------------------------------------
 Thu Jan 11 11:33:16 CET 2001 - kkaempf@suse.de
 
 - add proper regcode check
