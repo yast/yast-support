@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep 14 20:05:57 CEST 2001 - kkaempf@suse.de
+
+- adapt to new ycp syntax, fix translations.
+
+-------------------------------------------------------------------
 Fri Sep  7 04:48:22 CEST 2001 - bjacke@suse.de
 
 - use new sitar version and update information collector files
