@@ -1,5 +1,0 @@
-.rc.registration
-
-`ag_rcconfig(
-  RcFile("/var/lib/support/rc.registration")
-)

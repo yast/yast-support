@@ -1,4 +1,66 @@
 -------------------------------------------------------------------
+Thu Mar 21 19:01:22 CET 2002 - kkaempf@suse.de
+
+- Add option(`hstretch) to ComboWidget so ncurses displays it with
+  the right size (#15221).
+- Handle "close window" event as "abort" (#8643).
+
+-------------------------------------------------------------------
+Wed Mar 20 18:10:03 CET 2002 - kkaempf@suse.de
+
+- check for /etc/prelink.cache and report it in the question (#15273).
+
+-------------------------------------------------------------------
+Thu Mar 14 16:08:17 CET 2002 - kkaempf@suse.de
+
+- send "-none-" as question if user didn't enter any.
+
+-------------------------------------------------------------------
+Wed Mar 13 16:31:44 CET 2002 - mlasars@suse.de
+
+- added ##Y2support tags for cgi script
+
+-------------------------------------------------------------------
+Fri Mar  1 17:16:46 CET 2002 - kkaempf@suse.de
+
+- enhance logfile viewer
+- drop sitar require
+
+-------------------------------------------------------------------
+Fri Mar  1 12:02:02 CET 2002 - kkaempf@suse.de
+
+- all .include files changed to use siga, added 2 files,
+  hw.include & net.include
+
+- support_modules.pl
+  added net & hw option
+  removed not needed outputs
+
+- support_question.ycp
+  added buttons for cdr, network and hardware
+
+- support_send.ycp
+  added chmod 600 for support.request at the end
+
+- send_support_request.pl
+  changed url form 73 to 80
+
+- wrapper
+  added options (hw,net)
+  changed support_whatever() to call siga
+
+-------------------------------------------------------------------
+Mon Feb 25 19:45:59 CET 2002 - kkaempf@suse.de
+
+- adapt to Wizard library.
+- put key to /var/lib/support.
+
+-------------------------------------------------------------------
+Tue Feb 19 14:27:11 CET 2002 - kkaempf@suse.de
+
+- move support key data from rc.config to sysconfig.
+
+-------------------------------------------------------------------
 Thu Sep 20 17:31:09 CEST 2001 - gs@suse.de
 
 - new icons for startup log and system log

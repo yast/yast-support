@@ -1,0 +1,2 @@
+@commands = ("/usr/bin/siga no -x11 > /dev/null");
+@files = ();

@@ -1,7 +1,0 @@
-@commands = ("/usr/sbin/hwinfo --cdrom",
-	"/usr/sbin/hwinfo --storage_ctrl",
-	"/sbin/lsmod"
-	);
-
-@files = ("/etc/lilo.conf",
-	"/etc/init.d/boot.local");

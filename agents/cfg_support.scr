@@ -1,0 +1,5 @@
+.support.key
+
+`ag_ini(
+  SysConfigFile("/var/lib/support/key")
+)
