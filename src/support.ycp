@@ -30,21 +30,28 @@
 
 	while (ask_registration) {
 	    retval = CallFunction (`support_registration ());
-	    if (retval == `abort) {
+	    if (retval != `next) {
 		go_on = false;
 		break;
 	    }
-	    if (retval == `next) {
-		ask_registration = false;
-		if (lookup (regdata, "changed", false)) {
+	    else {
+		locale check_message = check_registration (regdata);
+		ask_registration = (check_message != _("NIL"));
+		if (ask_registration == true) {
+		    UI (`DisplayMessage (check_message));
+		}
+		else if (lookup (regdata, "changed", false)) {
 		    // popup when saving data
 		    UI (`DisplayMessage (_("Saving new registration data")));
 		    if (!write_registration (regdata)) {
 			// popup when saving failed
 			UI (`DisplayMessage (_("Saving of registration data failed !")));
 		    }
+		    break;
 		}
-		break;
+		else {
+		    break;
+		}
 	    }
 	} // while (ask_registration)
 
