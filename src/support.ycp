@@ -27,7 +27,9 @@
 
     // use string->locale propagation
     locale empty_locale = "";
-    boolean ask_registration = (check_registration (regdata) != empty_locale);
+    locale check_message = check_registration (regdata);
+    y2milestone ("empty_locale '%1', check_message '%2'", empty_locale, check_message);
+    boolean ask_registration = (check_message != empty_locale);
 
     boolean go_on = true;
 
@@ -41,7 +43,8 @@
 	    }
 	    else {
 		locale check_message = check_registration (regdata);
-		ask_registration = (check_message != _("NIL"));
+		y2milestone ("empty_locale '%1', check_message '%2'", empty_locale, check_message);
+		ask_registration = (check_message != empty_locale);
 		if (ask_registration == true) {
 		    UI (`ErrorPopup (check_message));
 		}
