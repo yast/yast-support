@@ -11,8 +11,9 @@ use Getopt::Std;
 #	-r rpm -qa
 #	-m lsmod
 #	-b /var/log/boot.msg
+#	-s generic software config
 
-getopts('purmb') or die "unknown option!";
+getopts('purmbs') or die "unknown option!";
 
 
 ## PCI
@@ -89,8 +90,9 @@ for (@out_boot,@out_mod,@out_pci,@out_rpm,@out_usb,@out_df,@out) {
 	print if $_;
 }
 
-print `/usr/bin/uptime`;
-open(REL, "< /etc/SuSE-release") or print "can't open /etc/SuSE-release: $!";
-print while (<REL>);
-close(REL);
-
+if ($opt_s) {
+	print `/usr/bin/uptime`;
+	open(REL, "< /etc/SuSE-release") or print "can't open /etc/SuSE-release: $!";
+	print while (<REL>);
+	close(REL);
+}
