@@ -25,8 +25,6 @@
     term contents = `VBox (
 		      // caption above view window
 		      `LogView (`id(`hwdata), _("Hardware data"), 7, 0),
-		      // caption above view window
-		      `LogView (`id(`swdata), _("Software data"), 7, 0),
 		      `VSpacing (1.0),
 		      `RadioButtonGroup(`id(`rb),
 			`VBox (
@@ -60,40 +58,43 @@ transfer the data to another computer by floppy disk.</p>"));
 
     string reg_file = "/var/lib/support/rc.registration";
 
-//    string user_data = "REGCODE "+ lookup (regdata, "regcode", "-none-") + "\n";
-//    user_data = user_data + "NAME "+lookup (regdata, "name1", "") + " " + lookup (regdata, "name2", "") + "\n";
-//    user_data = user_data + "EMAIL "+lookup (regdata, "email", "") + "\n";
-//    user_data = user_data + "\nREGISTRIERDATEN ENDE\n";
-//    user_data = user_data + "---\n" + lookup (regdata, "question", "") + "\n---\n";
     string user_data = "---\n" + lookup (regdata, "question", "") + "\n---\n";
-    string user_file = tmpdir+"/user.out";
+    string user_file = tmpdir + "/user.out";
 
     SCR(`Write(.target.string, user_file, user_data));
 
     string hw_data = "";
     string hw_file = tmpdir+"/hardware.out";
-    if (lookup (regdata, "hwdata", false)) {
-	SCR(`Execute(.target.bash, "/var/lib/support/eo.pl -u -p >" + hw_file));
-	hw_data = hw_data + SCR(`Read(.target.string, hw_file));
-    }
-
-    string sw_data = "";
-    string sw_file = tmpdir+"/software.out";
-    if (lookup (regdata, "swdata", false)) {
-	SCR(`Execute(.target.bash, "/var/lib/support/eo.pl -s -b -m -r -v -l -f -x -P -F >" + sw_file));
-	sw_data = sw_data + SCR(`Read(.target.string, sw_file));
-    }
+    string wrapper_options = "";
+    string output_format = "plain";
+    foreach (`option, `optval, regdata, ``{
+	if ((substring (option, 0, 2) == "--")
+	    && (optval == true))
+	{
+	    if (option == "--all")
+		output_format = "html";
+	    wrapper_options = wrapper_options + " " + option;
+	}
+    });
+    SCR(`Execute(.target.bash,
+	"/var/lib/support/wrapper --output="
+	+ output_format
+	+ wrapper_options
+	+" >" + hw_file));
+    hw_data = hw_data + SCR(`Read(.target.string, hw_file));
 
     UI(`ChangeWidget(`id(`hwdata), `Value, hw_data));
-    UI(`ChangeWidget(`id(`swdata), `Value, sw_data));
 
     any ret = UI (`UserInput());
 
-    string all_files = reg_file + " " + user_file + " " + hw_file + " " + sw_file;
+    string all_files = reg_file + " " + user_file + " " + hw_file;
 
-    if (ret == `next) {
-	if (UI(`QueryWidget (`id(`online), `Value)) == true) {
-	    if (SCR(`Execute(.target.bash, "/usr/lib/YaST2/bin/is_suse_there.sh")) != 0) {
+    if (ret == `next)
+    {
+	if (UI(`QueryWidget (`id(`online), `Value)) == true)
+	{
+	    if (SCR(`Execute(.target.bash, "/usr/lib/YaST2/bin/is_suse_there.sh")) != 0)
+	    {
 		// cant connect to server, popup message 1 of 3
 		string message_text = UI(_("Can't connect to SuSE support server."));
 		// cant connect to server, popup message 2 of 3
@@ -103,10 +104,12 @@ transfer the data to another computer by floppy disk.</p>"));
 		UI(`ErrorPopup (message_text));
 		ret = `again;
 	    }
-	    else {
+	    else
+	    {
 		// popup message, about to connect to support server
 		UI(`MessagePopup (_("Sending data via Internet")));
-		if (SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files)) != 0) {
+		if (SCR(`Execute(.target.bash, "/var/lib/support/send_support_request.pl " + all_files)) != 0)
+		{
 		    // failed to upload data to server, popup message 1 of 3
 		    string message_text = UI(_("Can't connect to SuSE support server."));
 		    // failed to upload data to server, popup message 2 of 3
@@ -118,7 +121,8 @@ transfer the data to another computer by floppy disk.</p>"));
 		}
 	    }
 	}
-	else if (UI(`QueryWidget (`id(`disk), `Value)) == true) {
+	else if (UI(`QueryWidget (`id(`disk), `Value)) == true)
+	{
 	    string disk_file = "/tmp/support.request";
 	    // popup message about where the "saving to disk" file resides
 	    string disk_message = sformat (UI(_("Saving data to %1")), disk_file);
@@ -128,7 +132,6 @@ transfer the data to another computer by floppy disk.</p>"));
     }
 
     SCR(`Execute(.target.remove, hw_file));
-    SCR(`Execute(.target.remove, sw_file));
 
     return ret;
 }
