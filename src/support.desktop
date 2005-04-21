@@ -16,7 +16,7 @@ X-SuSE-YaST-Geometry=
 X-SuSE-YaST-SortKey=
 X-SuSE-YaST-AutoInstResource=
 
-Icon=support
+Icon=yast-support
 Exec=/sbin/yast2 support 
 
 Name=Post a support query
