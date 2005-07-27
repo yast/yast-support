@@ -19,8 +19,8 @@ X-SuSE-YaST-AutoInstResource=
 Icon=yast-support
 Exec=/sbin/yast2 support 
 
-Name=Post a support query
-GenericName=Send an online query to the SuSE support portal
+Name=Support Query
+GenericName=Send an online query to the SUSE support portal
 Name[cs]=Dotaz na podporu
 GenericName[cs]=Zaslat online dotaz na portál podpory SuSE
 Name[de]=Support-Anfrage stellen
