@@ -1,0 +1,60 @@
+[Desktop Entry]
+Type=Application
+Categories=Qt;X-SuSE-YaST;X-SuSE-YaST-Misc;
+
+X-KDE-ModuleType=Library
+X-KDE-RootOnly=true
+X-KDE-HasReadOnlyMode=true
+X-KDE-Library=yast2
+X-SuSE-YaST-Call=support
+
+X-SuSE-YaST-Group=Misc
+X-SuSE-YaST-Argument=
+X-SuSE-YaST-RootOnly=true
+X-SuSE-YaST-AutoInst=
+X-SuSE-YaST-Geometry=
+X-SuSE-YaST-SortKey=
+X-SuSE-YaST-AutoInstResource=
+
+Icon=yast-support
+Exec=/sbin/yast2 support 
+
+Name=Support Query
+GenericName=Send an online query to the SUSE support portal
+Name[cs]=Dotaz na podporu
+GenericName[cs]=Zaslat online dotaz na portál podpory SuSE
+Name[de]=Support-Anfrage stellen
+GenericName[de]=Eine Support-Anfrage 'online' an das SuSE Support-Portal schicken
+Name[en]=Post a Support Query
+Name[es]=Enviar una petición de soporte
+GenericName[es]=Envie una petición en-linea a la página del soporte de SuSE
+Name[hu]=Telepítési kérdés küldése
+GenericName[hu]=Online kérdés küldése a SuSE terméktámogatásnak
+Name[it]=Inviate una domanda al supporto
+GenericName[it]=Inviate una richiesta online al portale di supporto SuSE
+Name[ko]=지원 요청 등록
+GenericName[ko]=질문을 온라인으로 SuSE 지원센터에 보내기
+Name[nl]=Verstuur een ondersteuningsvraag
+GenericName[nl]=Verstuur een online vraag naar het SuSE ondersteuningsportaal
+Name[pt]=Submeta uma pergunta de suporte
+GenericName[pt]=Envie uma pergunta online para o portal de suporte SuSE
+Name[sk]=Otázka na podporu
+GenericName[sk]=Poslať otázku podpore SuSE cez portál
+Name[sv]=Skicka en fråga till supporten
+GenericName[sv]=Skicka en online-fråga till SuSE:s supportportal
+Name[da]=Send et supportspørgsmål
+GenericName[da]=Send et online-spørgsmål til SuSEs supportportal
+Name[el]=Ταχυδρομήστε μια ερώτηση υποστήριξης
+GenericName[el]=Στείλτε μια online ερώτηση στον δικτυακό τόπο υποστήριξης της SuSE
+Name[en]=Post a Support Query
+Name[fr]=Envoyer une requête d'assistance technique
+GenericName[fr]=Envoyer une requête en ligne au portail d'assistance de SuSE
+Name[ja]=技術サポートへ質問を送信する。
+GenericName[ja]=SuSE の技術サポートへ質問を送信する。
+Name[lt]=Išsiųsti užklausą
+GenericName[lt]=Siųsti užklausą SuSE pagalbos portalui
+Name[sl]=Pošlji zahtevo o podpori
+GenericName[sl]=Pošlji zahtevo o podpori po liniji na SuSE podporni portal.
+Name[tr]=Destek isteği yolla
+GenericName[tr]=SuSE destek merkezine çevrimiçi bir istek yollayın
+X-KDE-SubstituteUID=true

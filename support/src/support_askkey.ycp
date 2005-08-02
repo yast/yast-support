@@ -1,0 +1,278 @@
+/**
+ * support_askkey.ycp
+ *
+ * present/ask support data
+ *
+ *  keydata = $["key"
+ * 		"salutation"
+ * 		"name1"
+ * 		"name2"
+ * 		"company"
+ * 		"street"
+ * 		"zip"
+ * 		"country"
+ * 		"state"
+ * 		"city"
+ * 		"email"
+ *
+ * $Id$
+ */
+{
+    textdomain "support";
+    import "Wizard";
+    import "Popup";
+
+    include "support/supportio.ycp";
+    map<string, any> keydata = read_supportkey ();
+
+define any support_askkey ()
+``{
+
+    y2milestone ("keydata in '%1'", keydata);
+
+    map<string, any> old_keydata = keydata;
+
+    string key		= keydata["key"]:"";
+    string salutation	= keydata["salutation"]:"";
+    string name1	= keydata["name1"]:"";
+    string name2	= keydata["name2"]:"";
+    string company	= keydata["company"]:"";
+    string street	= keydata["street"]:"";
+    string zip		= keydata["zip"]:"";
+    string country	= keydata["country"]:"";
+    string state	= keydata["state"]:"";
+    string city		= keydata["city"]:"";
+    string email	= keydata["email"]:"";
+
+    if (keydata["changed"]:false)
+    {
+	keydata["changed"] = false;
+    }
+
+    term contents = `VBox (
+		      // frame for support data screen
+		      `Frame (_("Enter support data"),
+			`VBox (
+			  `RadioButtonGroup(`id(`rb),
+			  `HBox (
+			    //`CheckBox (`id(`male), _("&Mr")),
+			    //`CheckBox (`id(`female), _("Mr&s")),
+			    // radion button
+			    `RadioButton (`id(`male), _("Mr."), (salutation == "male")),
+			    // radion button
+			    `RadioButton (`id(`female), _("Mrs."), (salutation == "female")),
+			    `HStretch ()
+			  )),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			    `TextEntry (`id(`name1), _("&First name:"), name1),
+			    `HSpacing (0.5),
+			    // text entry
+			    `TextEntry (`id(`name2), _("&Last name:"), name2),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			    `TextEntry (`id(`company), _("&Company:"), company),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			    `TextEntry (`id(`street), _("&Street:"), street),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			      `HWeight (20, `TextEntry (`id(`zip), _("&ZIP:"), zip)),
+			    // text entry
+			      `HWeight (80, `TextEntry (`id(`city), _("&City:"), city)),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			      `HWeight (20, `TextEntry (`id(`state), _("&State:"), state)),
+			    // text entry
+			      `HWeight (80, `TextEntry (`id(`country), _("&Country:"), country)),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			    `TextEntry (`id(`email), _("&E-mail:"), email),
+			    `HSpacing (0.5)
+			  ),
+			  `HBox (
+			    `HSpacing (0.5),
+			    // text entry
+			    `TextEntry (`id(`key), _("&Support Key:"), key),
+			    `HSpacing (0.5)
+			  )
+		        )
+		      )
+		    );
+
+    // helptext 1 of 3
+    string help = _("<p><b>Support Module</b></p>\n");
+
+    // helptext 2 of 3
+    help = help + _("<p>Enter your personal information as completely as possible
+                     in this form. This allows us to reach you if, for example, it 
+                     is not possible to e-mail you.</p>");
+
+    // helptext 3 of 3
+    help = help + _("<p>To avoid additional inquiries, review
+                        the support key entered.</p>
+");
+
+    // screen caption
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
+
+    boolean not_ok = true;
+    boolean changed = false;
+    any ret = nil;
+
+    while (not_ok)
+    {
+	ret = UI::UserInput();
+
+	not_ok = false;
+	changed = false;
+
+	y2milestone (sformat ("ret '%1'", ret));
+
+	if ((ret == `back)
+	    || (ret == `cancel)		// close window
+	    || (ret == `abort))
+	{
+	    keydata = old_keydata;
+	    break;
+	}
+
+	// ret == `next
+
+	string value = "";
+
+	if (salutation != "male"
+	    && UI::QueryWidget(`id(`male), `Value) == true)
+	{
+	    keydata["salutation"] = "male"; changed = true;
+	} else if (salutation != "female"
+		   && UI::QueryWidget(`id(`female), `Value) == true)
+	{
+	    keydata["salutation"] = "female"; changed = true;
+	}
+
+	value = (string) UI::QueryWidget(`id(`name1), `Value);
+	if (value != name1)
+	{
+	    keydata["name1"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`name2), `Value);
+	if (value != name2)
+	{
+	    keydata["name2"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`company), `Value);
+	if (value != company)
+	{
+	    keydata["company"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`street), `Value);
+	if (value != street)
+	{
+	    keydata["street"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`zip), `Value);
+	if (value != zip)
+	{
+	    keydata["zip"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`city), `Value);
+	if (value != city)
+	{
+	    keydata["city"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`state), `Value);
+	if (value != state)
+	{
+	    keydata["state"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`country), `Value);
+	if (value != country)
+	{
+	    keydata["country"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`email), `Value);
+	if (value != email)
+	{
+	   keydata["email"] = value; changed = true;
+	}
+	value = (string) UI::QueryWidget(`id(`key), `Value);
+	if (value != key)
+	{
+	   keydata["key"] = value; changed = true;
+	}
+
+	if (keydata["salutation"]:"" == "")
+	{
+	    not_ok = true;
+	    // warning message
+	    Popup::Error (_("Check either Mrs. or Mr."));
+	}
+	else if (keydata["name1"]:"" == "")
+	{
+	    not_ok = true;
+	    // warning message
+	    Popup::Error (_("Please enter your first name"));
+	}
+	else if (keydata["name2"]:"" == "")
+	{
+	    not_ok = true;
+	    // warning message
+	    Popup::Error (_("Please enter your last name"));
+	}
+	else if (keydata["email"]:"" == "")
+	{
+	    not_ok = true;
+	    // warning message
+	    Popup::Error (_("Enter your e-mail address."));
+	}
+	else if (keydata["key"]:"" == "")
+	{
+	    not_ok = true;
+	    // warning message
+	    Popup::Error (_("Please enter your support key"));
+	}
+	else
+	{
+	    string email = keydata["email"]:"";
+	    // email shoul be at least a@b.cc
+	    if ((size (email) < 6)
+		|| (findfirstof ("@", email) < 0)
+		|| (findfirstof (".", email) < 0))
+	    {
+		not_ok = true;
+		// warning message
+		Popup::Error (_("Enter a valid e-mail address"));
+	    }
+	}
+
+    } // while (not_ok)
+
+    y2milestone (sformat ("exit '%1'", ret));
+
+    if (changed)
+    {
+	keydata["changed"] = true;
+    }
+
+    y2milestone ("keydata out '%1'", keydata);
+
+    return ret;
+}
+}

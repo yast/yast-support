@@ -1,0 +1,51 @@
+// testedfiles: supportio.ycp
+
+{
+
+    include "testsuite.ycp";
+
+    include "support/supportio.ycp";
+
+    map WRITE_ok =
+    $[ "support":
+		$[ "key": true ]
+	];
+
+    map WRITE_notok =
+    $[ "support":
+		$[ "key": false ]
+	];
+
+    map<string,any> keydata =
+    $[ "name1": "Washington",
+       "name2": "Irwing",
+       "salutation": "male",
+       "company": "M&M",
+       "street": "",
+       "zip": "",
+       "country": "Italy",
+       "state": "",
+       "city": "",
+       "email": "WI@IW.jh",
+       "key": "WI-CATCH22-Yo-Yo"
+    ];
+
+    // keydata map succesfully written to the file
+	TEST (``(write_supportkey(keydata)), [ $[], WRITE_ok, $[] ], nil);
+    DUMP ("----------------------");
+
+    // unsuccesfull write to the file
+	TEST (``(write_supportkey(keydata)), [ $[], WRITE_notok, $[] ], nil);
+    DUMP ("----------------------");
+
+    keydata =
+    $[ "name1": "Washington",
+       "name2": "Irwing",
+       "salutation": "male",
+       "email": "WI@IW.jh",
+       "key": "WI-CATCH22-Yo-Yo"
+       ];
+
+    // keydata map is not full - for mising keys the empty string is written
+	TEST (``(write_supportkey(keydata)), [ $[], WRITE_ok, $[] ], nil);
+}

@@ -1,0 +1,203 @@
+/**
+ * support_question.ycp
+ *
+ * asking a support question
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ *
+ */
+{
+    textdomain "support";
+
+    import "Wizard";
+
+    define any support_question ()
+``{
+
+    // support_question.ycp
+
+    // checkbox labels to identify a support question
+    // keep the words short, 12 characters are maximum !
+    map<string, string> ask_options = $[
+	"--isdn"	: _("&ISDN"),
+	"--printer"	: _("&Printer"),
+	"--x11"		: _("&KDE/X11"),
+	"--boot"	: _("&Booting"),
+	"--sound"	: _("&Sound"),
+	"--laptop"	: _("&Notebook"),
+	"--mail"        : _("Mai&l"),
+	"--dsl"		: _("&DSL"),
+	"--modem"	: _("&Modem"),
+        "--cdr"         : _("&CD-R"),
+        "--net"         : _("Net&work"),
+        "--hw"          : _("&Hardware"),
+	"--install"	: _("I&nstallation"),
+        "--usb"         : _("&USB"),
+	"--all"		: _("&Unspecified")
+    ];
+
+    string id_for_all = "--all";
+
+    // frame label, around checkbuttons
+    term ui_category_all = `HBox (
+	    `Left (`RadioButton (`id(id_for_all), `opt(`notify), ask_options[id_for_all]:"", keydata[id_for_all]:true)));
+    /*
+	    `Left (`RadioButton (`id(id_for_all), `opt(`notify), ask_options[id_for_all]:"", keydata[id_for_all]:false)));
+    One radiobutton has to be checked, otherwise wrapper doesn't generate output
+    */
+
+    term ui_category_left   = `VBox ();
+    term ui_category_middle = `VBox ();
+    term ui_category_right  = `VBox ();
+
+    integer side = 0;	// start left
+
+    foreach ( string ckey, string clabel, ask_options,
+    ``{
+	if (ckey != id_for_all)
+	{
+	    if (side == 0)
+	    {
+		side = 1;
+		ui_category_left = add (ui_category_left,
+		    `Left (`RadioButton (`id(ckey), `opt(`notify), clabel, keydata[ckey]:false)));
+	    }
+	    else if (side == 1)
+	    {
+		side = 2;
+		ui_category_middle = add (ui_category_middle,
+		    `Left (`RadioButton (`id(ckey), `opt(`notify), clabel, keydata[ckey]:false)));
+	    }
+	    else
+	    {
+		side = 0;
+		ui_category_right = add (ui_category_right,
+		    `Left (`RadioButton (`id(ckey), `opt(`notify), clabel, keydata[ckey]:false)));
+	    }
+	}
+    });
+
+    // present/ask question data
+
+    term contents = `VBox (
+			// frame heading
+		      `VBox (
+			`Left (
+			  `HBox (
+			    // label for support key field
+			    // !! CAUTION !!
+			    // Check with SUSE if this should be translated
+			    // e.g. for germany, do _not_ translate it.
+			    `Label (_("Support Key:")),
+			    `Label (keydata["key"]:"")
+			  )
+			),
+			`Left (
+			  `HBox (
+			    `Label (keydata["name1"]:""),
+			    `Label (keydata["name2"]:""),
+			    `HStretch (),
+			    // push button for changing key data
+                `PushButton (`id(`ask_key), _("&Change"))
+			  )
+			)
+		      ),
+		      `VSpacing (1.0),
+		      // frame label, around checkbuttons
+		      `Frame (_("Choose a category"),
+			`RadioButtonGroup(`id(`categories),
+			  `VBox (
+			    ui_category_all,
+			    `HBox (
+			      `Top(ui_category_left),
+			      `Top(ui_category_middle),
+			      `Top(ui_category_right)
+			    )
+			  )
+			)
+		      ),
+		      `VSpacing (1.0),
+		      // label for multi line edit widget where user can
+		      // describe the problem
+		      `MultiLineEdit (`id(`question), _("&Your Question for SUSE Support:"), keydata["question"]:""),
+		      `VStretch ()
+		    );
+
+        //helptext 1 of 5
+    string help = _("<p><b>Support Question</b></p>\n");
+
+        //helptext 2 of 5
+    help = help + _("<p>Describe your problem briefly, but as thoroughly as possible.
+Exact error messages and previous actions taken
+are especially important.</p>
+");
+
+        //helptext 3 of 5
+    help = help + _("<p>Do not include more than one question in a mail.
+Separate multiple requests into different
+subject blocks and write a specific request for each topic. This makes
+them easier to process, accelerating responses.</p>
+");
+
+        //helptext 4 of 5
+/*    help = help + _("<p>The hardware and software information serves to determine
+the basic system information and configuration on your computer. When in doubt,
+this information can be helpful for support and should therefore only be deactivated
+with good reason.</p>
+");*/
+    help = help + _("<p>The hardware and software information serves to determine
+the basic system information and configuration on your computer.</p>
+");
+
+    string website = "http://www.suse.de/en/support";
+    string language = substring (UI::GetLanguage(true), 0, 2);
+    if (language == "de")
+    {
+	website = "http://www.suse.de/de/support";
+    }
+    if (language == "cs")
+    {
+	website = "http://www.suse.cz/cz/support";
+    }
+
+        //helptext 5 of 5
+	// keep the '%1' in the text, it will be replaced by an URL at runtime !
+    help = help + sformat (_("<p>If you need further support for individual problems,
+consider using the SUSE Professional Services. Find more information about this at %1.</p>
+"), website);
+
+    // screen title
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
+//    UI::ChangeWidget("
+
+    any ret = nil;
+    boolean go_on = true;
+
+    while (go_on)
+    {
+	ret = UI::UserInput();
+
+	if (is(ret, string))
+	{
+	    go_on = true;	// dummy
+	}
+	else if ((ret != `abort) && (ret != `cancel))
+	{
+	    keydata["question"] = UI::QueryWidget (`id(`question), `Value);
+	    foreach (string ckey, string clabel, ask_options,
+	    ``{
+		keydata[ckey] = UI::QueryWidget (`id(ckey), `Value);
+	    });
+	    go_on = false;
+	}
+	else
+	{
+	    go_on = false;
+	}
+    }
+
+    return ret;
+}
+}

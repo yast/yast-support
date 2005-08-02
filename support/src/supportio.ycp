@@ -1,0 +1,115 @@
+/**
+ * support/supportio.ycp
+ *
+ * functions for support key I/O
+ *
+ * read support key data from file
+ * return complete map
+ *
+ * $Id$
+ */
+{
+    import "Directory";
+    textdomain "support";
+
+    /**
+     * Reads the user's support data, should be in $vardir/support/key.
+     * @return support key data
+     */
+    define map<string,any> read_supportkey()
+    ``{
+
+    // Check if the "support key" file is present
+    if (SCR::Read(.target.stat, Directory::vardir + "/support/key") == $[])
+    {
+        SCR::Execute(.target.mkdir, Directory::vardir + "/support");
+        SCR::Execute(.target.bash, "/bin/cp " + Directory::ydatadir + "/support/key " + Directory::vardir + "/support/key");
+    }
+
+	map<string, any> keydata = $[];
+
+	keydata["name1"]	= SCR::Read(.support.key.KEY_NAME1);
+	keydata["name2"]	= SCR::Read(.support.key.KEY_NAME2);
+	keydata["salutation"]	= SCR::Read(.support.key.KEY_SALUTATION);
+	keydata["company"]	= SCR::Read(.support.key.KEY_COMPANY);
+	keydata["street"]	= SCR::Read(.support.key.KEY_STREET);
+	keydata["zip"]		= SCR::Read(.support.key.KEY_ZIP);
+	keydata["country"]	= SCR::Read(.support.key.KEY_COUNTRY);
+	keydata["state"]	= SCR::Read(.support.key.KEY_STATE);
+	keydata["city"]		= SCR::Read(.support.key.KEY_CITY);
+	keydata["email"]	= SCR::Read(.support.key.KEY_EMAIL);
+	keydata["key"]		= SCR::Read(.support.key.KEY_CODE);
+
+	return keydata;
+    };
+
+    /**
+     * Writes the support key data.
+     * @param keydata the data to write
+     * @return success
+     */
+    define boolean write_supportkey (map<string, any> keydata)
+    ``{
+
+	SCR::Write(.support.key.KEY_NAME1,	keydata["name1"]:"");
+	SCR::Write(.support.key.KEY_NAME2,	keydata["name2"]:"");
+	SCR::Write(.support.key.KEY_SALUTATION,	keydata["salutation"]:"");
+	SCR::Write(.support.key.KEY_COMPANY,	keydata["company"]:"");
+	SCR::Write(.support.key.KEY_STREET,	keydata["street"]:"");
+	SCR::Write(.support.key.KEY_ZIP,	keydata["zip"]:"");
+	SCR::Write(.support.key.KEY_COUNTRY,	keydata["country"]:"");
+	SCR::Write(.support.key.KEY_STATE,	keydata["state"]:"");
+	SCR::Write(.support.key.KEY_CITY,	keydata["city"]:"");
+	SCR::Write(.support.key.KEY_EMAIL,	keydata["email"]:"");
+	SCR::Write(.support.key.KEY_CODE,	keydata["key"]:"");
+
+	return SCR::Write(.support.key, nil);
+
+    };
+
+    /**
+     * Check if support key data is complete.
+     * @param keydata the data to check
+     * @return non-empty message if somethings missing
+     */
+    define string check_supportkey (map<string, any> keydata)
+    ``{
+
+	string message = "";
+
+	if (keydata["salutation"]:"" == "")
+	{
+	    message = _("Check either Mrs. or Mr.");
+	}
+	else if (keydata["name1"]:"" == "")
+	{
+	    message = _("Please enter your first name");
+	}
+	else if (keydata["name2"]:"" == "")
+	{
+	    message = _("Please enter your last name");
+	}
+	else if (keydata["email"]:"" == "")
+	{
+	    message = _("Enter your e-mail address.");
+	}
+	else if (size (keydata["key"]:"") < 14)
+	{
+	    // keep the term "support key" in german translation
+	    message = _("Please enter your support key");
+	}
+	else
+	{
+	    string email = keydata["email"]:"";
+	    if(email == nil) email = "";
+
+	    if ((findfirstof (email, "@") == nil)
+		 || (findfirstof (email, ".") == nil))
+	    {
+		message = _("Enter a valid e-mail address");
+	    }
+	}
+
+	return message;
+    };
+}

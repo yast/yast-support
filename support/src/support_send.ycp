@@ -1,0 +1,209 @@
+/**
+ * support_send.ycp
+ *
+ * sending a support question
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ *
+ */
+{
+    textdomain "support";
+
+    import "Wizard";
+    import "Directory";
+    import "Label";
+    import "Popup";
+
+    define any support_send(any retval)
+``{
+
+    map send_options = $[
+	"mail"		: _("via &e-mail"),
+	"file"		: _("&local file"),
+	"floppy"	: _("to &floppy disk"),
+	"html"		: _("&view"),
+	"tex"		: _("&TeX")
+    ];
+
+
+    // set up and execute wrapper script
+
+    string bindir = Directory::bindir;
+
+    string key_file = Directory::vardir + "/support/key";
+    string tmpdir = (string) SCR::Read(.target.tmpdir);
+
+    string question = keydata["question"]:"";
+    if (question == "")
+	question = "-none-";
+
+    integer has_prelink = (integer) SCR::Read(.target.size, "/etc/prelink.cache");
+    if (has_prelink > 0)
+    {
+	question = "** /etc/prelink.cache > 0 **\n" + question;
+    }
+
+    string user_data = "---\n" + question + "\n---\n";
+    string user_file = tmpdir + "/user.out";
+
+    SCR::Write(.target.string, user_file, user_data);
+
+    string wrapper_file = tmpdir+"/wrapper.out";
+    string wrapper_options = "";
+    any wrapper_data = "";
+    string output_format = "plain";
+    foreach (string option, any optval, keydata,
+    ``{
+	if ((substring (option, 0, 2) == "--")
+	    && (optval == true))
+	{
+        /*
+	    if (option == "--all")
+		    output_format = "html";
+        */
+	    wrapper_options = wrapper_options + " " + option;
+            //wrapper_options = wrapper_options " " option;
+	}
+    });
+
+    string wrapper_cmd = bindir + "/support/wrapper --output="
+	+ output_format
+	+ wrapper_options
+	+" >"
+	+ wrapper_file;
+
+    // execute wrapper only first time in this dialog
+    if (retval == `first) {
+
+    y2milestone ("running %1", wrapper_cmd);
+
+    UI::OpenDialog (`opt(`decorated), `HBox(`HSpacing(1), `Label(Label::PleaseWaitMsg()), `HSpacing(1)));
+    SCR::Execute(.target.bash, wrapper_cmd);
+    UI::CloseDialog();
+
+    // read output from wrapper
+    wrapper_data = SCR::Read(.target.string, wrapper_file);
+
+    }
+
+    // helptext 1 of 3
+    string help = _("<p><b>Support Data</b></p>\n");
+
+    //helptext 2 of 3
+    help = help + _("<p>Here, see an overview of the information
+transmitted. The transfer takes place by HTTP uploading.</p>
+");
+
+    //helptext 3 of 3
+    help = help + _("<p>If you do not have Internet access on your Linux system,
+save the data instead to the hard drive (save to disk) and from there
+transfer the data to another computer by floppy disk.</p>");
+
+    // support_question.ycp
+    // present/ask question data
+
+    term contents = `Dummy();
+    /*
+    if (output_format != "plain")
+    {
+	contents = `VBox (`RichText (`id(`data), ""));
+    }
+    else
+    {
+	contents = `VBox (`LogView (`id(`data), "", 7, 0));
+    }
+    */
+    // Why should be used RichText/html when wrapper reads txt-file?
+	contents = `VBox (`LogView (`id(`data), "", 7, 0));
+
+    contents = add (contents, `VSpacing (1.0));
+    contents = add (contents, `RadioButtonGroup(
+	`id(`rb),
+	`VBox (
+	    `Left (`HBox (
+		// radio button
+		`RadioButton (`id(`online), _("Transmission via Internet to SUSE Support"), true),
+		// radio button
+		`RadioButton (`id(`disk), _("save to disk"), false)
+	    ))
+	)
+	));
+
+    // screen caption
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
+
+	UI::ChangeWidget(`id(`data), `Value, wrapper_data);
+
+
+
+    any ret = `dummy;
+    boolean go_on = true;
+
+    while (go_on)
+    {
+	ret = UI::UserInput();
+	if ((ret == `next)
+	    || (ret == `back)
+	    || (ret == `abort)
+	    || (ret == `cancel))
+	{
+	    go_on = false;
+	}
+    }
+
+    string all_files = key_file + " " + user_file + " " + wrapper_file;
+
+    if (ret == `next)
+    {
+	if (UI::QueryWidget (`id(`online), `Value) == true)
+	{
+	    if (SCR::Execute(.target.bash, bindir + "/support/is_suse_there.sh") != 0)
+	    {
+		// cant connect to server, popup message 1 of 3
+		string message_text = _("Cannot connect to SUSE support server.");
+		// cant connect to server, popup message 2 of 3
+		message_text = message_text + "\n" + _("Check your Internet connection");
+		// cant connect to server, popup message 3 of 3
+		message_text = message_text + "\n" + _("or choose 'save to disk' and send a printed copy by mail.");
+		Popup::Error (message_text);
+		ret = `again;
+	    }
+	    else
+	    {
+		// popup message, about to connect to support server
+		Popup::Message (_("Sending data via Internet"));
+		if (SCR::Execute(.target.bash, bindir + "/support/send_support_request.pl " + all_files) != 0)
+		{
+		    // failed to upload data to server, popup message 1 of 3
+		    string message_text = _("Cannot connect to SUSE support server.");
+		    // failed to upload data to server, popup message 2 of 3
+		    message_text = message_text + "\n" + _("Check your Internet connection");
+		    // failed to upload data to server, popup message 3 of 3
+		    message_text = message_text + "\n" + _("or try again later.");
+		    Popup::Error (message_text);
+		    ret = `again;
+		}
+	    }
+	}
+	else if (UI::QueryWidget (`id(`disk), `Value) == true)
+	{
+	    string disk_file = "/tmp/siga/support.request";
+	    // popup message about where the "saving to disk" file resides
+	    string disk_message = sformat (_("Saving data to %1"), disk_file);
+	    Popup::Message (disk_message);
+	    SCR::Execute(.target.bash, "/bin/cat " + all_files + " > " + disk_file);
+            SCR::Execute(.target.bash, "/bin/chmod 600 /tmp/siga/support.request");
+	}
+    }
+
+    if (ret != `again)
+    {
+        SCR::Execute(.target.remove, user_file);
+        SCR::Execute(.target.remove, wrapper_file);
+    }
+
+    return ret;
+}
+}
