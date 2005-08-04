@@ -12,8 +12,6 @@
     import "Wizard";
     import "Popup";
 
-    //include "support/supportio.ycp";
-    //include "support/support_askkey.ycp";
     include "support/support_question.ycp";
     include "support/support_send.ycp";
 
@@ -63,7 +61,7 @@
 	    if (retval == `next)
 	    {
 		// just a final text to give user a 'good' feeling
-		Popup::Message (_("Thank you for using SuSE support"));
+		Popup::Message (_("Thank you for using SUSE support"));
 		go_on = false;
 	    }
 	}
