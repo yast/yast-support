@@ -20,11 +20,11 @@ Icon=yast-support
 Exec=/sbin/yast2 support 
 
 Name=Support Query
-GenericName=Send an online query to the SUSE support portal
+GenericName=Collect basic information for your support request
 Name[cs]=Dotaz na podporu
 GenericName[cs]=Zaslat online dotaz na portál podpory SuSE
-Name[de]=Support-Anfrage stellen
-GenericName[de]=Eine Support-Anfrage 'online' an das SuSE Support-Portal schicken
+Name[de]=Support-Anfrage
+GenericName[de]=Grundlegende Systeminformationen für Ihre Support-Anfrage
 Name[en]=Post a Support Query
 Name[es]=Enviar una petición de soporte
 GenericName[es]=Envie una petición en-linea a la página del soporte de SuSE
