@@ -12,8 +12,8 @@
     import "Wizard";
     import "Popup";
 
-    include "support/supportio.ycp";
-    include "support/support_askkey.ycp";
+    //include "support/supportio.ycp";
+    //include "support/support_askkey.ycp";
     include "support/support_question.ycp";
     include "support/support_send.ycp";
 
@@ -35,69 +35,19 @@
     string wrapper_data = "";
     string tmpdir = (string) SCR::Read(.target.tmpdir);
 
-    // keydata is global !
-    // map keydata = read_supportkey ();
-
     Wizard::CreateDialog();
     Wizard::SetDesktopIcon("support");
-    Wizard::HideAbortButton();
-
-    // if no valid supportkey data present, ask !
+    Wizard::HideBackButton();
 
     any retval = nil;
-
-    string check_message = check_supportkey (keydata);
-    y2milestone ("check_message '%1'", check_message);
-    boolean ask_key = (check_message != "");
 
     boolean go_on = true;
 
     while (go_on)
     {
 
-	while (ask_key)
-	{
-		retval = support_askkey();	    
-	    if (retval != `next)
-	    {
-		go_on = false;
-		break;
-	    }
-	    else
-	    {
-		string check_message = check_supportkey (keydata);
-		y2milestone ("check_message '%1'", check_message);
-		ask_key = (check_message != "");
-		if (ask_key == true)
-		{
-		    Popup::Error (check_message);
-		}
-		else if (keydata["changed"]:false)
-		{
-		    // popup when saving data
-		    Popup::Message (_("Saving new supportkey data"));
-		    if (!write_supportkey (keydata))
-		    {
-			// popup when saving failed
-			Popup::Error (_("Saving of supportkey data failed !"));
-		    }
-		    break;
-		}
-		else
-		{
-		    break;
-		}
-	    }
-	} // while (ask_key)
-
-	if (go_on == false)
-	    break;
 	retval = support_question ();
-	if (retval == `ask_key)
-	{
-	    ask_key = true;
-	}
-	else if (retval == `back)
+	if (retval == `back)
 	{
 	    retval = `abort;
 	}
@@ -105,7 +55,7 @@
 	{
 	    retval = `first;
 	    // support_send might return `again, loop here
-        // but do not need to generate & read info again - only for first time
+            // but do not need to generate & read info again - only for first time
 	    while (retval == `again || retval == `first)
 	    {
 		retval = support_send (retval);
