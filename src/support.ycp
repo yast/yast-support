@@ -39,37 +39,33 @@
 
     any retval = nil;
 
-    boolean go_on = true;
-
-    while (go_on)
+    while(true)
     {
-
 	retval = support_question ();
-	if (retval == `back)
-	{
-	    retval = `abort;
-	}
+
+        if (retval == `back
+	    || retval == `abort)
+	    break;
 	else if (retval == `next)
 	{
 	    retval = `first;
 	    // support_send might return `again, loop here
             // but do not need to generate & read info again - only for first time
 	    while (retval == `again || retval == `first)
-	    {
 		retval = support_send (retval);
-	    }
+
+            if (retval == `abort)
+	        break;
+
 	    if (retval == `next)
 	    {
 		// just a final text to give user a 'good' feeling
 		Popup::Message (_("Thank you for using SUSE support"));
-		go_on = false;
+		break;
 	    }
 	}
 
-	if (retval == `abort)
-	{
-	    go_on = false;
-	}
+        y2milestone( "Ignoring unexpected returncode in support_question(): %1", retval);
     }
 
 
