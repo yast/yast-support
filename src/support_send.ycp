@@ -88,16 +88,15 @@
     string help = _("<p><b>Support Data</b></p>\n");
 
     //helptext 2 of 3
-    help = help + _("<p>Here you can see an overview of the information
-collected. The output file should be attached to your mail to support.</p>
-");
+    help = help + _("<p>Here, see an overview of the information
+collected. Attach the output file to your mail to support.</p>");
 
     //helptext 3 of 3
-    help = help + _("<p>For security reasons the output file is only readable 
-by root. To be able to attach the file to your mailer (started with your 
-user account), you have to change the permissions of the file manually. 
-In a shell enter the command like the following: <tt>chmod 644 /tmp/support.txt</tt>. 
-Note, that the file is now readable for every user on your system.
+    help = help + _("<p>For security reasons, the output file is only readable 
+by root. To be able to attach the file in a mailer started with your 
+user account, change the permissions of the file manually. 
+In a shell, enter the command like the following: <tt>chmod 644 /tmp/support.txt</tt>. 
+Note that the file is now readable for every user on your system.
 You may want to delete the file afterwards.</p>
 ");
 
