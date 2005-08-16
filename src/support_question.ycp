@@ -103,7 +103,7 @@
     string help = _("<p><b>Support Information</b></p>\n");
 
         //helptext 2 of 5
-    help = help + _("<p>Please choose the category you encounter problems with.</p>");
+    help = help + _("<p>Choose the category that applies to your problem.</p>");
 
     help = help + _("<p>The hardware and software information serves to determine
 the basic system information and configuration on your computer.</p>
