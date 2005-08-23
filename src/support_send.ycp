@@ -27,7 +27,7 @@
 	"tex"		: _("&TeX")
     ];
 
-    string savefile = "/tmp/support.txt";
+    string savefile = "/root/support.txt";
 
     // set up and execute wrapper script
 
@@ -42,10 +42,10 @@
 	question = "** /etc/prelink.cache > 0 **\n" + question;
     }
 
-    string user_data = "---\n" + question + "\n---\n";
-    string user_file = tmpdir + "/user.out";
+    //string user_data = "---\n" + question + "\n---\n";
+    //string user_file = tmpdir + "/user.out";
 
-    SCR::Write(.target.string, user_file, user_data);
+    //SCR::Write(.target.string, user_file, user_data);
 
     string wrapper_file = tmpdir+"/wrapper.out";
     string wrapper_options = "";
@@ -95,7 +95,7 @@ collected. Attach the output file to your mail to support.</p>");
     help = help + _("<p>For security reasons, the output file is only readable 
 by root. To be able to attach the file in a mailer started with your 
 user account, change the permissions of the file manually. 
-In a shell, enter the command like the following: <tt>chmod 644 /tmp/support.txt</tt>. 
+In a shell, enter the command like the following: <tt>chmod 644 /root/support.txt</tt>. 
 Note that the file is now readable for every user on your system.
 You may want to delete the file afterwards.</p>
 ");
@@ -184,6 +184,7 @@ You may want to delete the file afterwards.</p>
     if (ret == `next)
     {
 	savefile = (string) UI::QueryWidget (`id(`savefile_input), `Value);
+	// check for security risks before overwriting the file
         y2milestone ("Saving data to %1", savefile);
         SCR::Execute(.target.bash, "/bin/cp " + wrapper_file + " " + savefile);
         SCR::Execute(.target.bash, "/bin/chmod 600 " + savefile);
@@ -191,7 +192,7 @@ You may want to delete the file afterwards.</p>
 
     if (ret != `again)
     {
-        SCR::Execute(.target.remove, user_file);
+        //SCR::Execute(.target.remove, user_file);
         SCR::Execute(.target.remove, wrapper_file);
     }
 
