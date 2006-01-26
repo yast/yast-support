@@ -1,7 +1,7 @@
 @HEADER-COMMENT@
-# neededforbuild yast2-devel-packages
 
 @HEADER@
+BuildRequires:	yast2-devel-packages
 Requires:	yast2 siga gzip
 
 Provides:	y2m_support yast2-module-support yast2-trans-support y2t_support
