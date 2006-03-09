@@ -1,7 +1,7 @@
 @HEADER-COMMENT@
 
 @HEADER@
-BuildRequires:	yast2-devtools doxygen pkg-config update-desktop-files perl-XML-Writer yast2-testsuite
+BuildRequires:	yast2-devtools doxygen pkg-config update-desktop-files perl-XML-Writer yast2-testsuite yast2
 Requires:	yast2 siga gzip
 
 Provides:	y2m_support yast2-module-support yast2-trans-support y2t_support

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Mar  9 16:39:30 CET 2006 - jsuchome@suse.cz
+
+- BuildRequires: added missing yast2
+- 2.13.2
+
+-------------------------------------------------------------------
 Mon Mar  6 08:00:29 CET 2006 - jsuchome@suse.cz
 
 - updated BuildRequires
