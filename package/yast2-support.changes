@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri May 19 06:23:34 CEST 2006 - stark@suse.de
+
+- added small documentation at the top of the output file
+- use RichText widget instead of LogView for displaying the 
+  resulting text file
+- 2.13.3
+
+-------------------------------------------------------------------
 Thu Mar  9 16:39:30 CET 2006 - jsuchome@suse.cz
 
 - BuildRequires: added missing yast2

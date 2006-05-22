@@ -71,8 +71,11 @@ for (@params) {
 }
 
 if( $myparams ne "" ) {
-	print "\nButtons: $myparams";
+	print "\nButtons: $myparams\n";
 }
+
+print '<pre>Please open a service request on <b>http://support.novell.com/eService</b>
+if not already done and attach this file to your open incident.</pre>';
 
 sub open_outfile() {
 	if ($output eq "send") {
