@@ -114,8 +114,8 @@ You may want to delete the file afterwards.</p>
 	contents = `VBox (`LogView (`id(`data), "", 7, 0));
     }
     */
-    // Why should be used RichText/html when wrapper reads txt-file?
-    contents = `VBox (`LogView (`id(`data), "", 7, 0));
+    // use always RichText since LogView positions at file end
+    contents = `VBox (`RichText (`id(`data), ""));
 
     contents = add (contents, `VSpacing (1.0));
     contents = add (contents, `ReplacePoint( `id(`savefile_input_replace_point),
