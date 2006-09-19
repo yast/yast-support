@@ -1,0 +1,93 @@
+Written by cg@suse.de:
+
+
+Hier nochmal der Workflow den sich Stefan, Milli und ich
+für die YaST2 Supportanfragemaske ausgedacht haben.
+
+Wir dachten an eine Aufteilung in 3 Schritte in yast2, sprich
+Eingabemasken:
+
+1. Maske: Erfassung der Registrierdaten. Diese Maske sollte nur
+beim ersten Start ausgefüllt werden müssen, später wird diese
+Maske schon ausgefüllt präsentiert und muß nur bestätigt werden
+(Kann aber vom Benutzer verändert werden, falls sich z.B. die
+Anschrift ändert)
+
+Das sähe dann ca. folgendermassen aus:
+
+        Anrede (Checkbox Herr/Frau)
+        Vorname, Name 
+        Firma
+        Straße 
+        PLZ Wohnort
+        Land
+        E-Mail Adresse
+
+        Registriercode
+
+       OK Cancel
+
+Hier müssen Anrede, Vor- & Nachname, E-Mail und Registriercode
+zwingend sein. Die E-Mail Adresse muß zumindest prinzipiell
+auf Syntax geprüft werden (@ Zeichen usw.)
+
+2. Maske 
+
+Hier kann der Kunde die Supportanfrage selber in einer
+Texteingabemaske eingeben. Zusätzlich steht hier noch die
+Möglichkeit zur Verfügung auszuwählen ob die Software und
+Hardwarekonfiguration an den SuSE Support übertragen werden soll.
+(Vorselektierte Checkboxen, default auf "yes")...
+
+Aussehen ca. wie folgt:
+
+
+   [x] Hardwaredaten übertragen
+   [x] Software konfiguration übertragen
+
+    Ihre Anfrage an den SuSE Support
+   [
+
+
+
+
+
+    ]
+
+    Ok    Cancel
+
+
+3. Maske
+
+Hier kann der Kunde die Supportanfrage dann abschicken. Damit er
+die Sicherheit hat was alles über ihn verschickt wird wird in
+einer Textbox die gesamte Mail unverschlüsselt und unkomprimiert
+dargestellt.
+
+Aussehen ca. wie folgt:
+
+
+   [
+
+    Scrollbares Textfeld das die zu übertragenen Daten
+    unkomprimiert enthält.   
+
+   ]
+
+    [x] verschlüsselte [ ] unverschÜsselte Übertragung über www
+    [x] Speichern auf Diskette
+
+     Ok Cancel 
+     
+
+Mit verschlüsselt ist eine SSL verschlüsselte Übertragung über
+ein http POST request gemeint, unverschlüsselt macht das ganze
+unverschlüsselt. 
+
+Existiert keine Defaultroute (= User nicht online) so wird die
+WWW Wahlmöglichkeit "ausgegraut" (mit Erklärung), demzufolge
+steht dann nur das "speichern auf Diskette" zur Verfügung.
+
+Ciao und Danke!
+
+   Carsten

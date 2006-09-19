@@ -1,0 +1,184 @@
+#!/usr/bin/perl
+# Björn Jacke <bjacke@suse.de>, 2001
+# Martin Lasarsch <mlasars@suse.de> 2002
+# -added options (hw,net)
+# -changed support_whatever() to call siga
+#
+
+#
+#TODO:
+# /var/lib/YaST2/support/key
+# there is no check for output format
+
+use Getopt::Long;
+
+my $output = "";
+my $outfile = "";
+GetOptions (	'output=s'	=> \$output,
+		'file=s'	=> \$outfile,
+		'all'		=> \$doitall,
+		'reg'		=> \$regdata,
+		'ttn=s'		=> \$ttn,
+
+		'help'		=> \$printhelp,
+		'boot'		=> \$boot,
+		'cdr'		=> \$cdr,
+		'dsl'		=> \$dsl,
+		'isdn'		=> \$isdn,
+		'install'	=> \$install,
+		'laptop'	=> \$laptop,
+		'mail'          => \$mail,
+		'modem'		=> \$modem,
+		'printer'	=> \$printer,
+		'scanner'	=> \$scanner,
+		'sound'		=> \$sound,
+		'usb'           => \$usb,
+		'net'         	=> \$net,
+		'hw'         	=> \$hw,
+		'x11'		=> \$x11
+		);
+
+
+if ($printhelp) {
+	print "\nUSAGE:  wrapper [options]\n\n--output={html,plain,latex,send,floppy}\n--file=filename\n--all --printer --isdn --sound --x11 --mail --modem --usb --scanner --dsl --boot --cdr --install}\n";
+	exit 0;
+}
+
+print STDERR "ignoring file name when output=floppy !" if ($output eq "floppy" and $outfile);
+$outFH = STDOUT;
+
+my @params = qw(
+		boot
+		cdr
+		dsl
+		hw
+		install
+		isdn
+		laptop
+		mail
+		modem
+		net
+		printer
+		scanner
+		sound
+		usb
+		x11
+		);
+
+my $myparams = "";
+for (@params) {
+	$myparams .= " --$_" if ($$_);
+}
+
+if( $myparams ne "" ) {
+	print "\nButtons: $myparams";
+}
+
+sub open_outfile() {
+	if ($output eq "send") {
+		$output = plain;
+		$send = 1;
+	}
+	if ($outfile) {
+		open FH, ">$outfile" or die "Can't open $file: $!";
+		$outFH = FH;
+	}
+	elsif ($send) {
+		open (FH, "| /usr/lib/YaST2/bin/support/send_support_request.pl");
+		$outFH = FH;
+	}
+}
+sub close_outfile() {
+	close $outFH unless ($outFH eq STDIN);
+}
+
+sub getfloppy() {
+	my @fstab=();
+	open FSTAB, "</etc/fstab" or die "Can't open fstab";
+	push (@fstab, $_) while (<FSTAB>);
+	close FSTAB;
+	my @floppies = grep (/^\s*\/dev\/fd0/, @fstab);
+	$floppy = $floppies[0];
+	$floppy =~ s/\s+/\t/g;
+	@floppies = split (/\t/, $floppy);
+	$floppy = $floppies[1];
+	print "\nFloppy: $floppy\n";
+}
+
+sub mountfloppy(){
+	open MTAB, "</etc/mtab" or die "Can't open mtab";
+	while (<MTAB>) {
+		if ($_ =~ m/\/dev\/fd0/) {
+			#print "Please unmount/remove floppy then hit RETURN");
+			die "already mounted floppy";
+		}
+	}
+	close MTAB;
+	system "/bin/mount $floppy";
+
+}
+
+sub support_whatever() {
+	if ($regdata) {
+		open FH, "< /var/lib/YaST2/support/key" or push @ret, "NO REGDATA" and last;
+		push @ret, $_ while (<FH>);
+	}
+
+	if ($doitall) {
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt:\n";
+ 		system ("siga no > /dev/null");
+               	push @ret, $_ for (`echo "<pre>" && cat /tmp/siga/siga.txt`);
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt--\n";
+	}
+	else {
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt:\n";
+                push @ret, $_ for (`/usr/lib/YaST2/bin/support/support_modules.pl --output=$output $myparams`);
+                push @ret, $_ for (`echo "<pre>" && cat /tmp/siga/siga.txt`);
+		push @ret, "\n##Y2support-/tmp/siga/siga.txt--\n";
+	}
+#	print "system support_all --$output" if ($doitall);
+	#print $_ for (@ret);
+	return @ret;
+}
+
+
+###################################################################
+CASE:{
+	# Text-Datei (auf Diskette)
+	if ($output eq "floppy") {
+		getfloppy();
+		mountfloppy();
+		$outfile = "$floppy/data";
+		open_outfile();
+		support_whatever();
+		close_outfile();
+		system "/bin/umount $floppy";
+		next CASE;
+	}
+	# Versenden (als plain Text)
+#	if ($output eq "send") {
+#		#system "/usr/lib/YaST2/bin/support/send_support_request.pl ";
+#		my @trash = support_whatever();
+#		for (@trash) {
+#			$out .= $_
+#		}
+#		#system "/usr/lib/YaST2/bin/support/send_support_request.pl $out";
+#		#open (FF, "/bin/cat"." $out |");
+##		open (FF, "| /bin/cat");
+#		open (FF, "| /usr/lib/YaST2/bin/support/send_support_request.pl");
+#		print FF "$out";
+#		close(FF);
+#		next CASE;
+#	}
+	# LaTeX or HTML or plain
+	if (($output eq "latex") or ($output eq "html") or ($output eq "plain") or ($output eq "send")) {
+		my @trash = support_whatever();
+		for (@trash) {
+			$out .= $_;
+		}
+		&open_outfile();
+		print $outFH $out;
+		&close_outfile();
+		next CASE;
+	}
+} #CASE
