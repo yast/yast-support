@@ -1,0 +1,431 @@
+-------------------------------------------------------------------
+Tue Sep 26 09:17:32 CEST 2006 - varkoly@suse.de
+
+- Bug 105835 - YaST2 support module shows misleading text
+- 2.13.5 
+
+-------------------------------------------------------------------
+Mon Sep 18 11:08:36 CEST 2006 - varkoly@suse.de
+
+- Fixing bug #105835: rename /root/support.txt /var/log/support.txt
+- 2.13.4
+
+-------------------------------------------------------------------
+Fri May 19 06:23:34 CEST 2006 - stark@suse.de
+
+- added small documentation at the top of the output file
+- use RichText widget instead of LogView for displaying the 
+  resulting text file
+- 2.13.3
+
+-------------------------------------------------------------------
+Thu Mar  9 16:39:30 CET 2006 - jsuchome@suse.cz
+
+- BuildRequires: added missing yast2
+- 2.13.2
+
+-------------------------------------------------------------------
+Mon Mar  6 08:00:29 CET 2006 - jsuchome@suse.cz
+
+- updated BuildRequires
+- 2.13.1
+
+-------------------------------------------------------------------
+Wed Jan 25 09:57:43 CET 2006 - stark@suse.de
+
+- version 2.13.0
+
+-------------------------------------------------------------------
+Tue Aug 23 20:40:23 CEST 2005 - stark@suse.de
+
+- save by default to /root directory (#106741)
+- 2.12.3
+
+-------------------------------------------------------------------
+Tue Aug 16 12:01:17 CEST 2005 - locilka@suse.cz
+
+- Merged messages from proofreading
+- 2.12.2
+
+-------------------------------------------------------------------
+Thu Aug  4 15:08:17 CEST 2005 - stark@suse.de
+
+- removed registration and online stuff
+- 2.12.1
+
+-------------------------------------------------------------------
+Tue Aug  2 11:26:08 CEST 2005 - locilka@suse.cz
+
+- Adapted for SUSE Linux 10.0
+- 2.12.0
+
+-------------------------------------------------------------------
+Mon Feb 28 17:11:46 CET 2005 - visnov@suse.cz
+
+- Adapted for SUSE Linux 9.3
+- 2.11.1 
+
+-------------------------------------------------------------------
+Mon Jan 17 17:51:26 CET 2005 - jsuchome@suse.cz
+
+- move client for viewing logs to yast2-repair
+- removed lookup & select
+- 2.11.0
+
+-------------------------------------------------------------------
+Mon Sep 13 15:33:06 CEST 2004 - visnov@suse.cz
+
+- adapted for 9.2 (mlasars)
+- 2.10.1 
+
+-------------------------------------------------------------------
+Tue Jun 15 15:52:32 CEST 2004 - msvec@suse.cz
+
+- updated testsuite
+- 2.10.0
+
+-------------------------------------------------------------------
+Fri May  7 16:40:43 CEST 2004 - mvidner@suse.cz
+
+- Merged messages from proofreading.
+- 2.9.4
+
+-------------------------------------------------------------------
+Fri Apr  2 17:10:38 CEST 2004 - msvec@suse.cz
+
+- fixed log viewer in ncurses menu (#38088)
+- changed license to GPL
+- updated testsuite
+- 2.9.3
+
+-------------------------------------------------------------------
+Thu Mar 11 18:19:30 CET 2004 - msvec@suse.cz
+
+- fixes from Martin Lasarsch
+- 2.9.2
+
+-------------------------------------------------------------------
+Mon Feb  9 16:34:08 CET 2004 - msvec@suse.cz
+
+- make it compile and build
+- drop y2cc config files
+- 2.9.1
+
+-------------------------------------------------------------------
+Mon Sep 15 13:46:42 CEST 2003 - mlasars@suse.de
+
+- removed obsolete text (bug #30372)
+- point send script to 9.0 url
+
+-------------------------------------------------------------------
+Sun Sep 14 20:54:41 CEST 2003 - adrian@suse.de
+
+- make it working in kcontrol
+
+-------------------------------------------------------------------
+Mon Sep  8 16:07:26 CEST 2003 - msvec@suse.cz
+
+- proof-read texts
+- 2.8.4
+
+-------------------------------------------------------------------
+Wed Aug 20 09:32:02 CEST 2003 - arvin@suse.de
+
+- added desktop file
+- use Popup and Label modules
+
+-------------------------------------------------------------------
+Mon Jun 23 11:12:12 CEST 2003 - arvin@suse.de
+
+- include directories in file list
+
+-------------------------------------------------------------------
+Fri Mar 14 17:10:44 CET 2003 - sh@suse.de
+
+- V 2.7.4
+- Enable embedding to KDE control center
+
+-------------------------------------------------------------------
+Mon Mar  3 17:34:56 CET 2003 - kkaempf@suse.de
+
+- proofread texts.
+- 2.7.3
+
+-------------------------------------------------------------------
+Fri Feb 21 20:52:50 CET 2003 - mlasars@suse.de
+
+- add mail and usb to support categories.
+- 2.7.2
+
+-------------------------------------------------------------------
+Fri Feb 21 15:40:28 CET 2003 - kkaempf@suse.de
+
+- match combo box entry with log view caption (#23849)
+- 2.7.1
+
+-------------------------------------------------------------------
+Mon Feb 10 13:59:01 CET 2003 - jsuchome@suse.de
+
+- Merged proofread texts.
+- 2.7.0
+
+-------------------------------------------------------------------
+Thu Aug 29 16:11:12 CEST 2002 - jsuchome@suse.cz
+
+- added tests
+
+-------------------------------------------------------------------
+Tue Aug 27 19:49:38 CEST 2002 - jsuchome@suse.cz
+
+- hacked send_support_request.pl for running outside of suse.de
+- added siga to "Requires"
+- changed helptext in question dialog (#17098)
+- tmp files removed at the end
+
+-------------------------------------------------------------------
+Mon Aug 26 17:27:31 CEST 2002 - jsuchome@suse.cz
+
+- 2.6.6.
+
+-------------------------------------------------------------------
+Thu Aug 22 17:37:08 CEST 2002 - jsuchome@suse.cz
+
+- changed install paths:
+    /usr/lib/YaST2/bin/support for scripts
+    /usr/share/YaST2/data/support for initial data
+    /var/lib/YaST2/support is still used for variable data
+- supportio.ycp put to yncludedir
+- html output for wrapper script changed to plain
+- added check for root as a user
+
+-------------------------------------------------------------------
+Thu Jul 18 16:37:37 CEST 2002 - kkaempf@suse.de
+
+- obsolete yast2-trans-support (#16886)
+
+-------------------------------------------------------------------
+Fri Jul 12 16:09:31 CEST 2002 - arvin@suse.de
+
+- use proper namespace for Args and CallFunction (#16776)
+
+-------------------------------------------------------------------
+Thu Jul 11 16:16:54 CEST 2002 - kkaempf@suse.de
+
+- generate support.pot
+
+-------------------------------------------------------------------
+Fri Jul 05 12:42:37 CEST 2002 - arvin@suse.de
+
+- moved non binary files to /usr/share/YaST2
+
+-------------------------------------------------------------------
+Thu Jun 27 14:54:22 CEST 2002 - kkaempf@suse.de
+
+- Rename to "yast2-support".
+
+-------------------------------------------------------------------
+Thu Mar 21 19:01:22 CET 2002 - kkaempf@suse.de
+
+- Add option(`hstretch) to ComboWidget so ncurses displays it with
+  the right size (#15221).
+- Handle "close window" event as "abort" (#8643).
+
+-------------------------------------------------------------------
+Wed Mar 20 18:10:03 CET 2002 - kkaempf@suse.de
+
+- check for /etc/prelink.cache and report it in the question (#15273).
+
+-------------------------------------------------------------------
+Thu Mar 14 16:08:17 CET 2002 - kkaempf@suse.de
+
+- send "-none-" as question if user didn't enter any.
+
+-------------------------------------------------------------------
+Wed Mar 13 16:31:44 CET 2002 - mlasars@suse.de
+
+- added ##Y2support tags for cgi script
+
+-------------------------------------------------------------------
+Fri Mar  1 17:16:46 CET 2002 - kkaempf@suse.de
+
+- enhance logfile viewer
+- drop sitar require
+
+-------------------------------------------------------------------
+Fri Mar  1 12:02:02 CET 2002 - kkaempf@suse.de
+
+- all .include files changed to use siga, added 2 files,
+  hw.include & net.include
+
+- support_modules.pl
+  added net & hw option
+  removed not needed outputs
+
+- support_question.ycp
+  added buttons for cdr, network and hardware
+
+- support_send.ycp
+  added chmod 600 for support.request at the end
+
+- send_support_request.pl
+  changed url form 73 to 80
+
+- wrapper
+  added options (hw,net)
+  changed support_whatever() to call siga
+
+-------------------------------------------------------------------
+Mon Feb 25 19:45:59 CET 2002 - kkaempf@suse.de
+
+- adapt to Wizard library.
+- put key to /var/lib/support.
+
+-------------------------------------------------------------------
+Tue Feb 19 14:27:11 CET 2002 - kkaempf@suse.de
+
+- move support key data from rc.config to sysconfig.
+
+-------------------------------------------------------------------
+Thu Sep 20 17:31:09 CEST 2001 - gs@suse.de
+
+- new icons for startup log and system log
+
+-------------------------------------------------------------------
+Tue Sep 18 18:39:44 CEST 2001 - bjacke@suse.de
+
+- fix dependency for sitar and remove a password from config file
+
+-------------------------------------------------------------------
+Fri Sep 14 20:05:57 CEST 2001 - kkaempf@suse.de
+
+- adapt to new ycp syntax, fix translations.
+- fix locale bug (#10409).
+- bump version to 2.4.1 for 7.3
+
+-------------------------------------------------------------------
+Fri Sep  7 04:48:22 CEST 2001 - bjacke@suse.de
+
+- use new sitar version and update information collector files
+
+-------------------------------------------------------------------
+Mon May 14 11:21:12 CEST 2001 - mge@suse.de
+
+- "wrapper": don't print "Buttons:" if --all
+
+-------------------------------------------------------------------
+Mon May 14 10:21:06 CEST 2001 - kkaempf@suse.de
+
+- re-enable "--output=html", "plain" breaks in wrapper
+
+-------------------------------------------------------------------
+Sat May 12 16:42:56 CEST 2001 - kkaempf@suse.de
+
+- drop "--output=html" for 'unspecified'
+- drop scanner and cd-writer as options
+
+-------------------------------------------------------------------
+Thu May 10 22:11:34 CEST 2001 - kkaempf@suse.de
+
+- suppress empty/unused locales (translations)
+
+-------------------------------------------------------------------
+Tue May  8 15:54:10 CEST 2001 - bjacke@suse.de
+
+- fix call in wrapper script and minor tweaks
+
+-------------------------------------------------------------------
+Mon May  7 16:34:28 CEST 2001 - sh@suse.de
+
+- Use new UI(`GetLanguage()) parameter
+
+-------------------------------------------------------------------
+Wed May  2 18:56:49 CEST 2001 - kkaempf@suse.de
+
+- use RichText widget for HTML output
+
+-------------------------------------------------------------------
+Tue May  1 16:08:39 CEST 2001 - bjacke@suse.de
+
+- correct include files and support_module
+
+-------------------------------------------------------------------
+Mon Apr 30 17:24:05 CEST 2001 - kkaempf@suse.de
+
+- correctly use "wrapper" script
+  fix filelist in specfile
+
+-------------------------------------------------------------------
+Thu Apr 12 17:09:51 CEST 2001 - kkaempf@suse.de
+
+- update probing tools
+  use yast2-lib-wizard functions
+
+-------------------------------------------------------------------
+Mon Apr  9 15:58:55 CEST 2001 - kkaempf@suse.de
+
+- modularize view file functions
+
+-------------------------------------------------------------------
+Fri Apr  6 16:13:02 CEST 2001 - kkaempf@suse.de
+
+- adapt to new common_popups
+- ask for category
+- use new data collection script
+
+-------------------------------------------------------------------
+Thu Apr  5 19:39:33 CEST 2001 - kkaempf@suse.de
+
+- package renamed to yast2-module-support
+- new functions, view /var/log/messages
+  and view /var/log/boot.msg
+
+-------------------------------------------------------------------
+Fri Jan 19 12:40:31 CET 2001 - kkaempf@suse.de
+
+- protect /var/lib/support with chmod 700
+
+-------------------------------------------------------------------
+Tue Jan 16 17:30:09 CET 2001 - kkaempf@suse.de
+
+- honor back button in support_question
+
+-------------------------------------------------------------------
+Tue Jan 16 16:02:17 CET 2001 - kkaempf@suse.de
+
+- remove duplicate include statements
+
+-------------------------------------------------------------------
+Thu Jan 11 16:12:24 CET 2001 - kkaempf@suse.de
+
+- gather more system informations
+
+-------------------------------------------------------------------
+Thu Jan 11 11:33:16 CET 2001 - kkaempf@suse.de
+
+- add proper regcode check
+
+-------------------------------------------------------------------
+Thu Jan 11 11:24:54 CET 2001 - kkaempf@suse.de
+
+- check internet connection, popup appropriate message boxes
+
+-------------------------------------------------------------------
+Wed Jan 10 15:45:24 CET 2001 - kkaempf@suse.de
+
+- fix "save disk" popup
+
+-------------------------------------------------------------------
+Wed Jan 10 11:56:16 CET 2001 - kkaempf@suse.de
+
+- added comments for translators
+
+-------------------------------------------------------------------
+Wed Dec 13 16:08:23 CET 2000 - kkaempf@suse.de
+
+- better messages
+
+-------------------------------------------------------------------
+Tue Nov 21 17:35:42 MET 2000 - kkaempf@suse.de
+
+- initial
+

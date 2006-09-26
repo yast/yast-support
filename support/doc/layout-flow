@@ -1,0 +1,35 @@
+General code layout
+
+
+Needed
+
+- file format to save registration information
+- implement any agent to read/write this data
+
+- mail/http/ftp upload interface agent (to support portal)
+
+
+Pseudo code
+
+if (registration_data_present)
+  read_registration_data()
+else
+  initialize_registration_data()
+
+UI::show_registration_data()
+UI::enter_support_question()
+
+if (upload_hardware_config)
+  probe_hardware()
+
+if (upload_software_config)
+  probe_software()
+
+UI::show_complete_data()
+
+if (online_possible)
+  upload_data_online()
+else
+  save_data_to_floppy()
+
+

@@ -1,0 +1,205 @@
+/**
+ * support_send.ycp
+ *
+ * sending a support question
+ *
+ * Author: Klaus Kaempf <kkaempf@suse.de>
+ *
+ * $Id$
+ *
+ */
+{
+    textdomain "support";
+
+    import "Wizard";
+    import "Directory";
+    import "Label";
+    import "Popup";
+
+    define any support_send(any retval)
+``{
+
+    map send_options = $[
+	"mail"		: _("via &e-mail"),
+	"file"		: _("&local file"),
+	"floppy"	: _("to &floppy disk"),
+	"html"		: _("&view"),
+	"tex"		: _("&TeX")
+    ];
+
+    string savefile = "/var/log/support.txt";
+
+    // set up and execute wrapper script
+
+    string bindir = Directory::bindir;
+
+    string question = "";
+    string tmpdir = (string) SCR::Read(.target.tmpdir);
+
+    integer has_prelink = (integer) SCR::Read(.target.size, "/etc/prelink.cache");
+    if (has_prelink > 0)
+    {
+	question = "** /etc/prelink.cache > 0 **\n" + question;
+    }
+
+    //string user_data = "---\n" + question + "\n---\n";
+    //string user_file = tmpdir + "/user.out";
+
+    //SCR::Write(.target.string, user_file, user_data);
+
+    string wrapper_file = tmpdir+"/wrapper.out";
+    string wrapper_options = "";
+    any wrapper_data = "";
+    string output_format = "plain";
+    foreach (string option, any optval, keydata,
+    ``{
+	if ((substring (option, 0, 2) == "--")
+	    && (optval == true))
+	{
+        /*
+	    if (option == "--all")
+		    output_format = "html";
+        */
+	    wrapper_options = wrapper_options + " " + option;
+	}
+    });
+
+    string wrapper_cmd = bindir + "/support/wrapper --output="
+	+ output_format
+	+ wrapper_options
+	+" >"
+	+ wrapper_file;
+
+    // execute wrapper only first time in this dialog
+    if (retval == `first) {
+
+    y2milestone ("running %1", wrapper_cmd);
+
+    UI::OpenDialog (`opt(`decorated), `HBox(`HSpacing(1), `Label(Label::PleaseWaitMsg()), `HSpacing(1)));
+    SCR::Execute(.target.bash, wrapper_cmd);
+    UI::CloseDialog();
+
+    // read output from wrapper
+    wrapper_data = SCR::Read(.target.string, wrapper_file);
+
+    }
+
+    // helptext 1 of 4
+    string help = _("<p><b>Support Data</b></p>\n");
+
+    //helptext 2 of 4
+    help = help + _("<p>Here, see an overview of the information
+collected. Attach the output file to your mail to support.</p>");
+
+    //helptext 3 of 4
+    help = help + _("<p>For security reasons, the output file is only readable 
+by root. To be able to attach the file in a mailer started with your 
+user account, change the permissions of the file manually. 
+In a shell, enter the command like the following: <tt>chmod 644 /var/log/support.txt</tt>. 
+Note that the file is now readable for every user on your system.
+You may want to delete the file afterwards.</p>
+");
+    //helptext 4 of 4
+    help = help + _("<p>Please open a service request on http://support.novell.com/eService
+if not already done and attach this file to your open incident.</p>
+");
+
+    // support_question.ycp
+    // present/ask question data
+
+    term contents = `Dummy();
+    /*
+    if (output_format != "plain")
+    {
+	contents = `VBox (`RichText (`id(`data), ""));
+    }
+    else
+    {
+	contents = `VBox (`LogView (`id(`data), "", 7, 0));
+    }
+    */
+    // use always RichText since LogView positions at file end
+    contents = `VBox (`RichText (`id(`data), ""));
+
+    contents = add (contents, `VSpacing (1.0));
+    contents = add (contents, `ReplacePoint( `id(`savefile_input_replace_point),
+                              `TextEntry(
+                              `id(`savefile_input),
+			      // Header of a TextEntry user input field:
+			      _("&Save As"),
+			      savefile
+			      ))
+                   );
+    contents = add (contents, `PushButton(
+                              `id(`change_savefile),
+			      _("&Change")
+			      )
+	           );
+/*    contents = add (contents, `RadioButtonGroup(
+	`id(`rb),
+	`VBox (
+	    `Left (`HBox (
+		// radio button
+		`RadioButton (`id(`disk), _("save to disk"), false)
+	    ))
+	)
+	)); */
+
+    // screen caption
+    Wizard::RestoreAbortButton();
+    Wizard::RestoreBackButton();
+    Wizard::SetContents (_("SUSE Support"), contents, help, true, true);
+
+    UI::ChangeWidget(`id(`data), `Value, wrapper_data);
+
+
+
+    any ret = `dummy;
+    boolean go_on = true;
+
+    while (go_on)
+    {
+	ret = UI::UserInput();
+	if ((ret == `next)
+	    || (ret == `back)
+	    || (ret == `abort)
+	    || (ret == `cancel))
+	{
+	    go_on = false;
+	}
+
+        if ( ret == `change_savefile )
+        {
+            savefile = (string)UI::QueryWidget( `id(`savefile_input), `Value );
+	    savefile = UI::AskForSaveFileName ( savefile, "*", _("Save to File"));
+	    if (savefile != "" && savefile != nil)
+	    {
+	        UI::ReplaceWidget( `id(`savefile_input_replace_point),
+	                           `TextEntry( `id(`savefile_input),
+		                               // Header of a TextEntry user input field:
+			                       _("&Save As"),
+					       savefile
+					     )
+	                         );
+	    }
+        }
+    }
+
+    if (ret == `next)
+    {
+	savefile = (string) UI::QueryWidget (`id(`savefile_input), `Value);
+	// check for security risks before overwriting the file
+        y2milestone ("Saving data to %1", savefile);
+        SCR::Execute(.target.bash, "/bin/cp " + wrapper_file + " " + savefile);
+        SCR::Execute(.target.bash, "/bin/chmod 600 " + savefile);
+    }
+
+    if (ret != `again)
+    {
+        //SCR::Execute(.target.remove, user_file);
+        SCR::Execute(.target.remove, wrapper_file);
+    }
+
+    return ret;
+}
+}

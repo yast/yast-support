@@ -1,0 +1,19 @@
+List of files to present for viewing
+
+/etc/modules.conf
+/etc/fstab
+/etc/lilo.conf
+/etc/[X11]/XF86Config
+/etc/pcmcia/network.opts
+/etc/pppoed.conf
+/etc/wvdial.conf
+/etc/ppp/ioptions.YaST
+/etc/route.conf
+/etc/resolv.conf
+/var/log/messages
+/var/log/boot.msg
+/var/log/SaX.log
+/var/log/XFree86.0.log
+/var/log/XFree86.1.log
+
+Cool währe ein grafisches frontend zu lspci, pnpdump, lsmod.
