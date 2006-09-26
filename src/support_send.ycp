@@ -84,20 +84,24 @@
 
     }
 
-    // helptext 1 of 3
+    // helptext 1 of 4
     string help = _("<p><b>Support Data</b></p>\n");
 
-    //helptext 2 of 3
+    //helptext 2 of 4
     help = help + _("<p>Here, see an overview of the information
 collected. Attach the output file to your mail to support.</p>");
 
-    //helptext 3 of 3
+    //helptext 3 of 4
     help = help + _("<p>For security reasons, the output file is only readable 
 by root. To be able to attach the file in a mailer started with your 
 user account, change the permissions of the file manually. 
 In a shell, enter the command like the following: <tt>chmod 644 /var/log/support.txt</tt>. 
 Note that the file is now readable for every user on your system.
 You may want to delete the file afterwards.</p>
+");
+    //helptext 4 of 4
+    help = help + _("<p>Please open a service request on http://support.novell.com/eService
+if not already done and attach this file to your open incident.</p>
 ");
 
     // support_question.ycp
