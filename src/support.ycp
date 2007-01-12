@@ -60,7 +60,7 @@
 	    if (retval == `next)
 	    {
 		// just a final text to give user a 'good' feeling
-		Popup::Message (_("Thank you for using SUSE support"));
+		Popup::Message (_("The collected informations was saved."));
 		break;
 	    }
 	}
