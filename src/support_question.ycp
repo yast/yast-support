@@ -28,8 +28,8 @@
 	"--x11"		: _("&KDE/X11"),
 	"--boot"	: _("&Booting"),
 	"--sound"	: _("&Sound"),
-	"--laptop"	: _("&Notebook"),
-	"--mail"        : _("Mai&l"),
+	"--laptop"	: _("&Laptop"),
+	"--mail"        : _("M&ail"),
 	"--dsl"		: _("&DSL"),
 	"--modem"	: _("&Modem"),
         "--cdr"         : _("&CD-R"),
@@ -83,7 +83,7 @@
 			// frame heading
 		      `VSpacing (1.0),
 		      // frame label, around checkbuttons
-		      `Frame (_("Choose a category"),
+		      `Frame (_("Category"),
 			`RadioButtonGroup(`id(`categories),
 			  `VBox (
 			    ui_category_all,
@@ -106,7 +106,7 @@
     help = help + _("<p>Choose the category that applies to your problem.</p>");
 
     help = help + _("<p>The hardware and software information serves to determine
-the basic system information and configuration on your computer.</p>
+the basic system information and configuration of your computer.</p>
 ");
 
     // screen title

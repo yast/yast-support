@@ -79,15 +79,15 @@
 
 	if (keydata["salutation"]:"" == "")
 	{
-	    message = _("Check either Mrs. or Mr.");
+	    message = _("Check Mrs. or Mr.");
 	}
 	else if (keydata["name1"]:"" == "")
 	{
-	    message = _("Please enter your first name");
+	    message = _("Enter your first name.");
 	}
 	else if (keydata["name2"]:"" == "")
 	{
-	    message = _("Please enter your last name");
+	    message = _("Enter your last name.");
 	}
 	else if (keydata["email"]:"" == "")
 	{
@@ -96,7 +96,7 @@
 	else if (size (keydata["key"]:"") < 14)
 	{
 	    // keep the term "support key" in german translation
-	    message = _("Please enter your support key");
+	    message = _("Enter your support key.");
 	}
 	else
 	{
@@ -106,7 +106,7 @@
 	    if ((findfirstof (email, "@") == nil)
 		 || (findfirstof (email, ".") == nil))
 	    {
-		message = _("Enter a valid e-mail address");
+		message = _("Enter a valid e-mail address.");
 	    }
 	}
 
