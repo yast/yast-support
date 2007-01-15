@@ -51,7 +51,7 @@ define any support_askkey ()
 
     term contents = `VBox (
 		      // frame for support data screen
-		      `Frame (_("Enter support data"),
+		      `Frame (_("Support Data"),
 			`VBox (
 			  `RadioButtonGroup(`id(`rb),
 			  `HBox (
@@ -66,50 +66,50 @@ define any support_askkey ()
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`name1), _("&First name:"), name1),
+			    `TextEntry (`id(`name1), _("&First Name"), name1),
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`name2), _("&Last name:"), name2),
+			    `TextEntry (`id(`name2), _("&Last Name"), name2),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`company), _("&Company:"), company),
+			    `TextEntry (`id(`company), _("&Company"), company),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`street), _("&Street:"), street),
+			    `TextEntry (`id(`street), _("&Street"), street),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			      `HWeight (20, `TextEntry (`id(`zip), _("&ZIP:"), zip)),
+			      `HWeight (20, `TextEntry (`id(`zip), _("&Zip Code"), zip)),
 			    // text entry
-			      `HWeight (80, `TextEntry (`id(`city), _("&City:"), city)),
+			      `HWeight (80, `TextEntry (`id(`city), _("&City"), city)),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			      `HWeight (20, `TextEntry (`id(`state), _("&State:"), state)),
+			      `HWeight (20, `TextEntry (`id(`state), _("&State"), state)),
 			    // text entry
-			      `HWeight (80, `TextEntry (`id(`country), _("&Country:"), country)),
+			      `HWeight (80, `TextEntry (`id(`country), _("&Country"), country)),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`email), _("&E-mail:"), email),
+			    `TextEntry (`id(`email), _("&E-Mail"), email),
 			    `HSpacing (0.5)
 			  ),
 			  `HBox (
 			    `HSpacing (0.5),
 			    // text entry
-			    `TextEntry (`id(`key), _("&Support Key:"), key),
+			    `TextEntry (`id(`key), _("&Support Key"), key),
 			    `HSpacing (0.5)
 			  )
 		        )
@@ -222,19 +222,19 @@ define any support_askkey ()
 	{
 	    not_ok = true;
 	    // warning message
-	    Popup::Error (_("Check either Mrs. or Mr."));
+	    Popup::Error (_("Check Mrs. or Mr."));
 	}
 	else if (keydata["name1"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
-	    Popup::Error (_("Please enter your first name"));
+	    Popup::Error (_("Enter your first name."));
 	}
 	else if (keydata["name2"]:"" == "")
 	{
 	    not_ok = true;
 	    // warning message
-	    Popup::Error (_("Please enter your last name"));
+	    Popup::Error (_("Enter your last name."));
 	}
 	else if (keydata["email"]:"" == "")
 	{
@@ -246,7 +246,7 @@ define any support_askkey ()
 	{
 	    not_ok = true;
 	    // warning message
-	    Popup::Error (_("Please enter your support key"));
+	    Popup::Error (_("Enter your support key."));
 	}
 	else
 	{
@@ -258,7 +258,7 @@ define any support_askkey ()
 	    {
 		not_ok = true;
 		// warning message
-		Popup::Error (_("Enter a valid e-mail address"));
+		Popup::Error (_("Enter a valid e-mail address."));
 	    }
 	}
 
