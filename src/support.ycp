@@ -25,7 +25,7 @@
     if( size(l_res) > 0 &&  l_res[0]:"" != "root")
     {
         // Popup label (user is not root)
-        Popup::Message(_("Log in as a root to run SuSE support."));
+        Popup::Message(_("Log in as root to run SUSE support."));
         return;
     }
 
@@ -60,7 +60,7 @@
 	    if (retval == `next)
 	    {
 		// just a final text to give user a 'good' feeling
-		Popup::Message (_("The collected informations was saved."));
+		Popup::Message (_("The collected information was saved."));
 		break;
 	    }
 	}
