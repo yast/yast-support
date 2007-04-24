@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Apr 24 15:26:48 CEST 2007 - varkoly@suse.de
+
+- Bug 264982 - Support module:: Entry KDE/X11 wrong 
+- 2.15.1
+
+-------------------------------------------------------------------
 Mon Jan 15 10:19:33 CET 2007 - jsrain@suse.cz
 
 - merged texts from proofread
