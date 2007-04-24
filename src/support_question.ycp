@@ -23,21 +23,21 @@
     // checkbox labels to identify a support question
     // keep the words short, 12 characters are maximum !
     map<string, string> ask_options = $[
-	"--isdn"	: _("&ISDN"),
+	"--isdn"	: _("IS&DN"),
 	"--printer"	: _("&Printer"),
-	"--x11"		: _("&KDE/X11"),
+	"--x11"		: _("&Graphical interface"),
 	"--boot"	: _("&Booting"),
 	"--sound"	: _("&Sound"),
 	"--laptop"	: _("&Laptop"),
-	"--mail"        : _("M&ail"),
+	"--mail"        : _("&Mail"),
 	"--dsl"		: _("&DSL"),
-	"--modem"	: _("&Modem"),
+	"--modem"	: _("M&odem"),
         "--cdr"         : _("&CD-R"),
-        "--net"         : _("Net&work"),
+        "--net"         : _("&Network"),
         "--hw"          : _("&Hardware"),
-	"--install"	: _("I&nstallation"),
+	"--install"	: _("&Installation"),
         "--usb"         : _("&USB"),
-	"--all"		: _("&Unspecified")
+	"--all"		: _("Un&specified")
     ];
 
     string id_for_all = "--all";
