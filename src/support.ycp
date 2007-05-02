@@ -7,28 +7,20 @@
 {
     textdomain "support";
 
-    integer current_stage = -1;
 
     import "Wizard";
     import "Popup";
+    import "CommandLine";
+    import "RichText";
+
 
     include "support/support_question.ycp";
     include "support/support_send.ycp";
 
-    /*
-     * exit when running for non-root
-     */
+any SupportGUI()
+{
 
-    map res = (map) SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
-    list l_res = splitstring(res["stdout"]:"", "\n");
-
-    if( size(l_res) > 0 &&  l_res[0]:"" != "root")
-    {
-        // Popup label (user is not root)
-        Popup::Message(_("Log in as root to run SUSE support."));
-        return;
-    }
-
+    integer current_stage = -1;
     // global - not necessary to read data again
     string wrapper_data = "";
     string tmpdir = (string) SCR::Read(.target.tmpdir);
@@ -72,6 +64,36 @@
     // --------------------------------------------------------------
 
     Wizard::CloseDialog();
+}
+    /*
+     * exit when running for non-root
+     */
+
+    map res = (map) SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
+    list l_res = splitstring(res["stdout"]:"", "\n");
+
+    if( size(l_res) > 0 &&  l_res[0]:"" != "root")
+    {
+        // Popup label (user is not root)
+        Popup::Message(_("Log in as root to run SUSE support."));
+        return;
+    }
+
+
+/**
+ * Command line definition
+ */
+map cmdline = $[
+    /* Commandline help title */
+    "help"      : _("Support module"),
+    "id"        : "support",
+    "guihandler": SupportGUI,
+    "initialize": SupportGUI,
+    "finish"    : SupportGUI, // FIXME
+];
+
+any ret = CommandLine::Run(cmdline);
+y2debug("ret=%1", ret);
 
 /* EOF */
 }
