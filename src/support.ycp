@@ -20,6 +20,22 @@
 any SupportGUI()
 {
 
+    any retval = nil;
+
+    /*
+     * exit when running for non-root
+     */
+
+    map res = (map) SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
+    list l_res = splitstring(res["stdout"]:"", "\n");
+
+    if( size(l_res) > 0 &&  l_res[0]:"" != "root")
+    {
+        // Popup label (user is not root)
+        Popup::Message(_("Log in as root to run SUSE support."));
+        return retval;
+    }
+
     integer current_stage = -1;
     // global - not necessary to read data again
     string wrapper_data = "";
@@ -28,8 +44,6 @@ any SupportGUI()
     Wizard::CreateDialog();
     Wizard::SetDesktopIcon("support");
     Wizard::HideBackButton();
-
-    any retval = nil;
 
     while(true)
     {
@@ -65,20 +79,6 @@ any SupportGUI()
 
     Wizard::CloseDialog();
 }
-    /*
-     * exit when running for non-root
-     */
-
-    map res = (map) SCR::Execute(.target.bash_output, "/usr/bin/whoami", $[]);
-    list l_res = splitstring(res["stdout"]:"", "\n");
-
-    if( size(l_res) > 0 &&  l_res[0]:"" != "root")
-    {
-        // Popup label (user is not root)
-        Popup::Message(_("Log in as root to run SUSE support."));
-        return;
-    }
-
 
 /**
  * Command line definition
