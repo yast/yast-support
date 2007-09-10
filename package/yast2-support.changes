@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Sep 10 08:12:34 CEST 2007 - varkoly@suse.de
+
+- Bug 269907 - yast support does not understand the "help" option 
+- 2.15.3
+
+-------------------------------------------------------------------
 Fri May 25 13:30:04 CEST 2007 - jsrain@suse.cz
 
 - removed outdated translations from .desktop-files (#271209)
