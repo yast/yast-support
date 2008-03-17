@@ -22,3 +22,4 @@ Exec=/sbin/yast2 support
 Name=Support Query
 GenericName=Collect basic information for your support request
 X-KDE-SubstituteUID=true
+StartupNotify=true
