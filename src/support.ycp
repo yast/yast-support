@@ -49,8 +49,7 @@ any SupportGUI()
     {
 	retval = support_question ();
 
-        if (retval == `back
-	    || retval == `abort)
+	if (retval == `back || retval == `abort || retval == `cancel )
 	    break;
 	else if (retval == `next)
 	{
@@ -60,7 +59,7 @@ any SupportGUI()
 	    while (retval == `again || retval == `first)
 		retval = support_send (retval);
 
-            if (retval == `abort)
+            if (retval == `abort || retval == `cancel )
 	        break;
 
 	    if (retval == `next)
