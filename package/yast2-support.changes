@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
-Mon Mar 17 12:43:32 CET 2008 - jsrain@suse.cz
+Sat Mar 29 09:09:34 CET 2008 - varkoly@suse.de
 
+- Suppor Query Module Does Not Close (bnc#372337) 
 - added 'StartupNotify=true' to the desktop file (bnc #304964)
 
 -------------------------------------------------------------------
