@@ -42,7 +42,7 @@ if ($opt_p) {
 
 if ($opt_u) {
 	push @out_usb, "##Y2support-usb:\n";
-	for (`/sbin/lsusb -v`) {
+	for (`/usr/sbin/lsusb -v`) {
 		push @out_usb, $_;
 	}
 	my $len=$#out_usb;
