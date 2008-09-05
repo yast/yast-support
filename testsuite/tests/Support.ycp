@@ -1,0 +1,13 @@
+{
+
+// testedfiles: Support.ycp
+
+include "testsuite.ycp";
+TESTSUITE_INIT([], nil);
+
+import "Support";
+
+DUMP("Support::Modified");
+TEST(``(Support::Modified()), [], nil);
+
+}

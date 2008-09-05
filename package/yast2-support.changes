@@ -1,0 +1,17 @@
+-------------------------------------------------------------------
+Thu Sep  4 12:10:27 CEST 2008 - mzugec@suse.cz
+
+- complete workflow
+- 2.17.1 
+
+-------------------------------------------------------------------
+Fri Aug 22 14:37:34 CEST 2008 - mzugec@suse.cz
+
+- fixed spec file
+- works with patched /sbin/support
+- 2.17.0 
+
+-------------------------------------------------------------------
+Tue Aug 12 19:56:47 2008 - mzugec@novell.com
+
+- initial version
