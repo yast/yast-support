@@ -139,7 +139,7 @@ global boolean include_slp=false;
 global boolean rpm_check=false;
 global string novell_number="";
 
-global string proposed_log_path="/tmp/support";
+global string proposed_log_path="/tmp/random_dir";
 global string created_directory="";
 
 global string GetParameterList(){
@@ -225,6 +225,7 @@ global boolean Read() {
     sleep(sl);
 
     if(Abort()) return false;
+    proposed_log_path=(string)SCR::Read(.target.tmpdir);
     modified = false;
     return true;
 }
