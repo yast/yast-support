@@ -122,7 +122,7 @@ global void SetAbortFunction(boolean() function) {
     AbortFunction = function;
 }
 
-// content of /etc/support.conf
+// content of /etc/supportconfig.conf
 map configuration = $[];
 
 // options parsed from configuration map
@@ -208,7 +208,7 @@ global boolean Read() {
     // read database
     if(Abort()) return false;
     Progress::NextStage();
-    configuration = (map)SCR::Read(.etc.support.all);
+    configuration = (map)SCR::Read(.etc.supportconfig.all);
     foreach(map<string, any> row, configuration["value"]:[], {
 	options[row["name"]:""]=row["value"]:"";
     });
@@ -265,7 +265,7 @@ global boolean Write() {
     // write settings
     if(Abort()) return false;
     Progress::NextStage();
-    string command = sformat("support %1 -f %2", GetParameterList(), proposed_log_path);
+    string command = sformat("supportconfig %1 -f %2", GetParameterList(), proposed_log_path);
     map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
     y2milestone("output %1", output);
     /* Error message */
@@ -289,7 +289,7 @@ global boolean Write() {
 }
 
 global boolean WriteConfig(){
- y2milestone("Writing /etc/support.conf configuration");
+ y2milestone("Writing /etc/supportconfig.conf configuration");
     list new_config=[];
     list<string>used_options=[];
     foreach(map<string, any> row, configuration["value"]:[], {
@@ -310,8 +310,8 @@ global boolean WriteConfig(){
      }
     });
     configuration["value"]=new_config;
-    y2internal("Write:%1", SCR::Write(.etc.support.all, configuration));
-    y2internal("Write:%1", SCR::Write(.etc.support, nil));
+    y2internal("Write:%1", SCR::Write(.etc.supportconfig.all, configuration));
+    y2internal("Write:%1", SCR::Write(.etc.supportconfig, nil));
  return true;
 }
 

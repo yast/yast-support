@@ -49,7 +49,7 @@ any Configure1Dialog () {
     string caption = _("OnStar Configuration (1/3)");
 
     list<term> items = [
-	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/support.conf)"), Support::use_defaults),
+	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/supportconfig.conf)"), Support::use_defaults),
 	  `item(`id(`full_listening), _("Create a full file listing from '/'"), Support::full_listening),
 	  `item(`id(`exclude_disk_scan), _("Exclude detailed disk info and scans"), Support::exclude_disk_scan),
 	  `item(`id(`search_for_edir), _("Search root filesystem for eDirectory instances"), Support::search_for_edir),
@@ -180,7 +180,7 @@ any ConfigurationDialog() {
             continue;
         }
         else if(ret == `next || ret == `back) {
-	 y2milestone("store configuration for /etc/support.conf");
+	 y2milestone("store configuration for /etc/supportconfig.conf");
 	 list selected_items = (list)UI::QueryWidget(`id(`opt_msb), `SelectedItems);
 	 foreach(string key, (list<string>)Map::Keys(Support::options), {
 	  string val = Support::options[key]:"";
@@ -265,7 +265,7 @@ any ContactDialog () {
 
 
 symbol GenerateDialog () {
-    string cmd = sformat("support %1 -t %2", Support::GetParameterList(), Support::proposed_log_path);
+    string cmd = sformat("supportconfig %1 -t %2", Support::GetParameterList(), Support::proposed_log_path);
     string caption = _("Collecting Data");
     term contents = `VBox (
         `LogView (`id (`log), _("Progress"), 1000, 1000)
