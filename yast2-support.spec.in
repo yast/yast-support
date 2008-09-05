@@ -27,4 +27,5 @@ Summary:	Configuration of nts support tools
 @clientdir@/support_*.ycp
 @moduledir@/Support.*
 @desktopdir@/support.desktop
+@scrconfdir@/*.scr
 %doc @docdir@

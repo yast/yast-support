@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Sep  5 12:09:03 CEST 2008 - mzugec@suse.cz
+
+- use .target.tmpdir for target log directory
+- adapted to new supportconfig script (bnc#419516)
+- 2.17.2 
+
+-------------------------------------------------------------------
 Thu Sep  4 12:10:27 CEST 2008 - mzugec@suse.cz
 
 - complete workflow
