@@ -46,7 +46,7 @@ include "support/helps.ycp";
 any Configure1Dialog () {
 
     /* Support configure1 dialog caption */
-    string caption = _("OnStar Configuration (1/3)");
+    string caption = _("Aurora Configuration");
 
     list<term> items = [
 	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/supportconfig.conf)"), Support::use_defaults),
@@ -65,7 +65,8 @@ any Configure1Dialog () {
 	  `InputField(`id(`log_dir), _("Log directory"), Support::proposed_log_path),
 	  `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
 	 )),
-	`MultiSelectionBox(`id(`options), _("Options"), items)
+	`MultiSelectionBox(`id(`options), _("Options"), items),
+	`PushButton(`id(`expert), _("Expert Settings"))
 	);
 
     Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
@@ -95,18 +96,20 @@ any Configure1Dialog () {
 	Support::rpm_check=contains(selected, `rpm_check);
 	Support::proposed_log_path=(string)UI::QueryWidget(`log_dir, `Value);
 	// if "use defaults" is not checked, go to detailed dialog
-	if (!Support::use_defaults) ret = `details;
+//	if (!Support::use_defaults) ret = `details;
             break;
         }
+
 	else if (ret == `browse){
 	    string dir = UI::AskForExistingDirectory((string)UI::QueryWidget(`log_dir, `Value),  _("Select directory to store log files"));
 	    if (dir!=nil) UI::ChangeWidget(`log_dir, `Value, dir);
 	    continue;
 	}
-        else {
+	else if (ret==`expert) return `expert;
+         else {
             y2error("unexpected retcode: %1", ret);
             continue;
-        }
+         }
     }
 
     return ret;
@@ -116,10 +119,10 @@ any Configure1Dialog () {
  * Overview dialog
  * @return dialog result
  */
-any ConfigurationDialog() {
+symbol ExpertDialog() {
 
     /* Support overview dialog caption */
-    string caption = _("OnStar Detailed Configuration (2/3)");
+    string caption = _("Aurora Detailed Configuration");
 
     list overview = Support::Overview();
 
@@ -206,7 +209,7 @@ any ConfigurationDialog() {
         }
     }
 y2internal("%1", Support::options);
-    return ret;
+    return (symbol)ret;
 }
 
 /**
@@ -216,7 +219,7 @@ y2internal("%1", Support::options);
 any ContactDialog () {
 
     /* Support configure2 dialog caption */
-    string caption = _("OnStar Detailed Configuration (3/3)");
+    string caption = _("Aurora Detailed Configuration");
 
     /* Support configure2 dialog contents */
     term contents = `VBox(
@@ -382,7 +385,7 @@ while(LogViewCore::IsProcessRunning()){
 symbol FilesDialog2() {
     string caption = _("Collected Data Review");
     // FIXME use list of generated files, as well as directory prefix
-	 map output = (map)SCR::Execute(.target.bash_output, sformat("ls -t %1|head -n1|tr -d '\n'", Support::proposed_log_path));
+	 map output = (map)SCR::Execute(.target.bash_output, sformat("ls -t %1|grep nts|head -n1|tr -d '\n'", Support::proposed_log_path));
 	 y2internal("output %1", output);
 	 if (output["exit"]:-1!=0){
 	   Popup::Error(output["stderr"]:"");

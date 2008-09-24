@@ -47,7 +47,7 @@ any MainSequence() {
     /* FIXME: adapt to your needs */
     map aliases = $[
 	"config1"	: ``(Configure1Dialog()),
-	"config_details"	:   ``( ConfigurationDialog() ),
+	"expert"	:   ``( ExpertDialog() ),
 	"contact"	: ``(ContactDialog()),
 	"generate"		: ``(GenerateDialog()),
 	"files2"	: ``(FilesDialog2()),
@@ -59,12 +59,12 @@ any MainSequence() {
 	"config1" : $[
 	    `abort	: `abort,
 	    `next	: "contact",
-	    `details	: "config_details"
+	    `expert	: "expert"
 	],
-	"config_details" : $[
+	"expert" : $[
 	    `abort	: `abort,
 	    `back	: `back,
-	    `next	: "contact",
+	    `next	: "config1",
 	],
 	"contact" : $[
 	    `abort	: `abort,

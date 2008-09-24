@@ -46,6 +46,8 @@ import "Report";
 import "Summary";
 
 import "CommandLine";
+include "support/complex.ycp";
+include "support/dialogs.ycp";
 include "support/wizards.ycp";
 
 map cmdline_description = $[

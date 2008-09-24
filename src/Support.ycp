@@ -267,6 +267,7 @@ global boolean Write() {
     if(Abort()) return false;
     Progress::NextStage();
     string command = sformat("supportconfig %1 -f %2", GetParameterList(), proposed_log_path);
+    y2internal("executing %1", command);
     map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
     y2milestone("output %1", output);
     /* Error message */

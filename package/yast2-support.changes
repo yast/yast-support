@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Sep 24 16:00:54 CEST 2008 - mzugec@suse.de
+
+- changed workflow - expert dialog
+- Renamed dialog headers from OnStar to Aurora
+- improved parser agent
+- 2.17.3 
+
+-------------------------------------------------------------------
 Fri Sep  5 12:09:03 CEST 2008 - mzugec@suse.cz
 
 - use .target.tmpdir for target log directory
