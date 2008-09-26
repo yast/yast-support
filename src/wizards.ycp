@@ -46,26 +46,33 @@ any MainSequence() {
 
     /* FIXME: adapt to your needs */
     map aliases = $[
-	"config1"	: ``(Configure1Dialog()),
+	"overview"	: ``(OverviewDialog()),
+	"parameters"	: ``(ParametersDialog()),
 	"expert"	:   ``( ExpertDialog() ),
 	"contact"	: ``(ContactDialog()),
 	"generate"		: ``(GenerateDialog()),
-	"files2"	: ``(FilesDialog2()),
+	"files"	: ``(FilesDialog()),
     ];
 
     /* FIXME: adapt to your needs */
     map sequence = $[
-	"ws_start" : "config1",
-	"config1" : $[
-	    `abort	: `abort,
-	    `next	: "contact",
-	    `expert	: "expert"
-	],
-	"expert" : $[
+	"ws_start" : "overview",
+	"overview" : $[
 	    `abort	: `abort,
 	    `back	: `back,
-	    `next	: "config1",
+	    `tarball	: "parameters",
+	    `next	: `next,
 	],
+	"parameters" : $[
+	    `abort	: `abort,
+	    `expert	: "expert",
+	    `next	: "contact",
+	],
+		"expert" : $[
+		    `abort	: `abort,
+		    `back	: `back,
+		    `next	: "parameters",
+		],
 	"contact" : $[
 	    `abort	: `abort,
 	    `back	: `back,
@@ -74,13 +81,13 @@ any MainSequence() {
 	"generate" : $[
 	    `abort	: `abort,
 	    `back	: `back,
-	    `next	: "files2",
+	    `next	: "files",
 
 	],
-	"files2" : $[
+	"files" : $[
 	    `abort	: `abort,
 	    `back	: `back,
-	    `next	: `next,
+	    `next	: "overview",
 
 	]
     ];

@@ -32,6 +32,7 @@
 textdomain "support";
 
 import "Label";
+import "Report";
 import "Wizard";
 import "Support";
 import "Map";
@@ -39,14 +40,61 @@ import "Map";
 include "support/helps.ycp";
 
 
+any OverviewDialog(){
+
+    /* Command line parameters dialog caption */
+    string caption = _("Supportconfig Overview Dialog");
+
+    /* Support configure1 dialog contents */
+    term contents = `VBox(
+	 `Left(
+	   `HBox(
+	    `InputField(`id(`tarball_file), _("Package with log files"), Support::log_files["tarball"]:""),
+	    `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
+	   )),
+	  `PushButton(`id(`tarball), _("Create report tarball")),
+	  `Left(
+	   `HBox(
+	    `InputField(`id(`url), _("Upload URL"), Support::options["VAR_OPTION_UPLOAD_TARGET"]:""),
+	    `VBox(`Label(""), `PushButton(`id(`upload), `opt(`disabled), _("Upload log files tarball into URL")))
+	   )),
+	  `PushButton(`id(`browser), `opt(`disabled), _("Execute web browser"))
+	);
+
+    Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
+	    Label::BackButton(), Label::NextButton());
+
+    Wizard::DisableBackButton();
+
+    any ret = nil;
+    while(true) {
+	ret = UI::UserInput();
+	if (ret == `abort || ret == `tarball)
+		break;
+	if (ret == `browse){
+         string tarball_file = UI::AskForExistingFile("/", "*.tgz *.tbz", _("Choose Log Files Tarball File") );
+         if (tarball_file != nil && size(tarball_file)>0){
+	  UI::ChangeWidget(`tarball_file, `Value, tarball_file);
+	  Support::log_files["tarball"]=tarball_file;
+	 }
+         else
+          y2error("Empty or invalid logs tarball path");
+         continue;
+	}
+    }
+ return ret;
+}
+
+
+
 /**
- * Configure1 dialog
+ * Command line parameters dialog
  * @return dialog result
  */
-any Configure1Dialog () {
+any ParametersDialog () {
 
-    /* Support configure1 dialog caption */
-    string caption = _("Aurora Configuration");
+    /* Command line parameters dialog caption */
+    string caption = _("Supportconfig Parameters Configuration");
 
     list<term> items = [
 	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/supportconfig.conf)"), Support::use_defaults),
@@ -62,7 +110,7 @@ any Configure1Dialog () {
     term contents = `VBox(
 	`Left(
 	 `HBox(
-	  `InputField(`id(`log_dir), _("Log directory"), Support::proposed_log_path),
+	  `InputField(`id(`log_dir), _("Log directory"), Support::log_files["tmp_dir"]:""),
 	  `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
 	 )),
 	`MultiSelectionBox(`id(`options), _("Options"), items),
@@ -72,7 +120,7 @@ any Configure1Dialog () {
     Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
 	    Label::BackButton(), Label::NextButton());
 
-    Wizard::DisableBackButton();
+//    Wizard::DisableBackButton();
 
     any ret = nil;
     while(true) {
@@ -94,7 +142,7 @@ any Configure1Dialog () {
 	Support::minimal_logs=contains(selected, `minimal_logs);
 	Support::include_slp=contains(selected, `include_slp);
 	Support::rpm_check=contains(selected, `rpm_check);
-	Support::proposed_log_path=(string)UI::QueryWidget(`log_dir, `Value);
+	Support::log_files["tmp_dir"]=(string)UI::QueryWidget(`log_dir, `Value);
 	// if "use defaults" is not checked, go to detailed dialog
 //	if (!Support::use_defaults) ret = `details;
             break;
@@ -122,7 +170,7 @@ any Configure1Dialog () {
 symbol ExpertDialog() {
 
     /* Support overview dialog caption */
-    string caption = _("Aurora Detailed Configuration");
+    string caption = _("Supportconfig Expert Configuration");
 
     list overview = Support::Overview();
 
@@ -182,7 +230,7 @@ symbol ExpertDialog() {
 	    UI::CloseDialog();
             continue;
         }
-        else if(ret == `next || ret == `back) {
+        else if( ret == `next ) {
 	 y2milestone("store configuration for /etc/supportconfig.conf");
 	 list selected_items = (list)UI::QueryWidget(`id(`opt_msb), `SelectedItems);
 	 foreach(string key, (list<string>)Map::Keys(Support::options), {
@@ -203,10 +251,11 @@ symbol ExpertDialog() {
 	 });
             break;
         }
-        else {
-            y2error("unexpected retcode: %1", ret);
-            continue;
-        }
+	else if ( ret == `back ) break;
+		else {
+		 y2error("unexpected retcode: %1", ret);
+		 continue;
+		}
     }
 y2internal("%1", Support::options);
     return (symbol)ret;
@@ -219,7 +268,7 @@ y2internal("%1", Support::options);
 any ContactDialog () {
 
     /* Support configure2 dialog caption */
-    string caption = _("Aurora Detailed Configuration");
+    string caption = _("Supportconfig Contact Configuration");
 
     /* Support configure2 dialog contents */
     term contents = `VBox(
@@ -268,7 +317,7 @@ any ContactDialog () {
 
 
 symbol GenerateDialog () {
-    string cmd = sformat("supportconfig %1 -t %2", Support::GetParameterList(), Support::proposed_log_path);
+    string cmd = sformat("supportconfig %1 -t %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
     string caption = _("Collecting Data");
     term contents = `VBox (
         `LogView (`id (`log), _("Progress"), 1000, 1000)
@@ -303,96 +352,18 @@ symbol GenerateDialog () {
 }
 
 
-/*
-any FilesDialog(){
-    string caption = _("OnStar Included Files Configuration (3/3)");
-    term contents = `VBox(
-	`HBox(
-		`PushButton(`id(`start_support), _("Trigger to collect logs")),
-		`InputField(`id(`directory_path), `opt(`disabled), _("Path to log directory"), Support::proposed_log_path)
-	   ),
-	  `LogView(`id(`lw), _("Log Files"), 19, 0)
-	);
 
-    Wizard::SetContentsButtons(caption, contents, HELPS["c2"]:"",
-            Label::BackButton(), Label::NextButton());
-    Wizard::DisableNextButton();
-    any ret = nil;
-    string full_log_path="";
-    while(true) {
-
-        ret = UI::UserInput();
-
-        if(ret == `abort || ret == `cancel) {
-            if(ReallyAbort()) break;
-            else continue;
-        }
-	else if(ret==`start_support){
-	 y2internal("Gathering system configuration logs");
-
-	 string command = sformat("support %1 -t %2", Support::GetParameterList(), Support::proposed_log_path);
-	 y2internal("command %1", command);
-import "LogViewCore";
-LogViewCore::Start((term)`id(`lw), $["command":command]);
-while(LogViewCore::IsProcessRunning()){
- LogViewCore::Update((term)`id(`lw));
- sleep(1000);
- y2internal("sleeping");
-}
-	Wizard::EnableNextButton();
-	 continue;
-	}
-        else if(ret == `next || ret == `back) {
-	 y2milestone("Creating output tarball");
-	 string command = sformat("support %1 -f %2", Support::GetParameterList(), Support::proposed_log_path);
-
-          break;
-        }
-	else if (ret==`show_file){
-	 string selected_item = (string)UI::QueryWidget(`file_list, `CurrentItem);
-
-	 UI::OpenDialog( `opt(`defaultsize),
-		`VBox(
-		      `RichText( `id(`rt), ""),
-		      `HBox(`PushButton(`id(`close), Label::CloseButton()))
-		     )
-		);
-	 string command=sformat("cat %1/%2", full_log_path, selected_item);
-	 y2internal("command %1", command);
-	 map output=(map)SCR::Execute(.target.bash_output, command);
-	 UI::ChangeWidget(`rt, `Value, output["stdout"]:"");
-	 UI::UserInput();
-	 UI::CloseDialog();
-	}
-	else if (ret==`delete_file){
-	 string selected_item = (string)UI::QueryWidget(`file_list, `CurrentItem);
-	 if (Popup::ContinueCancel(sformat(_("Really delete %1 file?"), selected_item))){
-	  if((integer)SCR::Execute(.target.bash, sformat("rm %1/%2", full_log_path, selected_item))==0){
-           map output = (map)SCR::Execute(.target.bash_output, sformat("ls %1", full_log_path));
-           UI::ChangeWidget(`file_list, `Items, filter(string s, splitstring(output["stdout"]:"", "\n"), {return (size(s)>0);}));
-	  }
-	 }
-	}
-        else {
-            y2error("unexpected retcode: %1", ret);
-            continue;
-        }
-    }
-    return ret;
-}
-*/
-
-symbol FilesDialog2() {
+symbol FilesDialog() {
     string caption = _("Collected Data Review");
     // FIXME use list of generated files, as well as directory prefix
-	 map output = (map)SCR::Execute(.target.bash_output, sformat("ls -t %1|grep nts|head -n1|tr -d '\n'", Support::proposed_log_path));
+	 map output = (map)SCR::Execute(.target.bash_output, sformat("ls -t %1|grep nts|head -n1|tr -d '\n'", Support::log_files["tmp_dir"]:""));
 	 y2internal("output %1", output);
 	 if (output["exit"]:-1!=0){
 	   Popup::Error(output["stderr"]:"");
 	   return `back;
 	 }
-	 Support::created_directory=output["stdout"]:"";
-	 string full_log_path=sformat("%1/%2/", Support::proposed_log_path, Support::created_directory);
+	 Support::log_files["log_dir"]=output["stdout"]:"";
+	 string full_log_path=sformat("%1/%2/", Support::log_files["tmp_dir"]:"", Support::log_files["log_dir"]:"");
 	 output = (map)SCR::Execute(.target.bash_output, sformat("ls %1", full_log_path));
          if (output["exit"]:-1!=0){
            Popup::Error(output["stderr"]:"");
@@ -428,7 +399,26 @@ symbol FilesDialog2() {
 //	    UI::ChangeWidget (`id (`file), `Value, data);
 	}
 	ret = (symbol)UI::UserInput();
-	if (ret == `next || ret == `abort || ret == `back)
+	if (ret == `next ){
+          string command = sformat("supportconfig %1 -f %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
+          y2internal("executing %1", command);
+          map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
+          y2milestone("output %1", output);
+          /* Error message */
+          if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2",_("Cannot write settings"), output));
+		else{
+			command = sformat("find \"%1\" -type f -name \"%2*\"|tr -d '\n'", Support::log_files["tmp_dir"]:"", Support::log_files["log_dir"]:"");
+			y2internal("command %1", command);
+			output=(map<string, any>)SCR::Execute(.target.bash_output, command);
+			if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2", _("Cannot write settings."), output));
+			 else{
+				if(size(output["stdout"]:"")>0) Support::log_files["tarball"]=output["stdout"]:"";
+					else y2error("Empty filename : %1", output);
+			     }
+		    }
+	  break;
+	}
+	if (ret == `abort || ret == `back)
 	    break;
 	if (ret == `remove)
 	{

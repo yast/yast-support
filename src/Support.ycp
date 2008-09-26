@@ -139,8 +139,9 @@ global boolean include_slp=false;
 global boolean rpm_check=false;
 global string novell_number="";
 
-global string proposed_log_path="/tmp/random_dir";
-global string created_directory="";
+global map<string, any> log_files=$[];
+//global string created_directory="";
+
 
 global string GetParameterList(){
  string parameters="";
@@ -225,7 +226,7 @@ global boolean Read() {
     sleep(sl);
 
     if(Abort()) return false;
-    proposed_log_path=(string)SCR::Read(.target.tmpdir);
+    log_files=$[ "tmp_dir":(string)SCR::Read(.target.tmpdir) ];
     modified = false;
     return true;
 }
@@ -266,12 +267,6 @@ global boolean Write() {
     // write settings
     if(Abort()) return false;
     Progress::NextStage();
-    string command = sformat("supportconfig %1 -f %2", GetParameterList(), proposed_log_path);
-    y2internal("executing %1", command);
-    map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
-    y2milestone("output %1", output);
-    /* Error message */
-    if (output["exit"]:-1 != 0) Report::Error (_("Cannot write settings."));
     sleep(sl);
 
     // run SuSEconfig

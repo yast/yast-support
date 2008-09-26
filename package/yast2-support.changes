@@ -1,8 +1,13 @@
 -------------------------------------------------------------------
+Fri Sep 26 16:06:25 CEST 2008 - mzugec@suse.cz
+
+- changed workflow - overview dialog 
+- 2.17.4 
+
+-------------------------------------------------------------------
 Wed Sep 24 16:00:54 CEST 2008 - mzugec@suse.de
 
 - changed workflow - expert dialog
-- Renamed dialog headers from OnStar to Aurora
 - improved parser agent
 - 2.17.3 
 
