@@ -138,8 +138,6 @@ any UploadDialog(){
     Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
             Label::BackButton(), Label::NextButton());
 
-//    Wizard::DisableBackButton();
-
     any ret = nil;
     while(true) {
         ret = UI::UserInput();
@@ -348,7 +346,9 @@ any ContactDialog () {
 	  `Left(`InputField(`id(`company), _("Company"), Support::options["VAR_OPTION_CONTACT_COMPANY"]:"")),
 	  `Left(`InputField(`id(`email), _("Email Address"), Support::options["VAR_OPTION_CONTACT_EMAIL"]:"")),
 	  `Left(`InputField(`id(`name), _("Name"), Support::options["VAR_OPTION_CONTACT_NAME"]:"")),
-	  `Left(`InputField(`id(`phone), _("Phone Number"), Support::options["VAR_OPTION_CONTACT_PHONE"]:""))
+	  `Left(`InputField(`id(`phone), _("Phone Number"), Support::options["VAR_OPTION_CONTACT_PHONE"]:"")),
+	  `Left(`InputField(`id(`storeid), _("Store ID"), Support::options["VAR_OPTION_CONTACT_STOREID"]:"")),
+	  `Left(`InputField(`id(`terminalid), _("Terminal ID"), Support::options["VAR_OPTION_CONTACT_TERMINALID"]:""))
 	 )),
 	`Frame (_("Upload Informations"), `VBox(
 	  `Left(`InputField(`id(`target), _("Upload Target"), Support::options["VAR_OPTION_UPLOAD_TARGET"]:"")),
@@ -373,6 +373,8 @@ any ContactDialog () {
 	  Support::options["VAR_OPTION_CONTACT_EMAIL"]=(string)UI::QueryWidget(`email, `Value);
 	  Support::options["VAR_OPTION_CONTACT_NAME"]=(string)UI::QueryWidget(`name, `Value);
 	  Support::options["VAR_OPTION_CONTACT_PHONE"]=(string)UI::QueryWidget(`phone, `Value);
+	  Support::options["VAR_OPTION_CONTACT_STOREID"]=(string)UI::QueryWidget(`storeid, `Value);
+	  Support::options["VAR_OPTION_CONTACT_TERMINALID"]=(string)UI::QueryWidget(`terminalid, `Value);
 	  Support::options["VAR_OPTION_UPLOAD_TARGET"]=(string)UI::QueryWidget(`target, `Value);
 	  Support::novell_number=(string)UI::QueryWidget(`novell_number, `Value);
 	  Support::WriteConfig();
