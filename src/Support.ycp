@@ -40,6 +40,7 @@ import "Report";
 import "Summary";
 import "Message";
 import "Map";
+import "PackageSystem";
 
 /**
  * Prototypes
@@ -142,6 +143,7 @@ global string novell_number="";
 global map<string, any> log_files=$[];
 //global string created_directory="";
 
+global string browser=nil;
 
 global string GetParameterList(){
  string parameters="";
@@ -221,6 +223,10 @@ global boolean Read() {
     // read current settings
     if(Abort()) return false;
     Progress::NextStage();
+    if (PackageSystem::Installed("MozillaFirefox")) browser="firefox";
+     else if (PackageSystem::Installed("kde4-konqueror")||PackageSystem::Installed("kdebase3")) browser="konqueror";
+      else if (PackageSystem::Installed("opera")) browser="opera";
+	else y2error("Couldn't find any supported browser installed.");
     /* Error message */
     if(false) Report::Error(Message::CannotReadCurrentSettings());
     sleep(sl);

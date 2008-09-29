@@ -3,5 +3,6 @@ Support.ybc: \
 	/usr/share/YaST2/modules/Report.ybc \
 	/usr/share/YaST2/modules/Summary.ybc \
 	/usr/share/YaST2/modules/Message.ybc \
-	/usr/share/YaST2/modules/Map.ybc
+	/usr/share/YaST2/modules/Map.ybc \
+	/usr/share/YaST2/modules/PackageSystem.ybc
 

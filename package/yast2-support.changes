@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Sep 29 14:29:09 CEST 2008 - mzugec@suse.cz
+
+- split Overview into Overview and Upload
+- test and run browser with specified URL
+- 2.17.5 
+
+-------------------------------------------------------------------
 Fri Sep 26 16:06:25 CEST 2008 - mzugec@suse.cz
 
 - changed workflow - overview dialog 

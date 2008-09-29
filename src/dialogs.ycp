@@ -36,7 +36,6 @@ import "Report";
 import "Wizard";
 import "Support";
 import "Map";
-
 include "support/helps.ycp";
 
 
@@ -46,6 +45,7 @@ any OverviewDialog(){
     string caption = _("Supportconfig Overview Dialog");
 
     /* Support configure1 dialog contents */
+/*
     term contents = `VBox(
 	 `Left(
 	   `HBox(
@@ -60,7 +60,35 @@ any OverviewDialog(){
 	   )),
 	  `PushButton(`id(`browser), `opt(`disabled), _("Execute web browser"))
 	);
-
+*/
+    term contents = `VBox(
+	`Left(
+		`Frame(_("Open Novell Support Center"),
+		 `VBox(
+		  `Label("This will start a browser with Novell Support Center Portal."),
+		  `PushButton(`id(`browser), _("Open"))
+		  )
+		 )
+	     ),
+	`VSpacing(2),
+	`Left(
+		`Frame(_("Collect Data"),
+		 `VBox(
+			`Label(_("This will create tarball with collected log files.")),
+			`PushButton(`id(`tarball), _("Create report tarball"))
+		      )
+		 )
+	     ),
+	`VSpacing(2),
+	`Left(
+		`Frame(_("Upload Data"),
+		 `VBox(
+			`Label(_("This will upload collected logs into specified URL.")),
+			`PushButton(`id(`upload), _("Upload"))
+		 )
+		)
+	     )
+	);
     Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
 	    Label::BackButton(), Label::NextButton());
 
@@ -69,23 +97,67 @@ any OverviewDialog(){
     any ret = nil;
     while(true) {
 	ret = UI::UserInput();
-	if (ret == `abort || ret == `tarball)
+	if (ret == `abort || ret == `tarball || ret == `upload)
 		break;
-	if (ret == `browse){
-         string tarball_file = UI::AskForExistingFile("/", "*.tgz *.tbz", _("Choose Log Files Tarball File") );
-         if (tarball_file != nil && size(tarball_file)>0){
-	  UI::ChangeWidget(`tarball_file, `Value, tarball_file);
-	  Support::log_files["tarball"]=tarball_file;
-	 }
          else
-          y2error("Empty or invalid logs tarball path");
-         continue;
+	if (ret == `browser){
+         string url="www.novell.com";
+	  y2milestone("Executing browser %1 with URL %2", Support::browser, url);
+	  SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
 	}
-    }
+       }
  return ret;
 }
 
+any UploadDialog(){
+    string caption = _("Supportconfig Upload Dialog");
 
+    string url="";
+     if(SCR::Read(.target.size,"/etc/install.inf") > 0) {
+	url = (string)SCR::Read(.etc.install_inf.supporturl);
+	y2milestone("URL value from /etc/install.inf : %1", url);
+     } else y2warning("/etc/install.inf not found");
+     if(url==nil){
+	url=Support::options["VAR_OPTION_UPLOAD_TARGET"]:"";
+	y2milestone("URL value from /etc/supportconfig.conf : %1", url);
+     }
+    y2milestone("%1", Support::log_files);
+    /* Support configure1 dialog contents */
+    term contents = `VBox(
+	 `Left(
+	   `HBox(
+	    `InputField(`id(`tarball_file), _("Package with log files"), Support::log_files["tarball"]:""),
+	    `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
+	   )),
+	  `Left(
+	   `HBox(
+	    `InputField(`id(`url), _("Upload URL"), url),
+	    `VBox(`Label(""), `PushButton(`id(`upload), `opt(`disabled), _("Upload log files tarball into URL")))
+	   ))
+	);
+    Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
+            Label::BackButton(), Label::NextButton());
+
+//    Wizard::DisableBackButton();
+
+    any ret = nil;
+    while(true) {
+        ret = UI::UserInput();
+        if (ret == `abort || ret == `next || ret == `back)
+                break;
+        if (ret == `browse){
+         string tarball_file = UI::AskForExistingFile("/", "*.tgz *.tbz", _("Choose Log Files Tarball File") );
+         if (tarball_file != nil && size(tarball_file)>0){
+          UI::ChangeWidget(`tarball_file, `Value, tarball_file);
+          Support::log_files["tarball"]=tarball_file;
+         }
+         else
+          y2error("Empty or invalid logs tarball path");
+         continue;
+        }
+    }
+ return ret;
+}
 
 /**
  * Command line parameters dialog
