@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Oct  2 09:44:49 CEST 2008 - mzugec@suse.cz
+
+- changed Novell Support Center URL 
+
+-------------------------------------------------------------------
 Mon Sep 29 15:37:11 CEST 2008 - mzugec@suse.cz
 
 - added support for new identifiers (fate#305243)

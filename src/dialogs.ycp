@@ -101,7 +101,7 @@ any OverviewDialog(){
 		break;
          else
 	if (ret == `browser){
-         string url="www.novell.com";
+         string url="http://www.novell.com/center/eservice";
 	  y2milestone("Executing browser %1 with URL %2", Support::browser, url);
 	  SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
 	}
