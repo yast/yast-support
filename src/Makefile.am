@@ -11,7 +11,8 @@ ynclude_DATA =			\
 	helps.ycp		\
 	wizards.ycp		\
 	dialogs.ycp		\
-	complex.ycp
+	complex.ycp 		\
+	supportconfig_conf.ycp
 
 desktop_DATA =			\
 	support.desktop

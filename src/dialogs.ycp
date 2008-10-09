@@ -37,7 +37,7 @@ import "Wizard";
 import "Support";
 import "Map";
 include "support/helps.ycp";
-
+include "support/supportconfig_conf.ycp";
 
 any OverviewDialog(){
 
@@ -61,34 +61,64 @@ any OverviewDialog(){
 	  `PushButton(`id(`browser), `opt(`disabled), _("Execute web browser"))
 	);
 */
-    term contents = `VBox(
-	`Left(
-		`Frame(_("Open Novell Support Center"),
-		 `VBox(
-		  `Label("This will start a browser with Novell Support Center Portal."),
-		  `PushButton(`id(`browser), _("Open"))
-		  )
-		 )
-	     ),
+    term contents = `HBox (`HStretch (), `VBox(
+       `Frame(_("Open Novell Support Center"),
+           `VBox(
+               `HStretch (),
+               `Left (`Label("This will start a browser with Novell Support Center Portal.")),
+               `HBox (
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `MinWidth (25, `PushButton(`id(`browser), _("Open"))),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch()
+               )
+           )
+       ),
 	`VSpacing(2),
-	`Left(
-		`Frame(_("Collect Data"),
-		 `VBox(
-			`Label(_("This will create tarball with collected log files.")),
-			`PushButton(`id(`tarball), _("Create report tarball"))
-		      )
-		 )
-	     ),
+       `Frame(`opt (`hstretch), _("Collect Data"),
+           `VBox(
+               `HStretch (),
+               `Left (`Label(_("This will create tarball with collected log files."))),
+               `HBox (
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `MinWidth (25, `PushButton(`id(`tarball), _("Create report tarball"))),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch()
+               )
+           )
+       ),
+
 	`VSpacing(2),
-	`Left(
-		`Frame(_("Upload Data"),
-		 `VBox(
-			`Label(_("This will upload collected logs into specified URL.")),
-			`PushButton(`id(`upload), _("Upload"))
-		 )
+       `Frame(`opt (`hstretch), _("Upload Data"),
+           `VBox(
+               `HStretch (),
+               `Label(_("This will upload collected logs into specified URL.")),
+               `HBox (
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `MinWidth (25, `PushButton(`id(`upload), _("Upload"))),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch(),
+                   `HStretch()
+
 		)
-	     )
-	);
+           )
+       )
+    ), `HStretch());
+
     Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
 	    Label::BackButton(), Label::NextButton());
 
@@ -167,63 +197,93 @@ any ParametersDialog () {
     string caption = _("Supportconfig Parameters Configuration");
 
     list<term> items = [
-	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/supportconfig.conf)"), Support::use_defaults),
+//	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/supportconfig.conf)"), Support::use_defaults),
 	  `item(`id(`full_listening), _("Create a full file listing from '/'"), Support::full_listening),
 	  `item(`id(`exclude_disk_scan), _("Exclude detailed disk info and scans"), Support::exclude_disk_scan),
 	  `item(`id(`search_for_edir), _("Search root filesystem for eDirectory instances"), Support::search_for_edir),
-	  `item(`id(`full_logging), _("Activates all support functions"), Support::full_logging),
-	  `item(`id(`minimal_logs), _("Only gather a minimum amount of info"), Support::minimal_logs),
+//	  `item(`id(`full_logging), _("Activates all support functions"), Support::full_logging),
+//	  `item(`id(`minimal_logs), _("Only gather a minimum amount of info"), Support::minimal_logs),
 	  `item(`id(`include_slp), _("Include full SLP service lists"), Support::include_slp),
 	  `item(`id(`rpm_check), _("Performs an rpm -V for each installed rpm"), Support::rpm_check)
 	];
     /* Support configure1 dialog contents */
     term contents = `VBox(
+       `Left(
+	`RadioButtonGroup(`id(`rb),
+	 `VBox(
+	  `Left( `RadioButton(`id(`use_defaults), `opt(`notify), _("Use Defaults (ignore  /etc/supportconfig.conf)")) ),
+	  `Left( `RadioButton(`id(`full_logging), `opt(`notify), _("Activates all support functions")) ),
+	  `Left( `RadioButton(`id(`minimal_logs), `opt(`notify), _("Only gather a minimum amount of info")) ),
+	  `Left( `VBox(
+		`RadioButton(`id(`custom), `opt(`notify), _("Use Custom (Expert) Settings")),
+		`PushButton(`id(`expert), _("Expert Settings"))
+		)
+		)
+	 )
+	)
+       ),
+	`MultiSelectionBox(`id(`options), _("Options"), items)
+/*
 	`Left(
 	 `HBox(
 	  `InputField(`id(`log_dir), _("Log directory"), Support::log_files["tmp_dir"]:""),
 	  `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
 	 )),
 	`MultiSelectionBox(`id(`options), _("Options"), items),
-	`PushButton(`id(`expert), _("Expert Settings"))
+*/
 	);
 
     Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
 	    Label::BackButton(), Label::NextButton());
 
+if (Support::use_defaults) UI::ChangeWidget(`rb, `CurrentButton, `use_defaults);
+ else if (Support::full_logging) UI::ChangeWidget(`rb, `CurrentButton, `full_logging);
+  else if (Support::minimal_logs) UI::ChangeWidget(`rb, `CurrentButton, `minimal_logs);
+   else UI::ChangeWidget(`rb, `CurrentButton, `custom);
+
 //    Wizard::DisableBackButton();
 
     any ret = nil;
     while(true) {
+	UI::ChangeWidget(`expert, `Enabled, (UI::QueryWidget(`rb, `CurrentButton)==`custom));
 
 	ret = UI::UserInput();
+
+	if (ret==`use_defaults || ret ==`full_logging || ret ==`minimal_logs || ret ==`custom) continue;
 
 	/* abort? */
 	if(ret == `abort || ret == `cancel) {
 	    if(ReallyAbort()) break;
 	    else continue;
 	}
-        else if(ret == `next || ret == `back) {
-	list selected=(list)UI::QueryWidget(`options, `SelectedItems);
-	Support::use_defaults=contains(selected, `use_defaults);
-	Support::full_listening=contains(selected, `full_listening);
-	Support::exclude_disk_scan=contains(selected, `exclude_disk_scan);
-	Support::search_for_edir=contains(selected, `search_for_edir);
-	Support::full_logging=contains(selected, `full_logging);
-	Support::minimal_logs=contains(selected, `minimal_logs);
-	Support::include_slp=contains(selected, `include_slp);
-	Support::rpm_check=contains(selected, `rpm_check);
-	Support::log_files["tmp_dir"]=(string)UI::QueryWidget(`log_dir, `Value);
-	// if "use defaults" is not checked, go to detailed dialog
-//	if (!Support::use_defaults) ret = `details;
+	else if (ret == `back) break;
+        else if(ret == `next || ret == `expert) {
+	 list selected=(list)UI::QueryWidget(`options, `SelectedItems);
+	 Support::use_defaults=contains(selected, `use_defaults);
+	 Support::full_listening=contains(selected, `full_listening);
+	 Support::exclude_disk_scan=contains(selected, `exclude_disk_scan);
+	 Support::search_for_edir=contains(selected, `search_for_edir);
+	 Support::full_logging=contains(selected, `full_logging);
+	 Support::minimal_logs=contains(selected, `minimal_logs);
+	 Support::include_slp=contains(selected, `include_slp);
+	 Support::rpm_check=contains(selected, `rpm_check);
+
+	 switch((symbol)UI::QueryWidget(`rb, `CurrentButton)){
+	  case `use_defaults:
+			Support::use_defaults=true;
+			break;
+	  case `full_logging:
+			Support::full_logging=true;
+			break;
+	  case `minimal_logs:
+			Support::minimal_logs=true;
+			break;
+	  default:
+		y2milestone("Custom settings");
+		break;
+	 }
             break;
         }
-
-	else if (ret == `browse){
-	    string dir = UI::AskForExistingDirectory((string)UI::QueryWidget(`log_dir, `Value),  _("Select directory to store log files"));
-	    if (dir!=nil) UI::ChangeWidget(`log_dir, `Value, dir);
-	    continue;
-	}
-	else if (ret==`expert) return `expert;
          else {
             y2error("unexpected retcode: %1", ret);
             continue;
@@ -245,22 +305,27 @@ symbol ExpertDialog() {
     list overview = Support::Overview();
 
 	list<term> bool_items = [];
-	list<term> table_items = [];
+//	list<term> table_items = [];
     foreach(string key, (list<string>)Map::Keys(Support::options), {
-     if (issubstring(key, "VAR_OPTION"))
-      table_items = add(table_items, `item(`id(key), key, Support::options[key]:""));
-	else
-	 bool_items = add(bool_items, `item(`id(key), key, Support::options[key]:""=="1"));
+     if (!issubstring(key, "VAR_OPTION"))
+      {
+       string value = support_descr[key]:"";
+       bool_items = add(bool_items, `item(`id(key), (size(value)>0) ? sformat("%1 - %2", key, value) : key, Support::options[key]:""=="1"));
+      }
+//	else
+//         table_items = add(table_items, `item(`id(key), key, Support::options[key]:""));
    });
 
     /* FIXME table header */
     term contents =
        `HBox(
-	`MultiSelectionBox(`id(`opt_msb), _("Default Options"), bool_items),
+	`MultiSelectionBox(`id(`opt_msb), _("Default Options"), bool_items) //,
+/*
 	`VBox(
 	 `Table(`id(`var_table), `header(_("Name"), _("Value")), table_items),
 		`PushButton(`id(`edit), Label::EditButton())
 	 )
+*/
        );
 
     Wizard::SetContentsButtons(caption, contents, HELPS["overview"]:"",
@@ -277,8 +342,8 @@ symbol ExpertDialog() {
 	    else continue;
 	}
         /* edit */
+/*
         else if(ret == `edit) {
-	    /* FIXME */
 	    any id = UI::QueryWidget(`var_table, `CurrentItem);
 	    term row = (term)UI::QueryWidget(`var_table, `Item(id));
 	    UI::OpenDialog(`VBox(
@@ -300,24 +365,28 @@ symbol ExpertDialog() {
 	    UI::CloseDialog();
             continue;
         }
+*/
         else if( ret == `next ) {
 	 y2milestone("store configuration for /etc/supportconfig.conf");
 	 list selected_items = (list)UI::QueryWidget(`id(`opt_msb), `SelectedItems);
 	 foreach(string key, (list<string>)Map::Keys(Support::options), {
 	  string val = Support::options[key]:"";
-	  if (issubstring(key, "VAR_OPTION")){
-	   string new_val = (string)UI::QueryWidget(`var_table, `Cell(`id(key), 1));
-	   if(new_val!=val){
-	     y2internal("value changed %1=%2, new value %3", key, val, new_val);
-	     Support::options[key]=new_val;
-	   }
-	  } else{
+	  if (!issubstring(key, "VAR_OPTION")){
 	    boolean bool_val=(contains(selected_items, key));
 	    if ((val=="1")!=bool_val){
 	     y2internal("value changed %1=%2, new value %3", key, val, bool_val ? "1" : "0");
 	     Support::options[key]=bool_val ? "1" : "0";
 	    }
 	  }
+/*
+	 else{
+	   string new_val = (string)UI::QueryWidget(`var_table, `Cell(`id(key), 1));
+	   if(new_val!=val){
+	     y2internal("value changed %1=%2, new value %3", key, val, new_val);
+	     Support::options[key]=new_val;
+	   }
+	  }
+*/
 	 });
             break;
         }
