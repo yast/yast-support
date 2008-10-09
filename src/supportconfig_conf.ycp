@@ -1,4 +1,7 @@
 {
+
+textdomain "support";
+
 map<string, any> support_descr=$[
 "OPTION_APPARMOR"	: _("AppArmor information. security-apparmor.txt"),
 "OPTION_AUTOFS"		:  _("autofs information. fs-autofs.txt"),
