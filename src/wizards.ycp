@@ -47,7 +47,8 @@ any MainSequence() {
     /* FIXME: adapt to your needs */
     map aliases = $[
 	"overview"	: ``(OverviewDialog()),
-	"upload"	: ``(UploadDialog()),
+	"upload1"	: ``(UploadDialog(false)),
+	"upload2"	: ``(UploadDialog(true)),
 	"parameters"	: ``(ParametersDialog()),
 	"expert"	:   ``( ExpertDialog() ),
 	"contact"	: ``(ContactDialog()),
@@ -62,10 +63,10 @@ any MainSequence() {
 	    `abort	: `abort,
 	    `back	: `back,
 	    `tarball	: "parameters",
-	    `upload	: "upload",
+	    `upload	: "upload1",
 	    `next	: `next,
 	],
-	"upload" : $[
+	"upload1" : $[
 	    `abort      : `abort,
 	    `back	: "overview",
 	    `next	: "overview"
@@ -94,8 +95,13 @@ any MainSequence() {
 	"files" : $[
 	    `abort	: `abort,
 	    `back	: `back,
-	    `next	: "overview",
+	    `next	: "upload2",
 
+	],
+	"upload2" : $[
+	    `abort      : `abort,
+	    `back	: "overview",
+	    `next	: "overview"
 	]
     ];
 

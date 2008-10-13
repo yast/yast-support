@@ -313,8 +313,8 @@ global boolean WriteConfig(){
      }
     });
     configuration["value"]=new_config;
-    y2internal("Write:%1", SCR::Write(.etc.supportconfig.all, configuration));
-    y2internal("Write:%1", SCR::Write(.etc.supportconfig, nil));
+    SCR::Write(.etc.supportconfig.all, configuration);
+    y2milestone("Write /etc/supportconfig.conf :%1", SCR::Write(.etc.supportconfig, nil));
  return true;
 }
 
