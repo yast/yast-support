@@ -40,7 +40,7 @@ map<string, any> support_descr=$[
 "OPTION_SAR"		:  _("System Activity Reporting related information, including copies of the SAR data files. sar.txt"),
 "OPTION_SLERT"		:  _("SLES Real Time kernel related information. slert.txt"),
 "OPTION_SLP"		:  _("Service Location Protocol related information. slp.txt"),
-"OPTION_SMART"		:  _("Self-Monitoring), Analysis, and Reporting Technology related information for hard disks.  WARNING: Some hard disk controllers and drives do  not
+"OPTION_SMART"		:  _("Self-Monitoring, Analysis, and Reporting Technology related information for hard disks. WARNING: Some hard disk controllers and drives do not
 behave kindly. Probing SMART data has been known to change file systems to read only mode or even hang the server. Make sure probing SMART data
 works in your environment before enabling this option. fs-smartmon.txt"),
 "OPTION_SMB"		:  _("Samba and CIFS related information. samba.txt"),

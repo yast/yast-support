@@ -141,7 +141,7 @@ any OverviewDialog(){
 
 any UploadDialog(boolean data_prepared){
     string caption = _("Supportconfig Upload Dialog");
-
+/*
     string url="";
      if(SCR::Read(.target.size,"/etc/install.inf") > 0) {
 	url = (string)SCR::Read(.etc.install_inf.supporturl);
@@ -151,6 +151,9 @@ any UploadDialog(boolean data_prepared){
 	url=Support::options["VAR_OPTION_UPLOAD_TARGET"]:"";
 	y2milestone("URL value from /etc/supportconfig.conf : %1", url);
      }
+*/
+	string url=Support::options["VAR_OPTION_UPLOAD_TARGET"]:"";
+	y2milestone("URL value from /etc/supportconfig.conf : %1", url);
     y2milestone("%1", Support::log_files);
     /* Support configure1 dialog contents */
     term load_save = `Left(
