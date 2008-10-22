@@ -41,6 +41,7 @@ import "Summary";
 import "Message";
 import "Map";
 import "PackageSystem";
+import "Label";
 
 /**
  * Prototypes
@@ -67,6 +68,63 @@ boolean write_only = false;
  * return boolean return true if abort
  */
 boolean() AbortFunction = Modified;
+
+/**
+ * root password for running supportconfig if module run as non-root
+ */
+global string root_pw = nil;
+
+global string pwd_pipe = nil;
+
+global boolean CheckRootPw (string pw) {
+    if (pwd_pipe == nil)
+	pwd_pipe = ((string)SCR::Read (.target.tmpdir) + "/pwd_pipe");
+    SCR::Execute (.target.bash, "test -e %1 || mkfifo %1", pwd_pipe);
+    SCR::Write (.target.string, pwd_pipe, pw + "\n");
+    integer exit = (integer)SCR::Execute (.target.bash, sformat ("cat %1 | su -c 'echo 0'", pwd_pipe));
+    boolean success = (exit == 0);
+    y2milestone ("Root password check: %1", success);
+    if (success)
+	root_pw = pw;
+    return success;
+}
+
+global integer WhoAmI() {
+    if ((integer)SCR::Read (.target.size, "/usr/bin/id") <= 0)
+    {
+        y2warning ("/usr/bin/id not existing, supposing to be root");
+        return 0;
+    }
+
+    map out = (map) SCR::Execute (.target.bash_output, "/usr/bin/id --user");
+    list<string> lines = splitstring (out["stdout"]:"", "\n");
+    string strid = lines[0]:"";
+    integer id = tointeger (strid);
+    if (id == nil)
+	return 0;
+    return id;
+}
+
+global boolean AskForRootPwd () {
+    while (root_pw == nil) {
+	UI::OpenDialog (`VBox (
+	    `Label (_("To continue, enter root password")),
+	    `Password (`id (`passwd), _("root Password")),
+	    `ButtonBox (
+		`PushButton (`id(`ok), `opt (`okButton, `default, `key_F10), Label::OKButton()),
+		`PushButton (`id(`cancel), `opt (`cancelButton, `key_F9), Label::CancelButton())
+	    )
+	));
+	symbol input = (symbol)UI::UserInput();
+	string pw = (string)UI::QueryWidget (`id (`passwd), `Value);
+	UI::CloseDialog ();
+	if (input == `cancel)
+	    return false;
+	if (! CheckRootPw (pw))
+	    Report::Error (_("Password incorrect"));
+    }
+    return true;
+}
 
 /**
  * Abort function

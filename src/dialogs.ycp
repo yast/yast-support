@@ -195,6 +195,13 @@ any UploadDialog(boolean data_prepared){
 	   string url = (string)UI::QueryWidget(`url, `Value);
            if (size(url)>0) command = sformat("%1 -U %2", command, url);
           }
+	  if (Support::WhoAmI() != 0) {
+	    if (! Support::AskForRootPwd())
+	      return `back;
+	    integer id = Support::WhoAmI();
+	    SCR::Write (.target.string, Support::pwd_pipe, Support::root_pw + "\n");
+	    command = sformat("cat %2 | su -c '%1'", command, Support::pwd_pipe);
+          }
           y2milestone("executing %1", command);
           map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
           y2milestone("output %1", output);
@@ -508,13 +515,20 @@ any ContactDialog () {
 
 
 symbol GenerateDialog () {
-    string cmd = sformat("supportconfig %1 -t %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
     string caption = _("Collecting Data");
     term contents = `VBox (
         `LogView (`id (`log), _("Progress"), 1000, 1000)
     );
     Wizard::SetContentsButtons(caption, contents, HELPS["c2"]:"",
             Label::BackButton(), Label::NextButton());
+    string cmd = sformat("supportconfig %1 -t %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
+    if (Support::WhoAmI() != 0) {
+	if (! Support::AskForRootPwd())
+	    return `back;
+	integer id = Support::WhoAmI();
+	SCR::Write (.target.string, Support::pwd_pipe, Support::root_pw + "\n");
+	cmd = sformat("cat %4 | su -c 'supportconfig %1 -t %2 && chown -R %3 %2'", Support::GetParameterList(), Support::log_files["tmp_dir"]:"", id, Support::pwd_pipe);
+    }
     symbol ret = nil;
     integer pid = (integer) SCR::Execute(.process.start_shell, cmd);
     string unfinished_line = "";

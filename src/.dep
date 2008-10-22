@@ -4,5 +4,6 @@ Support.ybc: \
 	/usr/share/YaST2/modules/Summary.ybc \
 	/usr/share/YaST2/modules/Message.ybc \
 	/usr/share/YaST2/modules/Map.ybc \
-	/usr/share/YaST2/modules/PackageSystem.ybc
+	/usr/share/YaST2/modules/PackageSystem.ybc \
+	/usr/share/YaST2/modules/Label.ybc
 
