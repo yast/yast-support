@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Oct 24 12:16:50 CEST 2008 - jsrain@suse.cz
+
+- added help texts
+
+-------------------------------------------------------------------
 Wed Oct 22 17:04:56 CEST 2008 - jsrain@suse.cz
 
 - added support for running as non-root
