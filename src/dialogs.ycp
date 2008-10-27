@@ -45,22 +45,6 @@ any OverviewDialog(){
     string caption = _("Supportconfig Overview Dialog");
 
     /* Support configure1 dialog contents */
-/*
-    term contents = `VBox(
-	 `Left(
-	   `HBox(
-	    `InputField(`id(`tarball_file), _("Package with log files"), Support::log_files["tarball"]:""),
-	    `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
-	   )),
-	  `PushButton(`id(`tarball), _("Create report tarball")),
-	  `Left(
-	   `HBox(
-	    `InputField(`id(`url), _("Upload URL"), Support::options["VAR_OPTION_UPLOAD_TARGET"]:""),
-	    `VBox(`Label(""), `PushButton(`id(`upload), `opt(`disabled), _("Upload log files tarball into URL")))
-	   )),
-	  `PushButton(`id(`browser), `opt(`disabled), _("Execute web browser"))
-	);
-*/
     term contents = `HBox (`HStretch (), `VBox(
        `Frame(_("Open Novell Support Center"),
            `VBox(
@@ -131,54 +115,58 @@ any OverviewDialog(){
 		break;
          else
 	if (ret == `browser){
-         string url="http://www.novell.com/center/eservice";
+	 if (Support::browser==nil) Popup::Error(_("Couldn't find any installed browser."));
+	  else{
+          string url="http://www.novell.com/center/eservice";
 	  y2milestone("Executing browser %1 with URL %2", Support::browser, url);
 	  SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
-	}
+	  }
+	 }
        }
  return ret;
 }
 
 any UploadDialog(boolean data_prepared){
     string caption = _("Supportconfig Upload Dialog");
-/*
-    string url="";
-     if(SCR::Read(.target.size,"/etc/install.inf") > 0) {
-	url = (string)SCR::Read(.etc.install_inf.supporturl);
-	y2milestone("URL value from /etc/install.inf : %1", url);
-     } else y2warning("/etc/install.inf not found");
-     if(url==nil){
-	url=Support::options["VAR_OPTION_UPLOAD_TARGET"]:"";
-	y2milestone("URL value from /etc/supportconfig.conf : %1", url);
-     }
-*/
 	string url=Support::options["VAR_OPTION_UPLOAD_TARGET"]:"";
 	y2milestone("URL value from /etc/supportconfig.conf : %1", url);
     y2milestone("%1", Support::log_files);
+    string home=((map<string, any>)SCR::Execute(.target.bash_output, "echo ~|tr -d '\n'"))["stdout"]:"";
     /* Support configure1 dialog contents */
-    term load_save = `Left(
-	`HBox(
-	 ((data_prepared)
-	  ?  `InputField(`id(`save_dir), _("Save As"), Support::log_files["tmp_dir"]:"")
-	  : `InputField(`id(`tarball_file), _("Package with log files"), Support::log_files["tarball"]:"")),
-	    `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
-         )
+    term load_save = nil;
+    if (data_prepared)
+     load_save=`Left(
+		`CheckBoxFrame(`id(`save), _("Save as"), true,
+		  `HBox(
+                   `InputField(`id(`save_dir), _("Directory to Save"), home),
+                   `VBox(
+			`Label(""),
+			`PushButton(`id(`browse), Label::BrowseButton())
+			)
+		       )
+		      )
+		    );
+	else load_save=`Left(
+	   `HBox(
+		`InputField(`id(`tarball_file), _("Package with log files"), Support::log_files["tarball"]:""),
+		`VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton())))
         );
 
     term contents = `VBox(
 	 load_save,
 	  `Left(
-	   `HBox(
-	    `CheckBox(`id(`upload), _("Upload log files tarball into URL"), true),
+	    `CheckBoxFrame(`id(`upload), _("Upload log files tarball into URL"), true,
 	    `InputField(`id(`url), _("Upload Target"), url)
-//	    `VBox(`Label(""), `PushButton(`id(`upload), `opt(`disabled), _("Upload log files tarball into URL")))
-	   ))
+	   )
+	 )
 	);
-    Wizard::SetContentsButtons(caption, contents, HELPS["c1"]:"",
+    string help= (data_prepared) ? HELPS["upload_save"]:"" : HELPS["upload_select"]:"";
+    Wizard::SetContentsButtons(caption, contents, help,
             Label::BackButton(), Label::NextButton());
 
     any ret = nil;
     while(true) {
+
         ret = UI::UserInput();
         if (ret == `abort || ret == `back)
                 break;
@@ -212,7 +200,16 @@ any UploadDialog(boolean data_prepared){
 			output=(map<string, any>)SCR::Execute(.target.bash_output, command);
 			if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2", _("Cannot write settings."), output));
 			 else{
-				if(size(output["stdout"]:"")>0) Support::log_files["tarball"]=output["stdout"]:"";
+				if(size(output["stdout"]:"")>0){
+					 Support::log_files["tarball"]=output["stdout"]:"";
+					 y2internal("input tarball : %1", Support::log_files["tarball"]:"");
+					 if (data_prepared && (boolean)UI::QueryWidget(`save, `Value)) {
+						string tarball = Support::log_files["tarball"]:"";
+						string output_dir = (string)UI::QueryWidget(`save_dir, `Value);
+						string command = sformat("cp '%1' '%2'", tarball, output_dir);
+						y2milestone("execute %1 : %2", command, SCR::Execute(.target.bash_output, command));
+					 }
+					}
 					else y2error("Empty filename : %1", output);
 			     }
 		    }
@@ -220,14 +217,16 @@ any UploadDialog(boolean data_prepared){
 	}
         if (ret == `browse){
 	 if (data_prepared){
-          string save_dir = UI::AskForExistingDirectory((string)UI::QueryWidget(`save_dir, `Value), _("Choose Directory Where to Save Tarball") );
+	  string startdir = (string)UI::QueryWidget(`save_dir, `Value);
+	  y2milestone("startdir %1", startdir);
+          string save_dir = UI::AskForExistingDirectory(startdir, _("Choose Directory Where to Save Tarball") );
           if (save_dir != nil && size(save_dir)>0){
            UI::ChangeWidget(`save_dir, `Value, save_dir);
 //           Support::log_files["tmp_dir"]=save_dir;
           }
           else
            y2error("Empty or invalid logs tarball path");
-        }else{
+         }else{
           string tarball_file = UI::AskForExistingFile("/", "*.tgz *.tbz", _("Choose Log Files Tarball File") );
           if (tarball_file != nil && size(tarball_file)>0){
            UI::ChangeWidget(`tarball_file, `Value, tarball_file);

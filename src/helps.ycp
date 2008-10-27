@@ -137,13 +137,25 @@ Review the data collected by supportconfig. If you do not want to share some of 
 use <b>Remove from Data</b> and selected file will be removed.</p>"),
 
     /* Configure1 dialog help 1/2 */
-    "c1" : _("<p><b><big>Configuration Part One</big></b><br>
-Press <b>Next</b> to continue.
+    "upload_save" : _("<p><b><big>Upload supportconfig tarball to Novell Technical Support</big></b><br>
+If you want to store copy of supportconfig tarball, select target directory and be sure that this option
+ is checked.
 <br></p>") +
 
     /* Configure1 dialog help 2/2 */
-_("<p><b><big>Selecting Something</big></b><br>
-It is not possible. You must code it first. :-)
+_("<p><b><big>Upload URL</big></b><br>
+This option has default value where supportconfig tarball will be uploaded.
+Change this value only in special cases.
+</p>"),
+
+    "upload_select" : _("<p><b><big>Upload supportconfig tarball to Novell Technical Support</big></b><br>
+If you have supportconfig tarball already created, write full path into <i>Package with log files</i> field.
+<br></p>") +
+
+    /* Configure1 dialog help 2/2 */
+_("<p><b><big>Upload URL</big></b><br>
+This option has default value where supportconfig tarball will be uploaded.
+Change this value only in special cases.
 </p>"),
 
     /* Configure2 dialog help 1/2 */
