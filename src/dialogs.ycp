@@ -196,12 +196,14 @@ any UploadDialog(boolean data_prepared){
 	    if (! Support::AskForRootPwd())
 	      return `back;
 	    integer id = Support::WhoAmI();
-	    SCR::Write (.target.string, Support::pwd_pipe, Support::root_pw + "\n");
-	    command = sformat("cat %2 | su -c '%1'", command, Support::pwd_pipe);
+	    SCR::Write (.target.string, Support::pwd_file, Support::root_pw + "\n");
+	    command = sformat("cat %2 | su -c '%1'", command, Support::pwd_file);
           }
           y2milestone("executing %1", command);
           map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
           y2milestone("output %1", output);
+	  if (Support::WhoAmI() != 0)
+	    SCR::Write (.target.string, Support::pwd_file, "");
           if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2",_("Cannot write settings"), output));
 		else{
 			command = sformat("find \"%1\" -type f -name \"%2*\"|tr -d '\n'", Support::log_files["tmp_dir"]:"", Support::log_files["log_dir"]:"");
@@ -534,8 +536,8 @@ symbol GenerateDialog () {
 	if (! Support::AskForRootPwd())
 	    return `back;
 	integer id = Support::WhoAmI();
-	SCR::Write (.target.string, Support::pwd_pipe, Support::root_pw + "\n");
-	cmd = sformat("cat %4 | su -c 'supportconfig %1 -t %2 && chown -R %3 %2'", Support::GetParameterList(), Support::log_files["tmp_dir"]:"", id, Support::pwd_pipe);
+	SCR::Write (.target.string, Support::pwd_file, Support::root_pw + "\n");
+	cmd = sformat("cat %4 | su -c 'supportconfig %1 -t %2 && chown -R %3 %2'", Support::GetParameterList(), Support::log_files["tmp_dir"]:"", id, Support::pwd_file);
     }
     symbol ret = nil;
     integer pid = (integer) SCR::Execute(.process.start_shell, cmd);
@@ -558,6 +560,8 @@ symbol GenerateDialog () {
             break;
         }
     }
+    if (Support::WhoAmI() != 0)
+	SCR::Write (.target.string, Support::pwd_file, "");
     while(ret!=`back && ret!=`abort && ret!=`next){
      ret = (symbol)UI::UserInput();
     }

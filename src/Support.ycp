@@ -74,14 +74,16 @@ boolean() AbortFunction = Modified;
  */
 global string root_pw = nil;
 
-global string pwd_pipe = nil;
+global string pwd_file = nil;
 
 global boolean CheckRootPw (string pw) {
-    if (pwd_pipe == nil)
-	pwd_pipe = ((string)SCR::Read (.target.tmpdir) + "/pwd_pipe");
-    SCR::Execute (.target.bash, "test -e %1 || mkfifo %1", pwd_pipe);
-    SCR::Write (.target.string, pwd_pipe, pw + "\n");
-    integer exit = (integer)SCR::Execute (.target.bash, sformat ("cat %1 | su -c 'echo 0'", pwd_pipe));
+    if (pwd_file == nil)
+	pwd_file = ((string)SCR::Read (.target.tmpdir) + "/pwd_file");
+    SCR::Execute (.target.bash, sformat ("test -e %1 || touch %1", pwd_file));
+    SCR::Execute (.target.bash, sformat ("chmod 600 %1", pwd_file));
+    SCR::Write (.target.string, pwd_file, pw + "\n");
+    integer exit = (integer)SCR::Execute (.target.bash, sformat ("cat %1 | su -c 'echo 0'", pwd_file));
+    SCR::Write (.target.string, pwd_file, "");
     boolean success = (exit == 0);
     y2milestone ("Root password check: %1", success);
     if (success)
