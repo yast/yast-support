@@ -118,8 +118,17 @@ any OverviewDialog(){
 	 if (Support::browser==nil) Popup::Error(_("Couldn't find any installed browser."));
 	  else{
           string url="http://www.novell.com/center/eservice";
-	  y2milestone("Executing browser %1 with URL %2", Support::browser, url);
-	  SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
+	  if (0 == SCR::Execute (.target.bash, "env|grep LOGNAME|cut -d'=' -f2- | grep root"))
+	  {
+	    if (Popup::ContinueCancel (sformat (_("YaST will run a web browser as superuser. Consider
+running it as a non-provileged user and entering URL
+%1.
+Start web browser?"), url)))
+	    {
+	      y2milestone("Executing browser %1 with URL %2", Support::browser, url);
+	      SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
+	    }
+	  }
 	  }
 	 }
        }

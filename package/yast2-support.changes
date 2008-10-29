@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Oct 29 14:52:50 CET 2008 - jsrain@suse.cz
+
+- issue a warning before starting browser as root
+
+-------------------------------------------------------------------
 Wed Oct 29 14:07:23 CET 2008 - mzugec@suse.de
 
 - fixed layout
