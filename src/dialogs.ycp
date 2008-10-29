@@ -152,11 +152,11 @@ any UploadDialog(boolean data_prepared){
 		`VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton())))
         );
 
-    term contents = `VBox(
+    term contents = `Frame("",
+	`VBox(
 	 load_save,
-	  `Left(
 	    `CheckBoxFrame(`id(`upload), _("Upload log files tarball into URL"), true,
-	    `InputField(`id(`url), _("Upload Target"), url)
+	      `Left( `InputField(`id(`url), _("Upload Target"), url) )
 	   )
 	 )
 	);
