@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Nov  5 14:15:44 CET 2008 - jsrain@suse.cz
+
+- fixed typos (bnc #441790)
+
+-------------------------------------------------------------------
 Wed Oct 29 16:55:40 CET 2008 - jsrain@suse.cz
 
 - issue a warning before starting browser as root

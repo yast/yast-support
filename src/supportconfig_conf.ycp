@@ -67,17 +67,17 @@ works in your environment before enabling this option. fs-smartmon.txt"),
 
 "VAR_OPTION_LINE_COUNT"		:_("The number of lines to include when getting a log file. Zero means get the entire file."),
 
-"VAR_OPTION_LOG_DIRS"		:_("The supportconfig tar ball location. The first valid location in the list is always used."),
+"VAR_OPTION_LOG_DIRS"		:_("The supportconfig tarball location. The first valid location in the list is always used."),
 
 "VAR_OPTION_MSG_MAXSIZE"	:_("The maximum number of /var/log/messages lines to get. Zero means get the entire file."),
 
-"VAR_OPTION_PENGINE_FILES_LIMIT":_("The maximum number of heartbeat policy engine log files to include in the supportconfig tar ball."),
+"VAR_OPTION_PENGINE_FILES_LIMIT":_("The maximum number of heartbeat policy engine log files to include in the supportconfig tarball."),
 
-"VAR_OPTION_SAR_FILES_LIMIT"	:_("The maximum number of SAR data files to include in the supportconfig tar ball."),
+"VAR_OPTION_SAR_FILES_LIMIT"	:_("The maximum number of SAR data files to include in the supportconfig tarball."),
 
-"VAR_OPTION_SILENT"		:_("When set to 1, supportconfig runs in quiet mode. This option is useful if you plan on running regular supportconfigs in a cron job for example.  Set  with -Q."),
+"VAR_OPTION_SILENT"		:_("When set to 1, supportconfig runs in quiet mode. This option is useful if you plan on running regular supportconfigs in a cron job for example. Set with -Q."),
 
-"VAR_OPTION_UPLOAD_TARGET"	:_("Used  to  specify  where the supportconfig tar ball will be uploaded, when using the -u srnum startup option. You can specify any FTP server that supports anonymous uploads. The default is Novell's public ftp server.")
+"VAR_OPTION_UPLOAD_TARGET"	:_("Used to specify where the supportconfig tarball will be uploaded, when using the -u srnum startup option. You can specify any FTP server that supports anonymous uploads. The default is Novell's public ftp server.")
 
 
 

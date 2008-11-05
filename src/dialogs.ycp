@@ -262,7 +262,7 @@ any ParametersDialog () {
     string caption = _("Supportconfig Parameters Configuration");
 
     list<term> items = [
-//	  `item(`id(`use_defaults), _("Use Defaults (ignore  /etc/supportconfig.conf)"), Support::use_defaults),
+//	  `item(`id(`use_defaults), _("Use Defaults (ignore /etc/supportconfig.conf)"), Support::use_defaults),
 	  `item(`id(`full_listening), _("Create a full file listing from '/'"), Support::full_listening),
 	  `item(`id(`exclude_disk_scan), _("Exclude detailed disk info and scans"), Support::exclude_disk_scan),
 	  `item(`id(`search_for_edir), _("Search root filesystem for eDirectory instances"), Support::search_for_edir),
@@ -276,7 +276,7 @@ any ParametersDialog () {
        `Left(
 	`RadioButtonGroup(`id(`rb),
 	 `VBox(
-	  `Left( `RadioButton(`id(`use_defaults), `opt(`notify), _("Use Defaults (ignore  /etc/supportconfig.conf)")) ),
+	  `Left( `RadioButton(`id(`use_defaults), `opt(`notify), _("Use Defaults (ignore /etc/supportconfig.conf)")) ),
 	  `Left( `RadioButton(`id(`full_logging), `opt(`notify), _("Activates all support functions")) ),
 	  `Left( `RadioButton(`id(`minimal_logs), `opt(`notify), _("Only gather a minimum amount of info")) ),
 	  `Left( `VBox(
