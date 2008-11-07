@@ -104,14 +104,14 @@ any OverviewDialog(){
     ), `HStretch());
 
     Wizard::SetContentsButtons(caption, contents, HELPS["overview"]:"",
-	    Label::BackButton(), Label::NextButton());
+	    Label::BackButton(), Label::FinishButton());
 
     Wizard::DisableBackButton();
 
     any ret = nil;
     while(true) {
 	ret = UI::UserInput();
-	if (ret == `abort || ret == `tarball || ret == `upload)
+	if (ret == `abort || ret == `tarball || ret == `upload || ret == `next)
 		break;
          else
 	if (ret == `browser){
@@ -190,7 +190,14 @@ any UploadDialog(boolean data_prepared){
           string command = sformat("supportconfig %1 -f %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
           if ((boolean)UI::QueryWidget(`upload, `Value)){
 	   string url = (string)UI::QueryWidget(`url, `Value);
-           if (size(url)>0) command = sformat("%1 -U %2", command, url);
+           if (size(url)>0) //{
+/*
+	    if (issubstring(url, "https://secure-www.novell.com/upload?appname=supportconfig&file"))
+			command = sformat("%1 -u -U %2", command, sformat("https://secure-www.novell.com/upload?appname=supportconfig&file=%1", Support::log_files["tarball"]:""));
+		else 
+*/
+		command = sformat("%1 -u -U %2", command, url);
+//	   }
           }
 	  if (Support::WhoAmI() != 0) {
 	    if (! Support::AskForRootPwd())
@@ -206,7 +213,7 @@ any UploadDialog(boolean data_prepared){
 	    SCR::Write (.target.string, Support::pwd_file, "");
           if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2",_("Cannot write settings"), output));
 		else{
-			command = sformat("find \"%1\" -type f -name \"%2*\"|tr -d '\n'", Support::log_files["tmp_dir"]:"", Support::log_files["log_dir"]:"");
+			command = sformat("find \"%1\" -type f -name \"%2*\"|grep -v \".md5$\" | tr -d '\n'", Support::log_files["tmp_dir"]:"", Support::log_files["log_dir"]:"");
 			y2internal("command %1", command);
 			output=(map<string, any>)SCR::Execute(.target.bash_output, command);
 			if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2", _("Cannot write settings."), output));
@@ -531,13 +538,14 @@ symbol GenerateDialog () {
     );
     Wizard::SetContentsButtons(caption, contents, HELPS["collecting"]:"",
             Label::BackButton(), Label::NextButton());
-    string cmd = sformat("supportconfig %1 -t %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
+    string uuid_param = (issubstring(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "novell.com")) ? "-q" : "";
+    string cmd = sformat("supportconfig %1 %2 -t %3", Support::GetParameterList(), uuid_param, Support::log_files["tmp_dir"]:"");
     if (Support::WhoAmI() != 0) {
 	if (! Support::AskForRootPwd())
 	    return `back;
 	integer id = Support::WhoAmI();
 	SCR::Write (.target.string, Support::pwd_file, Support::root_pw + "\n");
-	cmd = sformat("cat %4 | su -c 'supportconfig %1 -t %2 && chown -R %3 %2'", Support::GetParameterList(), Support::log_files["tmp_dir"]:"", id, Support::pwd_file);
+	cmd = sformat("cat %4 | su -c '%1 && chown -R %3 %2'", cmd, Support::log_files["tmp_dir"]:"", id, Support::pwd_file);
     }
     symbol ret = nil;
     integer pid = (integer) SCR::Execute(.process.start_shell, cmd);

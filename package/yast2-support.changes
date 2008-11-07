@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Nov  7 17:22:51 CET 2008 - mzugec@suse.cz
+
+- next->ok button in Overview dialog (bnc#442358)
+- several upload fixes (bnc#440666)
+- 2.17.15
+
+-------------------------------------------------------------------
 Fri Nov  7 09:13:22 CET 2008 - jsrain@suse.cz
 
 - added reference to Novell's privacy policy (fate #303850)
