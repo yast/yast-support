@@ -126,8 +126,13 @@ running it as a non-provileged user and entering URL
 Start web browser?"), url)))
 	    {
 	      y2milestone("Executing browser %1 with URL %2", Support::browser, url);
-	      SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
+	      SCR::Execute(.target.bash, sformat("%1 %2", Support::browser, url));
 	    }
+	  }
+	  else
+	  {
+	      y2milestone("Executing browser %1 with URL %2", Support::browser, url);
+	      SCR::Execute(.target.bash, sformat("su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"", Support::browser, url));
 	  }
 	  }
 	 }

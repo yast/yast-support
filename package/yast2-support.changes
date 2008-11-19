@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Nov 19 12:26:24 CET 2008 - jsrain@suse.cz
+
+- fixed browser invokation (bnc #439903)
+- 2.17.16
+
+-------------------------------------------------------------------
 Fri Nov  7 17:22:51 CET 2008 - mzugec@suse.cz
 
 - next->ok button in Overview dialog (bnc#442358)
