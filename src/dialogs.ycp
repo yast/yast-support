@@ -49,7 +49,7 @@ any OverviewDialog(){
        `Frame(_("Open Novell Support Center"),
            `VBox(
                `HStretch (),
-               `Left (`Label("This will start a browser with Novell Support Center Portal.")),
+               `Left (`Label(_("This will start a browser with Novell Support Center Portal."))),
                `HBox (
                    `HStretch(),
                    `HStretch(),
