@@ -60,6 +60,7 @@ any MainSequence() {
     map sequence = $[
 	"ws_start" : "overview",
 	"overview" : $[
+	    `cancel	: `abort,
 	    `abort	: `abort,
 	    `back	: `back,
 	    `tarball	: "parameters",
@@ -67,38 +68,45 @@ any MainSequence() {
 	    `next	: `next,
 	],
 	"upload1" : $[
+	    `cancel	: `abort,
 	    `abort      : `abort,
 	    `back	: "overview",
 	    `next	: "overview"
 	],
 	"parameters" : $[
+	    `cancel	: `abort,
 	    `abort	: `abort,
 	    `expert	: "expert",
 	    `next	: "contact",
 	],
 		"expert" : $[
+	    `cancel	: `abort,
 		    `abort	: `abort,
 		    `back	: `back,
 		    `next	: "parameters",
 		],
 	"contact" : $[
+	    `cancel	: `abort,
 	    `abort	: `abort,
 	    `back	: `back,
 	    `next	: "generate",
 	],
 	"generate" : $[
+	    `cancel	: `abort,
 	    `abort	: `abort,
 	    `back	: `back,
 	    `next	: "files",
 
 	],
 	"files" : $[
+	    `cancel	: `abort,
 	    `abort	: `abort,
 	    `back	: `back,
 	    `next	: "upload2",
 
 	],
 	"upload2" : $[
+	    `cancel	: `abort,
 	    `abort      : `abort,
 	    `back	: "overview",
 	    `next	: "overview"
@@ -129,6 +137,7 @@ any SupportSequence() {
 	    `next	: "main"
 	],
 	"main" : $[
+	    `cancel	: `abort,
 	    `abort	: `abort,
 	    `next	: "write"
 	],

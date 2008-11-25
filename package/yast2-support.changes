@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Tue Nov 25 15:34:01 CET 2008 - mzugec@suse.cz
+
+- copy also .md5 file (bnc#445294)
+- handle `close event (bnc#446073)
+- quote upload target URL (bnc#445315)
+- SR numbers validator (bnc#445289)
+- 2.17.17 
+
+-------------------------------------------------------------------
 Thu Nov 20 15:41:47 CET 2008 - mzugec@suse.cz
 
 - fixed help string (bnc#436773)

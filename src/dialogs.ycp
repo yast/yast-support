@@ -111,13 +111,13 @@ any OverviewDialog(){
     any ret = nil;
     while(true) {
 	ret = UI::UserInput();
-	if (ret == `abort || ret == `tarball || ret == `upload || ret == `next)
+	if (ret == `abort || ret == `cancel || ret == `tarball || ret == `upload || ret == `next)
 		break;
          else
 	if (ret == `browser){
 	 if (Support::browser==nil) Popup::Error(_("Couldn't find any installed browser."));
 	  else{
-          string url="http://www.novell.com/center/eservice";
+          string url="'http://www.novell.com/center/eservice'";
 	  if (0 == SCR::Execute (.target.bash, "env|grep LOGNAME|cut -d'=' -f2- | grep root"))
 	  {
 	    if (Popup::ContinueCancel (sformat (_("YaST will run a web browser as superuser. Consider
@@ -137,12 +137,13 @@ Start web browser?"), url)))
 	  }
 	 }
        }
+ if (ret==`cancel) ret=`abort;
  return ret;
 }
 
 any UploadDialog(boolean data_prepared){
     string caption = _("Supportconfig Upload Dialog");
-	string url=Support::options["VAR_OPTION_UPLOAD_TARGET"]:"";
+	string url=deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'");
 	y2milestone("URL value from /etc/supportconfig.conf : %1", url);
     y2milestone("%1", Support::log_files);
     string home=((map<string, any>)SCR::Execute(.target.bash_output, "echo ~|tr -d '\n'"))["stdout"]:"";
@@ -201,7 +202,7 @@ any UploadDialog(boolean data_prepared){
 			command = sformat("%1 -u -U %2", command, sformat("https://secure-www.novell.com/upload?appname=supportconfig&file=%1", Support::log_files["tarball"]:""));
 		else 
 */
-		command = sformat("%1 -u -U %2", command, url);
+		command = sformat("%1 -u -U '%2'", command, url);
 //	   }
           }
 	  if (Support::WhoAmI() != 0) {
@@ -229,7 +230,7 @@ any UploadDialog(boolean data_prepared){
 					 if (data_prepared && (boolean)UI::QueryWidget(`save, `Value)) {
 						string tarball = Support::log_files["tarball"]:"";
 						string output_dir = (string)UI::QueryWidget(`save_dir, `Value);
-						string command = sformat("cp '%1' '%2'", tarball, output_dir);
+						string command = sformat("cp %1* '%2'", tarball, output_dir);
 						y2milestone("execute %1 : %2", command, SCR::Execute(.target.bash_output, command));
 					 }
 					}
@@ -497,12 +498,13 @@ any ContactDialog () {
 	  `Left(`InputField(`id(`terminalid), _("Terminal ID"), Support::options["VAR_OPTION_CONTACT_TERMINALID"]:""))
 	 )),
 	`Frame (_("Upload Information"), `VBox(
-	  `Left(`InputField(`id(`target), _("Upload Target"), Support::options["VAR_OPTION_UPLOAD_TARGET"]:"")),
+	  `Left(`InputField(`id(`target), _("Upload Target"), deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'"))),
 	  `Left(`InputField(`id(`novell_number), _("Novell 11 digit service request number"), Support::novell_number))
 	)));
 
     Wizard::SetContentsButtons(caption, contents, HELPS["contact"]:"",
 	    Label::BackButton(), Label::NextButton());
+    UI::ChangeWidget(`novell_number, `ValidChars, "0123456789");
 
     any ret = nil;
     while(true) {
@@ -521,8 +523,15 @@ any ContactDialog () {
 	  Support::options["VAR_OPTION_CONTACT_PHONE"]=(string)UI::QueryWidget(`phone, `Value);
 	  Support::options["VAR_OPTION_CONTACT_STOREID"]=(string)UI::QueryWidget(`storeid, `Value);
 	  Support::options["VAR_OPTION_CONTACT_TERMINALID"]=(string)UI::QueryWidget(`terminalid, `Value);
-	  Support::options["VAR_OPTION_UPLOAD_TARGET"]=(string)UI::QueryWidget(`target, `Value);
+	  Support::options["VAR_OPTION_UPLOAD_TARGET"]=sformat("'%1'", (string)UI::QueryWidget(`target, `Value));
 	  Support::novell_number=(string)UI::QueryWidget(`novell_number, `Value);
+	  if (size(Support::novell_number)>0){
+		if (size(Support::novell_number)!=11){
+		 Popup::Error(_("The SR number must be 11 digits"));
+		 ret=nil;
+		 continue;
+		}
+	  }
 	  Support::WriteConfig();
           break;
         }
