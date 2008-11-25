@@ -495,7 +495,8 @@ any ContactDialog () {
 	  `Left(`InputField(`id(`name), _("Name"), Support::options["VAR_OPTION_CONTACT_NAME"]:"")),
 	  `Left(`InputField(`id(`phone), _("Phone Number"), Support::options["VAR_OPTION_CONTACT_PHONE"]:"")),
 	  `Left(`InputField(`id(`storeid), _("Store ID"), Support::options["VAR_OPTION_CONTACT_STOREID"]:"")),
-	  `Left(`InputField(`id(`terminalid), _("Terminal ID"), Support::options["VAR_OPTION_CONTACT_TERMINALID"]:""))
+	  `Left(`InputField(`id(`terminalid), _("Terminal ID"), Support::options["VAR_OPTION_CONTACT_TERMINALID"]:"")),
+	  `Left(`InputField(`id(`gpg_uid), _("GPG UID"), Support::options["VAR_OPTION_GPG_UID"]:""))
 	 )),
 	`Frame (_("Upload Information"), `VBox(
 	  `Left(`InputField(`id(`target), _("Upload Target"), deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'"))),
@@ -524,6 +525,7 @@ any ContactDialog () {
 	  Support::options["VAR_OPTION_CONTACT_STOREID"]=(string)UI::QueryWidget(`storeid, `Value);
 	  Support::options["VAR_OPTION_CONTACT_TERMINALID"]=(string)UI::QueryWidget(`terminalid, `Value);
 	  Support::options["VAR_OPTION_UPLOAD_TARGET"]=sformat("'%1'", (string)UI::QueryWidget(`target, `Value));
+	  Support::options["VAR_OPTION_GPG_UID"]=(string)UI::QueryWidget(`gpg_uid, `Value);
 	  Support::novell_number=(string)UI::QueryWidget(`novell_number, `Value);
 	  if (size(Support::novell_number)>0){
 		if (size(Support::novell_number)!=11){
