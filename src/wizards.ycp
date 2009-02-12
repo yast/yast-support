@@ -148,6 +148,7 @@ any SupportSequence() {
     ];
 
     Wizard::CreateDialog();
+    Wizard::SetDesktopTitle("support");
 
     any ret = Sequencer::Run(aliases, sequence);
 

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Feb 12 17:52:08 CET 2009 - mzugec@suse.cz
+
+- set window title (bnc#474618)
+- 2.18.0 
+
+-------------------------------------------------------------------
 Fri Jan  9 19:10:23 CET 2009 - varkoly@suse.de
 
 - bnc#447588 - remove progress dialog on start of support module
