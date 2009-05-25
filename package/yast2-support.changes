@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue May 25 16:50:20 CEST 2009 - mzugec@suse.de
+
+- removed calls of not-implemented functions 
+
+-------------------------------------------------------------------
 Sun May 17 16:15:37 CEST 2009 - mzugec@suse.cz
 
 - YaST module for supportconfig (fate#303811)
