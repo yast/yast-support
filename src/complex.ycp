@@ -77,7 +77,7 @@ symbol ReadDialog() {
 	    if (!Confirm::MustBeRoot()) return `abort;
 	}
 	y2milestone ("Using configuration file %1", file);
-	setenv ("SC_CONF", file);
+//	setenv ("SC_CONF", file);
 	// ensure ~/.supportconfig does exist
 	if (SCR::Read (.target.size, file) < 0)
 	{
