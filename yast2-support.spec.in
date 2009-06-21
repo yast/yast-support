@@ -9,7 +9,8 @@ BuildArchitectures:	noarch
 Summary:	YaST2 - Support Inquiries
 
 %description
--
+This module allows you to collect system information for installation
+support in a standardized format.
 
 @PREP@
 
