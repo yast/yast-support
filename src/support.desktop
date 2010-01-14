@@ -17,9 +17,8 @@ X-SuSE-YaST-SortKey=
 X-SuSE-YaST-AutoInstResource=support
 
 Icon=yast-support
-Exec=/sbin/yast2 support 
+Exec=xdg-su -c "/sbin/yast2 support"
 
 Name=Support
 GenericName=support
-X-KDE-SubstituteUID=true
 StartupNotify=true
