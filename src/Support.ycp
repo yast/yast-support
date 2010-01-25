@@ -244,52 +244,20 @@ global boolean Read() {
     /* Support read dialog caption */
     string caption = _("Initializing support Configuration");
 
-    // TODO FIXME Set the right number of stages
-    integer steps = 2;
-
-    integer sl = 500;
-    sleep(sl);
-
-    // TODO FIXME Names of real stages
-    // We do not set help text here, because it was set outside
-    Progress::New( caption, " ", steps, [
-	    /* Progress stage 1/3 */
-	    _("Read the configuration")
-	], [
-	    /* Progress step 1/3 */
-	    _("Reading the database..."),
-	    /* Progress step 2/3 */
-	    _("Reading the previous settings..."),
-	    /* Progress step 3/3 */
-	    _("Detecting the devices..."),
-	    /* Progress finished */
-	    _("Finished")
-	],
-	""
-    );
-
-    // read database
-    if(Abort()) return false;
-    Progress::NextStage();
     configuration = (map)SCR::Read(.etc.supportconfig.all);
     foreach(map<string, any> row, configuration["value"]:[], {
 	options[row["name"]:""]=row["value"]:"";
     });
     /* Error message */
     if(false) Report::Error(Message::CannotReadCurrentSettings());
-    sleep(sl);
-
 
     // read current settings
-    if(Abort()) return false;
-    Progress::NextStage();
     if (PackageSystem::Installed("MozillaFirefox")) browser="firefox";
      else if (PackageSystem::Installed("kde4-konqueror")||PackageSystem::Installed("kdebase3")) browser="konqueror";
       else if (PackageSystem::Installed("opera")) browser="opera";
 	else y2error("Couldn't find any supported browser installed.");
     /* Error message */
     if(false) Report::Error(Message::CannotReadCurrentSettings());
-    sleep(sl);
 
     if(Abort()) return false;
     log_files=$[ "tmp_dir":(string)SCR::Read(.target.tmpdir) ];
