@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Aug  5 12:35:28 CEST 2011 - tgoettlicher@suse.de
+
+- fixed .desktop file (bnc #681249)
+
+-------------------------------------------------------------------
 Mon Jan 18 09:52:19 CET 2010 - mzugec@suse.cz
 
 - fixed desktop file (Categories)
