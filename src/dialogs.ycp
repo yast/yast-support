@@ -49,7 +49,7 @@ any OverviewDialog(){
        `Frame(_("Open Novell Support Center"),
            `VBox(
                `HStretch (),
-               `Left (`Label(_("This will start a browser with Novell Support Center Portal."))),
+               `Left (`Label(_("This will start a browser connecting to the Novell Support Center Portal."))),
                `HBox (
                    `HStretch(),
                    `HStretch(),
@@ -67,7 +67,7 @@ any OverviewDialog(){
        `Frame(`opt (`hstretch), _("Collect Data"),
            `VBox(
                `HStretch (),
-               `Left (`Label(_("This will create tarball with collected log files."))),
+               `Left (`Label(_("This will create a tarball containing the collected log files."))),
                `HBox (
                    `HStretch(),
                    `HStretch(),
@@ -86,7 +86,7 @@ any OverviewDialog(){
        `Frame(`opt (`hstretch), _("Upload Data"),
            `VBox(
                `HStretch (),
-               `Label(_("This will upload collected logs into specified URL.")),
+               `Label(_("This will upload the collected logs to the specified URL.")),
                `HBox (
                    `HStretch(),
                    `HStretch(),
@@ -115,15 +115,16 @@ any OverviewDialog(){
 		break;
          else
 	if (ret == `browser){
-	 if (Support::browser==nil) Popup::Error(_("Couldn't find any installed browser."));
+	 if (Support::browser==nil) Popup::Error(_("Could not find any installed browser."));
 	  else{
           string url="'http://www.novell.com/center/eservice'";
 	  if (0 == SCR::Execute (.target.bash, "env|grep LOGNAME|cut -d'=' -f2- | grep root"))
 	  {
-	    if (Popup::ContinueCancel (sformat (_("YaST will run a web browser as superuser. Consider
-running it as a non-provileged user and entering URL
+	    if (Popup::ContinueCancel (sformat (_("YaST will run a Web browser as superuser. Consider
+running it as a non-provileged user and entering the URL
 %1.
-Start web browser?"), url)))
+Start Web browser?
+"), url)))
 	    {
 	      y2milestone("Executing browser %1 with URL %2", Support::browser, url);
 	      SCR::Execute(.target.bash, sformat("%1 %2", Support::browser, url));
@@ -170,7 +171,7 @@ any UploadDialog(boolean data_prepared){
     term contents = `Frame("",
 	`VBox(
 	 load_save,
-	    `CheckBoxFrame(`id(`upload), _("Upload log files tarball into URL"), true,
+	    `CheckBoxFrame(`id(`upload), _("Upload log files tarball to URL"), true,
 	      `Left( `InputField(`id(`url), _("Upload Target"), url) )
 	   )
 	 )
@@ -500,7 +501,7 @@ any ContactDialog () {
 	 )),
 	`Frame (_("Upload Information"), `VBox(
 	  `Left(`InputField(`id(`target), _("Upload Target"), deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'"))),
-	  `Left(`InputField(`id(`novell_number), _("Novell 11 digit service request number"), Support::novell_number))
+	  `Left(`InputField(`id(`novell_number), _("Novell 11-digit service request number"), Support::novell_number))
 	)));
 
     Wizard::SetContentsButtons(caption, contents, HELPS["contact"]:"",

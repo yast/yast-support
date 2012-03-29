@@ -242,7 +242,7 @@ global string GetParameterList(){
 global boolean Read() {
 
     /* Support read dialog caption */
-    string caption = _("Initializing support Configuration");
+    string caption = _("Initializing Support Configuration");
 
     configuration = (map)SCR::Read(.etc.supportconfig.all);
     foreach(map<string, any> row, configuration["value"]:[], {
@@ -272,7 +272,7 @@ global boolean Read() {
 global boolean Write() {
 
     /* Support read dialog caption */
-    string caption = _("Saving support Configuration");
+    string caption = _("Saving Support Configuration");
 
     // TODO FIXME And set the right number of stages
     integer steps = 2;
