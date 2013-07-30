@@ -8,6 +8,8 @@ BuildRequires:	perl-XML-Writer update-desktop-files yast2 yast2-devtools yast2-t
 
 BuildArchitectures:	noarch
 
+Requires:       yast2-ruby-bindings >= 1.0.0
+
 Summary:	YaST2 - Support Inquiries
 
 %description
@@ -26,8 +28,8 @@ support in a standardized format.
 %defattr(-,root,root)
 %dir @yncludedir@/support
 @yncludedir@/support/*
-@clientdir@/support.ycp
-@clientdir@/support_*.ycp
+@clientdir@/support.rb
+@clientdir@/support_*.rb
 @moduledir@/Support.*
 @desktopdir@/support.desktop
 @scrconfdir@/*.scr
