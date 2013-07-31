@@ -1,30 +1,27 @@
-# Makefile.am for support/src
+# Sources for support
+
+module_DATA = \
+  modules/Support.rb
+
+client_DATA = \
+  clients/support_proposal.rb \
+  clients/support_auto.rb \
+  clients/support.rb
 
 yncludedir = @yncludedir@/support
+ynclude_DATA = \
+  include/support/wizards.rb \
+  include/support/dialogs.rb \
+  include/support/supportconfig_conf.rb \
+  include/support/complex.rb \
+  include/support/helps.rb
 
-client_DATA =			\
-	support.ycp		\
-	support_auto.ycp	\
-	support_proposal.ycp
+scrconf_DATA = \
+  scrconf/supportconfig.scr
 
-ynclude_DATA =			\
-	helps.ycp		\
-	wizards.ycp		\
-	dialogs.ycp		\
-	complex.ycp 		\
-	supportconfig_conf.ycp
+desktop_DATA = \
+  desktop/support.desktop
 
-desktop_DATA =			\
-	support.desktop
-
-module_DATA =			\
-	Support.ycp		
-
-# create a symlink for local build, #145327
-support:
-	ln -sf . $@
-ycpchook = support
-
-EXTRA_DIST = $(client_DATA) $(ynclude_DATA) $(module_DATA) $(desktop_DATA)
+EXTRA_DIST = $(module_DATA) $(client_DATA) $(ynclude_DATA) $(scrconf_DATA) $(desktop_DATA)
 
 include $(top_srcdir)/Makefile.am.common
