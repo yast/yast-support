@@ -1,5 +1,5 @@
 Makefile
-Makefile.am
+/Makefile.am
 Makefile.in
 aclocal.m4
 autom4te.cache
@@ -28,4 +28,3 @@ Makefile.am.common
 .dep
 tmp.*
 *.log
-*.ybc
