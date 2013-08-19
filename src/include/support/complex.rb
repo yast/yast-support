@@ -161,7 +161,7 @@ module Yast
           )
         )
       end
-      Builtins.y2internal(
+      Builtins.y2milestone(
         "Read 2: %1",
         SCR.Read(path(".etc.supportconfig.all"))
       )
@@ -174,7 +174,6 @@ module Yast
     # @return `abort if aborted and `next otherwise
     def WriteDialog
       Wizard.RestoreHelp(Ops.get_string(@HELPS, "write", ""))
-      # Support::SetAbortFunction(PollAbort);
       ret = Support.Write
       ret ? :next : :abort
     end
