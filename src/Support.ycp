@@ -198,6 +198,7 @@ global boolean full_logging=false;
 global boolean minimal_logs=false;
 global boolean include_slp=false;
 global boolean rpm_check=false;
+global boolean additional_logs  =false;
 global string novell_number="";
 
 global map<string, any> log_files=$[];
@@ -215,6 +216,7 @@ global string GetParameterList(){
  if(minimal_logs)	parameters=sformat("%1 %2", parameters, "-m");
  if(include_slp)	parameters=sformat("%1 %2", parameters, "-s");
  if(rpm_check)		parameters=sformat("%1 %2", parameters, "-v");
+ if(additional_logs)    parameters=sformat("%1 %2", parameters, "-l");
  if( size(novell_number)>0 )	parameters=sformat("%1 %2 %3", parameters, "-r", novell_number);
  y2milestone("Create parameter list : %1", parameters);
  return parameters;
