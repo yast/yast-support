@@ -448,6 +448,11 @@ module Yast
           Id(:rpm_check),
           _("Performs an rpm -V for each installed rpm"),
           Support.rpm_check
+        ),
+        Item(
+          Id(:additional_logs),
+          _("Include all log file lines, gather additional rotated logs"),
+          Support.additional_logs
         )
       ]
       # Support configure1 dialog contents
@@ -558,6 +563,7 @@ module Yast
           Support.minimal_logs = Builtins.contains(selected, :minimal_logs)
           Support.include_slp = Builtins.contains(selected, :include_slp)
           Support.rpm_check = Builtins.contains(selected, :rpm_check)
+          Support.additional_logs = Builtins.contains(selected, :additional_logs)
 
           case Convert.to_symbol(UI.QueryWidget(:rb, :CurrentButton))
             when :use_defaults

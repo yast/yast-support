@@ -78,6 +78,7 @@ module Yast
       @minimal_logs = false
       @include_slp = false
       @rpm_check = false
+      @additional_logs = false
       @novell_number = ""
 
       @log_files = {}
@@ -230,6 +231,7 @@ module Yast
       parameters = Builtins.sformat("%1 %2", parameters, "-m") if @minimal_logs
       parameters = Builtins.sformat("%1 %2", parameters, "-s") if @include_slp
       parameters = Builtins.sformat("%1 %2", parameters, "-v") if @rpm_check
+      parameters = Builtins.sformat("%1 %2", parameters, "-l") if @additional_logs
       if Ops.greater_than(Builtins.size(@novell_number), 0)
         parameters = Builtins.sformat(
           "%1 %2 %3",
@@ -466,6 +468,7 @@ module Yast
     publish :variable => :minimal_logs, :type => "boolean"
     publish :variable => :include_slp, :type => "boolean"
     publish :variable => :rpm_check, :type => "boolean"
+    publish :variable => :additional_logs, :type => "boolean"
     publish :variable => :novell_number, :type => "string"
     publish :variable => :log_files, :type => "map <string, any>"
     publish :variable => :browser, :type => "string"
