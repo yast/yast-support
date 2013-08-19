@@ -282,7 +282,8 @@ any ParametersDialog () {
 //	  `item(`id(`full_logging), _("Activates all support functions"), Support::full_logging),
 //	  `item(`id(`minimal_logs), _("Only gather a minimum amount of info"), Support::minimal_logs),
 	  `item(`id(`include_slp), _("Include full SLP service lists"), Support::include_slp),
-	  `item(`id(`rpm_check), _("Performs an rpm -V for each installed rpm"), Support::rpm_check)
+	  `item(`id(`rpm_check), _("Performs an rpm -V for each installed rpm"), Support::rpm_check),
+	  `item(`id(`additional_logs), _("Include all log file lines, gather additional rotated logs"), Support::additional_logs)
 	];
     /* Support configure1 dialog contents */
     term contents = `VBox(
@@ -345,6 +346,7 @@ if (Support::use_defaults) UI::ChangeWidget(`rb, `CurrentButton, `use_defaults);
 	 Support::minimal_logs=contains(selected, `minimal_logs);
 	 Support::include_slp=contains(selected, `include_slp);
 	 Support::rpm_check=contains(selected, `rpm_check);
+	 Support::additional_logs=contains(selected, `additional_logs);
 
 	 switch((symbol)UI::QueryWidget(`rb, `CurrentButton)){
 	  case `use_defaults:
