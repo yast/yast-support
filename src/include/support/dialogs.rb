@@ -291,9 +291,6 @@ module Yast
           if Convert.to_boolean(UI.QueryWidget(:upload, :Value))
             url2 = Convert.to_string(UI.QueryWidget(:url, :Value))
             if Ops.greater_than(Builtins.size(url2), 0) #{
-              # 	    if (issubstring(url, "https://secure-www.novell.com/upload?appname=supportconfig&file"))
-              # 			command = sformat("%1 -u -U %2", command, sformat("https://secure-www.novell.com/upload?appname=supportconfig&file=%1", Support::log_files["tarball"]:""));
-              # 		else
               command = Builtins.sformat("%1 -u -U '%2'", command, url2)
             end 
             #	   }
@@ -332,7 +329,7 @@ module Yast
               Ops.get_string(Support.log_files, "tmp_dir", ""),
               Ops.get_string(Support.log_files, "log_dir", "")
             )
-            Builtins.y2internal("command %1", command)
+            Builtins.y2milestone("command %1", command)
             output = Convert.convert(
               SCR.Execute(path(".target.bash_output"), command),
               :from => "any",
@@ -352,7 +349,7 @@ module Yast
                   "tarball",
                   Ops.get_string(output, "stdout", "")
                 )
-                Builtins.y2internal(
+                Builtins.y2milestone(
                   "input tarball : %1",
                   Ops.get_string(Support.log_files, "tarball", "")
                 )
@@ -421,7 +418,6 @@ module Yast
       caption = _("Supportconfig Parameters Configuration")
 
       items = [
-        #	  `item(`id(`use_defaults), _("Use Defaults (ignore /etc/supportconfig.conf)"), Support::use_defaults),
         Item(
           Id(:full_listening),
           _("Create a full file listing from '/'"),
@@ -437,8 +433,6 @@ module Yast
           _("Search root filesystem for eDirectory instances"),
           Support.search_for_edir
         ),
-        #	  `item(`id(`full_logging), _("Activates all support functions"), Support::full_logging),
-        #	  `item(`id(`minimal_logs), _("Only gather a minimum amount of info"), Support::minimal_logs),
         Item(
           Id(:include_slp),
           _("Include full SLP service lists"),
@@ -448,6 +442,11 @@ module Yast
           Id(:rpm_check),
           _("Performs an rpm -V for each installed rpm"),
           Support.rpm_check
+        ),
+        Item(
+          Id(:additional_logs),
+          _("Include all log file lines, gather additional rotated logs"),
+          Support.additional_logs
         )
       ]
       # Support configure1 dialog contents
@@ -489,12 +488,7 @@ module Yast
               )
             )
           )
-        ), # 	`Left(
-        # 	 `HBox(
-        # 	  `InputField(`id(`log_dir), _("Log directory"), Support::log_files["tmp_dir"]:""),
-        # 	  `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
-        # 	 )),
-        # 	`MultiSelectionBox(`id(`options), _("Options"), items),
+        ),
         MultiSelectionBox(Id(:options), _("Options"), items)
       )
 
@@ -558,6 +552,7 @@ module Yast
           Support.minimal_logs = Builtins.contains(selected, :minimal_logs)
           Support.include_slp = Builtins.contains(selected, :include_slp)
           Support.rpm_check = Builtins.contains(selected, :rpm_check)
+          Support.additional_logs = Builtins.contains(selected, :additional_logs)
 
           case Convert.to_symbol(UI.QueryWidget(:rb, :CurrentButton))
             when :use_defaults
@@ -608,17 +603,12 @@ module Yast
               Ops.get_string(Support.options, key, "") == "1"
             )
           )
-        end #	else
-        #         table_items = add(table_items, `item(`id(key), key, Support::options[key]:""));
+        end
       end
 
       # FIXME table header
       contents = HBox(
         MultiSelectionBox(Id(:opt_msb), _("Default Options"), bool_items) #,
-        # 	`VBox(
-        # 	 `Table(`id(`var_table), `header(_("Name"), _("Value")), table_items),
-        # 		`PushButton(`id(`edit), Label::EditButton())
-        # 	 )
       )
 
       Wizard.SetContentsButtons(
@@ -640,29 +630,6 @@ module Yast
           else
             next
           end
-        # edit
-        #         else if(ret == `edit) {
-        # 	    any id = UI::QueryWidget(`var_table, `CurrentItem);
-        # 	    term row = (term)UI::QueryWidget(`var_table, `Item(id));
-        # 	    UI::OpenDialog(`VBox(
-        # 		 `InputField(`id(`changed_value), row[1]:"", row[2]:""),
-        # 		  `HBox(
-        # 		   `PushButton(`id(`cancel), Label::CancelButton()),
-        # 		   `PushButton(`id(`ok), Label::OKButton())
-        # 		  )
-        # 		));
-        # 	    any ret=UI::UserInput();
-        # 	    if (ret==`ok){
-        # 		string new_value = (string)UI::QueryWidget(`id(`changed_value), `Value);
-        # 		if (new_value != row[2]:"") {
-        # 			UI::CloseDialog();
-        # 			UI::ChangeWidget(`id(`var_table), `Cell(`id(id), 1), new_value);
-        # 			continue;
-        # 		}
-        # 	    }
-        # 	    UI::CloseDialog();
-        #             continue;
-        #         }
         elsif ret == :next
           Builtins.y2milestone(
             "store configuration for /etc/supportconfig.conf"
@@ -681,7 +648,7 @@ module Yast
             if !Builtins.issubstring(key, "VAR_OPTION")
               bool_val = Builtins.contains(selected_items, key)
               if (val == "1") != bool_val
-                Builtins.y2internal(
+                Builtins.y2milestone(
                   "value changed %1=%2, new value %3",
                   key,
                   val,
@@ -689,13 +656,7 @@ module Yast
                 )
                 Ops.set(Support.options, key, bool_val ? "1" : "0")
               end
-            end # 	 else{
-            # 	   string new_val = (string)UI::QueryWidget(`var_table, `Cell(`id(key), 1));
-            # 	   if(new_val!=val){
-            # 	     y2internal("value changed %1=%2, new value %3", key, val, new_val);
-            # 	     Support::options[key]=new_val;
-            # 	   }
-            # 	  }
+            end
           end
           break
         elsif ret == :back
@@ -705,7 +666,7 @@ module Yast
           next
         end
       end
-      Builtins.y2internal("%1", Support.options)
+      Builtins.y2milestone("%1", Support.options)
       Convert.to_symbol(ret)
     end
 
@@ -975,7 +936,7 @@ module Yast
           )
         )
       )
-      Builtins.y2internal("output %1", output)
+      Builtins.y2milestone("output %1", output)
       if Ops.get_integer(output, "exit", -1) != 0
         Popup.Error(Ops.get_string(output, "stderr", ""))
         return :back
@@ -1045,25 +1006,9 @@ module Yast
             Id(:file_rp),
             RichText(Id(:file), Opt(:plainText), data)
           ) 
-          #	    UI::ChangeWidget (`id (`file), `Value, data);
         end
         ret = Convert.to_symbol(UI.UserInput)
         if ret == :next
-          #           string command = sformat("supportconfig %1 -f %2", Support::GetParameterList(), Support::log_files["tmp_dir"]:"");
-          #           y2internal("executing %1", command);
-          #           map<string, any> output = (map<string, any>)SCR::Execute(.target.bash_output, command);
-          #           y2milestone("output %1", output);
-          #           if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2",_("Cannot write settings"), output));
-          # 		else{
-          # 			command = sformat("find \"%1\" -type f -name \"%2*\"|tr -d '\n'", Support::log_files["tmp_dir"]:"", Support::log_files["log_dir"]:"");
-          # 			y2internal("command %1", command);
-          # 			output=(map<string, any>)SCR::Execute(.target.bash_output, command);
-          # 			if (output["exit"]:-1 != 0) Report::Error (sformat("%1 : %2", _("Cannot write settings."), output));
-          # 			 else{
-          # 				if(size(output["stdout"]:"")>0) Support::log_files["tarball"]=output["stdout"]:"";
-          # 					else y2error("Empty filename : %1", output);
-          # 			     }
-          # 		    }
           break
         end
         break if ret == :abort || ret == :back
@@ -1081,7 +1026,7 @@ module Yast
           )
           ret = :filelist
           # FIXME uncomment, following line not tested
-          Builtins.y2internal("removing %1%2", full_log_path, file)
+          Builtins.y2milestone("removing %1%2", full_log_path, file)
           SCR.Execute(
             path(".target.bash"),
             Builtins.sformat("/bin/rm %1%2", full_log_path, file)
