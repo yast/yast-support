@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Sep 19 17:29:23 UTC 2013 - lslezak@suse.cz
+
+- do not use *.spec.in template, use *.spec file with RPM macros
+  instead
+- 3.1.0
+
+-------------------------------------------------------------------
 Mon Aug 19 10:50:52 CEST 2013 - jsuchome@suse.cz
 
 - added option to include additional logs (bnc#806924)
