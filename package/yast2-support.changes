@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 24 08:54:37 UTC 2014 - jsrain@suse.cz
+
+- adjusted help text - name technical support correctly
+  (bnc#872123)
+
+-------------------------------------------------------------------
 Thu Sep 19 17:29:23 UTC 2013 - lslezak@suse.cz
 
 - do not use *.spec.in template, use *.spec file with RPM macros

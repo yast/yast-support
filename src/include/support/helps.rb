@@ -73,7 +73,7 @@ module Yast
           "\n" +
             "<p><b><big>Opening Novell Support Center</big></b><br>\n" +
             "To start a Web browser that opens the Novell Support Center Portal, use <b>Open Novell Support Center</b>.\n" +
-            "You can then open a Service Request with Novell Technical Support. Make sure you write down\n" +
+            "You can then open a Service Request with Global Technical Support. Make sure you write down\n" +
             "the Service Request number to include in the supportconfig data upload.</p>\n"
         ) +
           # Ovreview dialog help 2/3
@@ -84,7 +84,7 @@ module Yast
           _(
             "<p><b><big>Uploading Collected Data</big></b><br>\n" +
               "To upload the data already collected to a server, use <b>Upload Data</b>.\n" +
-              "The server may or may not be Novell Technical Support.</p>"
+              "The server may or may not be Global Technical Support.</p>"
           ),
         # Configure1 dialog help 1/3
         "support_params" => _(
@@ -131,7 +131,7 @@ module Yast
           ) +
           # Contact dialog help 4/4
           _(
-            "<p><b>Note:</b> If you are uploading a supportconfig tarball to Novell Technical Support,\nmake sure you include the Novell 11-digit service request number from your open service request.\n"
+            "<p><b>Note:</b> If you are uploading a supportconfig tarball to Global Technical Support,\nmake sure you include the Novell 11-digit service request number from your open service request.\n"
           ),
         # Collecting data dialkog help 1/1
         "collecting"     => _(
@@ -146,7 +146,7 @@ module Yast
         # Configure1 dialog help 1/3
         "upload_save"    => Ops.add(
           _(
-            "<p><b><big>Upload supportconfig tarball to Novell Technical Support</big></b><br>\n" +
+            "<p><b><big>Upload supportconfig tarball to Global Technical Support</big></b><br>\n" +
               "If you want to store a copy of the supportconfig tarball, select the target\n" +
               "directory and make sure that this option is checked.\n" +
               "<br></p>\n"
@@ -171,7 +171,7 @@ module Yast
         ),
         "upload_select"  => Ops.add(
           _(
-            "<p><b><big>Upload supportconfig tarball to Novell Technical Support</big></b><br>\n" +
+            "<p><b><big>Upload supportconfig tarball to Global Technical Support</big></b><br>\n" +
               "If you have already created the supportconfig tarball, write the full path\n" +
               "into the <i>Package with log files</i> field.\n" +
               "<br></p>\n"
