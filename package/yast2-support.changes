@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue May 13 06:15:37 UTC 2014 - jsrain@suse.cz
+
+- save report to /var/log by default (bnc#875994)
+- 3.1.2
+
+-------------------------------------------------------------------
 Thu Apr 24 08:54:37 UTC 2014 - jsrain@suse.cz
 
 - adjusted help text - name technical support correctly
