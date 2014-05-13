@@ -267,7 +267,7 @@ module Yast
 
       # make sure supportconfig.conf exists
       # the call does not work as non-root
-      if Support.WhoAmI == 0 && SCR.Read(path(".target.size"), "/etc/supportconfig.conf") <= 0
+      if Support.WhoAmI == 0 && ! FileUtils.Exists("/etc/supportconfig.conf")
         SCR.Execute(path(".target.bash"), "/sbin/supportconfig -C");
       end
 
