@@ -265,6 +265,12 @@ module Yast
       # Support read dialog caption
       caption = _("Initializing Support Configuration")
 
+      # make sure supportconfig.conf exists
+      # the call does not work as non-root
+      if Support.WhoAmI == 0 && SCR.Read(path(".target.size"), "/etc/supportconfig.conf") <= 0
+        SCR.Execute(path(".target.bash"), "/sbin/supportconfig -C");
+      end
+
       @configuration = Convert.to_map(SCR.Read(path(".etc.supportconfig.all")))
       Builtins.foreach(Ops.get_list(@configuration, "value", [])) do |row|
         Ops.set(
