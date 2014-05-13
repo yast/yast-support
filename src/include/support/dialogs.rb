@@ -205,7 +205,7 @@ module Yast
       )
       Builtins.y2milestone("URL value from /etc/supportconfig.conf : %1", url)
       Builtins.y2milestone("%1", Support.log_files)
-      home = Ops.get_string(
+      dir_to_save = Ops.get_string(
         Convert.convert(
           SCR.Execute(path(".target.bash_output"), "echo ~|tr -d '\n'"),
           :from => "any",
@@ -214,6 +214,9 @@ module Yast
         "stdout",
         ""
       )
+      if dir_to_save == "/root"
+        dir_to_save = "/var/log"
+      end
       # Support configure1 dialog contents
       load_save = nil
       if data_prepared
@@ -223,7 +226,7 @@ module Yast
             _("Save as"),
             true,
             HBox(
-              InputField(Id(:save_dir), _("Directory to Save"), home),
+              InputField(Id(:save_dir), _("Directory to Save"), dir_to_save),
               VBox(Label(""), PushButton(Id(:browse), Label.BrowseButton))
             )
           )
