@@ -43,6 +43,7 @@ module Yast
       Yast.import "Map"
       Yast.import "PackageSystem"
       Yast.import "Label"
+      include Yast::Logger
 
       # Data was modified?
       @modified = false
@@ -268,6 +269,7 @@ module Yast
       # make sure supportconfig.conf exists
       # the call does not work as non-root
       if Support.WhoAmI == 0 && ! FileUtils.Exists("/etc/supportconfig.conf")
+        log.info "Creating new /etc/supportconfig.conf file"
         SCR.Execute(path(".target.bash"), "/sbin/supportconfig -C");
       end
 
