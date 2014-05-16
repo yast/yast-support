@@ -32,6 +32,7 @@ require "yast"
 
 module Yast
   class SupportClass < Module
+    include Yast::Logger
     def main
       Yast.import "UI"
       textdomain "support"
@@ -43,7 +44,6 @@ module Yast
       Yast.import "Map"
       Yast.import "PackageSystem"
       Yast.import "Label"
-      include Yast::Logger
 
       # Data was modified?
       @modified = false
