@@ -50,13 +50,13 @@ module Yast
         HStretch(),
         VBox(
           Frame(
-            _("Open Novell Support Center"),
+            _("Open SUSE Support Center"),
             VBox(
               HStretch(),
               Left(
                 Label(
                   _(
-                    "This will start a browser connecting to the Novell Support Center Portal."
+                    "This will start a browser connecting to the SUSE Support Center Portal."
                   )
                 )
               ),
@@ -148,7 +148,7 @@ module Yast
           if Support.browser == nil
             Popup.Error(_("Could not find any installed browser."))
           else
-            url = "'http://www.novell.com/center/eservice'"
+            url = "'http://scc.suse.com/tickets'"
             if 0 ==
                 SCR.Execute(
                   path(".target.bash"),
@@ -767,7 +767,7 @@ module Yast
             Left(
               InputField(
                 Id(:novell_number),
-                _("Novell 11-digit service request number"),
+                _("11-digit service request number"),
                 Support.novell_number
               )
             )

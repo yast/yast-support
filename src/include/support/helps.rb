@@ -71,8 +71,8 @@ module Yast
         # Ovreview dialog help 1/3
         "overview"       => _(
           "\n" +
-            "<p><b><big>Opening Novell Support Center</big></b><br>\n" +
-            "To start a Web browser that opens the Novell Support Center Portal, use <b>Open Novell Support Center</b>.\n" +
+            "<p><b><big>Opening SUSE Support Center</big></b><br>\n" +
+            "To start a Web browser that opens the SUSE Support Center Portal, use <b>Open SUSE Support Center</b>.\n" +
             "You can then open a Service Request with Global Technical Support. Make sure you write down\n" +
             "the Service Request number to include in the supportconfig data upload.</p>\n"
         ) +
@@ -131,7 +131,7 @@ module Yast
           ) +
           # Contact dialog help 4/4
           _(
-            "<p><b>Note:</b> If you are uploading a supportconfig tarball to Global Technical Support,\nmake sure you include the Novell 11-digit service request number from your open service request.\n"
+            "<p><b>Note:</b> If you are uploading a supportconfig tarball to Global Technical Support,\nmake sure you include the 11-digit service request number from your open service request.\n"
           ),
         # Collecting data dialkog help 1/1
         "collecting"     => _(
@@ -163,10 +163,10 @@ module Yast
           Builtins.sformat(
             _(
               "<p><b><big>Privacy Policy</big></b><br>\n" +
-                "Find Novell's privacy policy at\n" +
+                "Find SUSE's privacy policy at\n" +
                 "<i>%1</i>.</p>\n"
             ),
-            "http://www.novell.com/company/policies/privacy/"
+            "https://www.suse.com/company/policies/privacy/"
           )
         ),
         "upload_select"  => Ops.add(
@@ -188,10 +188,10 @@ module Yast
           Builtins.sformat(
             _(
               "<p><b><big>Privacy Policy</big></b><br>\n" +
-                "Find Novell's privacy policy at\n" +
+                "Find SUSE's privacy policy at\n" +
                 "<i>%1</i>.</p>\n"
             ),
-            "http://www.novell.com/company/policies/privacy/"
+            "https://www.suse.com/company/policies/privacy/"
           )
         ),
         # Configure2 dialog help 1/2
