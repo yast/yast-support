@@ -216,7 +216,7 @@ module Yast
           "When set to 1, supportconfig runs in quiet mode. This option is useful if you\nplan on running supportconfig regularly in a cron job for example. Set with -Q."
         ),
         "VAR_OPTION_UPLOAD_TARGET"       => _(
-          "Used to specify where the supportconfig tarball will be uploaded, when using the -u srnum startup option. You can specify any FTP server that supports anonymous uploads. The default is Novell's public ftp server."
+          "Used to specify where the supportconfig tarball will be uploaded, when using the -u srnum startup option. You can specify any FTP server that supports anonymous uploads. The default is SUSE's public ftp server."
         )
       }
     end

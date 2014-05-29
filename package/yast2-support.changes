@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu May 29 06:10:11 UTC 2014 - jsrain@suse.cz
+
+- point to SUSE Support Center, more similar text adjustments
+  (bnc#879400)
+- 3.1.4
+
+-------------------------------------------------------------------
 Tue May 13 10:31:04 UTC 2014 - jsrain@suse.cz
 
 - assure that /etc/supportconfig.conf exists (bnc#876038)
