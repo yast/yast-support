@@ -22,14 +22,16 @@ Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        %{name}-%{version}.tar.bz2
+url:            http://github.com/yast/yast-support
 
 Group:	        System/YaST
 License:        GPL-2.0
 Requires:	yast2
-BuildRequires:	perl-XML-Writer update-desktop-files yast2 yast2-testsuite
+BuildRequires:	yast2
 BuildRequires:  yast2-devtools >= 3.0.6
+BuildRequires:  rubygem(yast-rake)
 
-BuildArchitectures:	noarch
+BuildArch:	noarch
 
 Requires:       yast2-ruby-bindings >= 1.0.0
 
@@ -42,11 +44,13 @@ support in a standardized format.
 %prep
 %setup -n %{name}-%{version}
 
+%check
+rake test:unit
+
 %build
-%yast_build
 
 %install
-%yast_install
+rake install DESTDIR="%{buildroot}"
 
 
 %files
