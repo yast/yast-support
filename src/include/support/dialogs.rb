@@ -905,7 +905,11 @@ module Yast
         Builtins.sleep(100)
         if SCR.Read(path(".process.running"), pid) == true
           new_text = Convert.to_string(SCR.Read(path(".process.read"), pid))
-          UI.ChangeWidget(Id(:log), :LastLine, new_text) if new_text != nil
+          if !new_text.nil?
+            # Remove ANSI escape codes for cursor movement (bnc#921233)
+            new_text.gsub!(/\e\[(\d|;)*[HJ]/, "")
+            UI.ChangeWidget(Id(:log), :LastLine, new_text)
+          end
         else
           Wizard.EnableNextButton
           break
