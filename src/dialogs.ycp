@@ -575,7 +575,7 @@ symbol GenerateDialog () {
             string new_text = (string)SCR::Read (.process.read, pid);
             if (new_text != nil) {
                 // Remove ANSI escape codes for cursor movement (bnc#921233)
-                new_text = regexpsub(new_text, "^(.\\[[\\d;]*[HJ])*(.*)", "\\2");
+                new_text = regexpsub(new_text, "^(.\\[[0-9;]*[HJ])*(.*)", "\\2");
                 UI::ChangeWidget (`id (`log), `LastLine, new_text);
             }
         } else {
