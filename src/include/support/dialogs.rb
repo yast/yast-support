@@ -25,10 +25,14 @@
 # Authors:	Michal Zugec <mzugec@novell.com>
 #
 # $Id: support.ycp 27914 2006-02-13 14:32:08Z locilka $
-#
+
+require "yast/core_ext"
+
 # Main file for support configuration. Uses all other files.
 module Yast
   module SupportDialogsInclude
+    using Yast::CoreExt::AnsiString
+
     def initialize_support_dialogs(include_target)
       textdomain "support"
 
@@ -907,7 +911,7 @@ module Yast
           new_text = Convert.to_string(SCR.Read(path(".process.read"), pid))
           if !new_text.nil?
             # Remove ANSI escape codes for cursor movement (bnc#921233)
-            new_text.gsub!(/\e\[(\d|;)*[HJ]/, "")
+            new_text.remove_ansi_sequences
             UI.ChangeWidget(Id(:log), :LastLine, new_text)
           end
         else
