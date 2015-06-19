@@ -909,7 +909,7 @@ module Yast
         Builtins.sleep(100)
         if SCR.Read(path(".process.running"), pid) == true
           new_text = Convert.to_string(SCR.Read(path(".process.read"), pid))
-          if !new_text.nil?
+          if new_text
             # Remove ANSI escape codes for cursor movement (bnc#921233)
             new_text.remove_ansi_sequences
             UI.ChangeWidget(Id(:log), :LastLine, new_text)
