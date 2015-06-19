@@ -17,7 +17,7 @@
 
 
 Name:           yast2-support
-Version:        3.1.5
+Version:        3.1.6
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -33,7 +33,8 @@ BuildRequires:  rubygem(yast-rake)
 
 BuildArch:	noarch
 
-Requires:       yast2-ruby-bindings >= 1.0.0
+# Yast::CoreExt::AnsiString
+Requires:       yast2-ruby-bindings >= 3.1.36
 
 Summary:	YaST2 - Support Inquiries
 
