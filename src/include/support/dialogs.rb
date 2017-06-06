@@ -771,7 +771,7 @@ module Yast
             Left(
               InputField(
                 Id(:novell_number),
-                _("11-digit service request number"),
+                _("service request number"),
                 Support.novell_number
               )
             )
@@ -847,8 +847,8 @@ module Yast
             UI.QueryWidget(:novell_number, :Value)
           )
           if Ops.greater_than(Builtins.size(Support.novell_number), 0)
-            if Builtins.size(Support.novell_number) != 11
-              Popup.Error(_("The SR number must be 11 digits"))
+            if Builtins.size(Support.novell_number) < 11
+              Popup.Error(_("The SR number must be at least 11 digits"))
               ret = nil
               next
             end
