@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Fri Jun 16 08:08:10 UTC 2017 - jreidinger@suse.com
 
-- Allow support request number longer then 11 digits (bsc#1040706)
+- Allow service request number longer then 11 digits (bsc#1040706)
 - 3.2.0
 
 -------------------------------------------------------------------
