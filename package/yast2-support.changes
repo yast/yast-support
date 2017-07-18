@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jun 16 08:08:10 UTC 2017 - jreidinger@suse.com
+
+- Allow service request number longer then 11 digits (bsc#1040706)
+- 3.1.7
+
+-------------------------------------------------------------------
 Thu Mar 19 11:14:48 UTC 2015 - ancor@suse.com
 
 - Do not show ANSI escape codes on screen (bnc#921233)

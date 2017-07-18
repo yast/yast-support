@@ -131,7 +131,7 @@ module Yast
           ) +
           # Contact dialog help 4/4
           _(
-            "<p><b>Note:</b> If you are uploading a supportconfig tarball to Global Technical Support,\nmake sure you include the 11-digit service request number from your open service request.\n"
+            "<p><b>Note:</b> If you are uploading a supportconfig tarball to Global Technical Support,\nmake sure you include the service request number from your open service request.\n"
           ),
         # Collecting data dialkog help 1/1
         "collecting"     => _(
