@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jun 16 08:08:10 UTC 2017 - jreidinger@suse.com
+
+- Allow service request number longer then 11 digits (bsc#1040706)
+- 3.1.4.1
+
+-------------------------------------------------------------------
 Thu May 29 06:10:11 UTC 2014 - jsrain@suse.cz
 
 - point to SUSE Support Center, more similar text adjustments
