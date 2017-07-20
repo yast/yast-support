@@ -125,7 +125,7 @@ ftp://ftp.novell.com/incoming<br>
 scp://central.server.foo.com/supportconfig/archives</p>")
     /* Contact dialog help 4/4 */
     + _("<p><b>Note:</b> If you are uploading a supportconfig tarball to Novell Technical Support,
-make sure you include the Novell 11 digit service request number from your open service request."),
+make sure you include the service request number from your open service request."),
 
     /* Collecting data dialkog help 1/1 */
     "collecting" : _("<p><b><big>Collecting Data</big></b>><br>
