@@ -528,8 +528,8 @@ any ContactDialog () {
 	  Support::options["VAR_OPTION_GPG_UID"]=(string)UI::QueryWidget(`gpg_uid, `Value);
 	  Support::novell_number=(string)UI::QueryWidget(`novell_number, `Value);
 	  if (size(Support::novell_number)>0){
-		if (size(Support::novell_number)!=11){
-		 Popup::Error(_("The SR number must be 11 digits"));
+		if (size(Support::novell_number)<11){
+		 Popup::Error(_("The service request number must be at least 11 digits"));
 		 ret=nil;
 		 continue;
 		}
