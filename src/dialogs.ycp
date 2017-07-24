@@ -502,7 +502,7 @@ any ContactDialog () {
 	 )),
 	`Frame (_("Upload Information"), `VBox(
 	  `Left(`InputField(`id(`target), _("Upload Target"), deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'"))),
-	  `Left(`InputField(`id(`novell_number), _("Novell 11 digit service request number"), Support::novell_number))
+	  `Left(`InputField(`id(`novell_number), _("Service request number"), Support::novell_number))
 	)));
 
     Wizard::SetContentsButtons(caption, contents, HELPS["contact"]:"",
@@ -530,8 +530,8 @@ any ContactDialog () {
 	  Support::options["VAR_OPTION_GPG_UID"]=(string)UI::QueryWidget(`gpg_uid, `Value);
 	  Support::novell_number=(string)UI::QueryWidget(`novell_number, `Value);
 	  if (size(Support::novell_number)>0){
-		if (size(Support::novell_number)!=11){
-		 Popup::Error(_("The SR number must be 11 digits"));
+		if (size(Support::novell_number)<11){
+		 Popup::Error(_("The service request number must be at least 11 digits"));
 		 ret=nil;
 		 continue;
 		}

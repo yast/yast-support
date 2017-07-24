@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Jul 20 12:07:56 UTC 2017 - gsouza@suse.com
+
+- Allow support request number longer than 11 digits (bsc#1040706)
+- 2.17.20.1
+
+-------------------------------------------------------------------
 Mon Aug 19 11:30:02 CEST 2013 - jsuchome@suse.cz
 
 - added option to include additional logs (bnc#806924)
