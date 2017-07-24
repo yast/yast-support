@@ -153,7 +153,7 @@ any UploadDialog(boolean data_prepared){
      load_save=`Left(
 		`CheckBoxFrame(`id(`save), _("Save as"), true,
 		  `HBox(
-                   `InputField(`id(`save_dir), _("Directory to Save"), home),
+                   `TextEntry(`id(`save_dir), `opt(`hstretch), _("Directory to Save"), home),
                    `VBox(
 			`Label(""),
 			`PushButton(`id(`browse), Label::BrowseButton())
@@ -163,7 +163,7 @@ any UploadDialog(boolean data_prepared){
 		    );
 	else load_save=`Left(
 	   `HBox(
-		`InputField(`id(`tarball_file), _("Package with log files"), Support::log_files["tarball"]:""),
+		`TextEntry(`id(`tarball_file), `opt(`hstretch), _("Package with log files"), Support::log_files["tarball"]:""),
 		`VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton())))
         );
 
@@ -171,7 +171,7 @@ any UploadDialog(boolean data_prepared){
 	`VBox(
 	 load_save,
 	    `CheckBoxFrame(`id(`upload), _("Upload log files tarball into URL"), true,
-	      `Left( `InputField(`id(`url), _("Upload Target"), url) )
+	      `TextEntry(`id(`url), `opt(`hstretch), _("Upload Target"), url)
 	   )
 	 )
 	);
@@ -304,7 +304,7 @@ any ParametersDialog () {
 /*
 	`Left(
 	 `HBox(
-	  `InputField(`id(`log_dir), _("Log directory"), Support::log_files["tmp_dir"]:""),
+	  `TextEntry(`id(`log_dir), `opt(`hstretch), _("Log directory"), Support::log_files["tmp_dir"]:""),
 	  `VBox(`Label(""), `PushButton(`id(`browse), Label::BrowseButton()))
 	 )),
 	`MultiSelectionBox(`id(`options), _("Options"), items),
@@ -425,7 +425,7 @@ symbol ExpertDialog() {
 	    any id = UI::QueryWidget(`var_table, `CurrentItem);
 	    term row = (term)UI::QueryWidget(`var_table, `Item(id));
 	    UI::OpenDialog(`VBox(
-		 `InputField(`id(`changed_value), row[1]:"", row[2]:""),
+		 `TextEntry(`id(`changed_value), `opt(`hstretch), row[1]:"", row[2]:""),
 		  `HBox(
 		   `PushButton(`id(`cancel), Label::CancelButton()),
 		   `PushButton(`id(`ok), Label::OKButton())
@@ -490,17 +490,17 @@ any ContactDialog () {
     /* Support configure2 dialog contents */
     term contents = `VBox(
 	`Frame (_("Contact Information"), `VBox(
-	  `Left(`InputField(`id(`company), _("Company"), Support::options["VAR_OPTION_CONTACT_COMPANY"]:"")),
-	  `Left(`InputField(`id(`email), _("Email Address"), Support::options["VAR_OPTION_CONTACT_EMAIL"]:"")),
-	  `Left(`InputField(`id(`name), _("Name"), Support::options["VAR_OPTION_CONTACT_NAME"]:"")),
-	  `Left(`InputField(`id(`phone), _("Phone Number"), Support::options["VAR_OPTION_CONTACT_PHONE"]:"")),
-	  `Left(`InputField(`id(`storeid), _("Store ID"), Support::options["VAR_OPTION_CONTACT_STOREID"]:"")),
-	  `Left(`InputField(`id(`terminalid), _("Terminal ID"), Support::options["VAR_OPTION_CONTACT_TERMINALID"]:"")),
-	  `Left(`InputField(`id(`gpg_uid), _("GPG UID"), Support::options["VAR_OPTION_GPG_UID"]:""))
+	  `TextEntry(`id(`company), `opt(`hstretch), _("Company"), Support::options["VAR_OPTION_CONTACT_COMPANY"]:""),
+	  `TextEntry(`id(`email), `opt(`hstretch), _("Email Address"), Support::options["VAR_OPTION_CONTACT_EMAIL"]:""),
+	  `TextEntry(`id(`name), `opt(`hstretch), _("Name"), Support::options["VAR_OPTION_CONTACT_NAME"]:""),
+	  `TextEntry(`id(`phone), `opt(`hstretch), _("Phone Number"), Support::options["VAR_OPTION_CONTACT_PHONE"]:""),
+	  `TextEntry(`id(`storeid), `opt(`hstretch), _("Store ID"), Support::options["VAR_OPTION_CONTACT_STOREID"]:""),
+	  `TextEntry(`id(`terminalid), `opt(`hstretch), _("Terminal ID"), Support::options["VAR_OPTION_CONTACT_TERMINALID"]:""),
+	  `TextEntry(`id(`gpg_uid), `opt(`hstretch), _("GPG UID"), Support::options["VAR_OPTION_GPG_UID"]:"")
 	 )),
 	`Frame (_("Upload Information"), `VBox(
-	  `Left(`InputField(`id(`target), _("Upload Target"), deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'"))),
-	  `Left(`InputField(`id(`novell_number), _("Service request number"), Support::novell_number))
+	  `TextEntry(`id(`target),`opt(`hstretch),  _("Upload Target"), deletechars(Support::options["VAR_OPTION_UPLOAD_TARGET"]:"", "'")),
+	  `TextEntry(`id(`novell_number), `opt(`hstretch), _("Novell 11 digit service request number"), Support::novell_number)
 	)));
 
     Wizard::SetContentsButtons(caption, contents, HELPS["contact"]:"",
@@ -561,29 +561,28 @@ symbol GenerateDialog () {
 	    return `back;
 	integer id = Support::WhoAmI();
 	SCR::Write (.target.string, Support::pwd_file, Support::root_pw + "\n");
-	cmd = sformat("cat %4 | su -c '%1 && chown -R %3 %2'", cmd, Support::log_files["tmp_dir"]:"", id, Support::pwd_file);
+	cmd = sformat("bash -c \"cat %4 | su -c '%1 && chown -R %3 %2'\"", cmd, Support::log_files["tmp_dir"]:"", id, Support::pwd_file);
     }
     symbol ret = nil;
-    integer pid = (integer) SCR::Execute(.process.start_shell, cmd);
+    SCR::Execute(.background.run_output, cmd);
     string unfinished_line = "";
     Wizard::DisableNextButton ();
-    while (true) {
-        sleep (100);
-        if (SCR::Read (.process.running, pid) == true) {
-            string new_text = (string)SCR::Read (.process.read, pid);
-            if (new_text != nil)
-                UI::ChangeWidget (`id (`log), `LastLine, new_text);
-        } else {
-	    Wizard::EnableNextButton ();
-	    break;
-        }
+    while((boolean)SCR::Read(.background.output_open) || (boolean)(SCR::Read(.background.newlines) > 0)) {
+	sleep (100);
+	list<string> script_out = (list<string>)SCR::Read(.background.newout);
+	y2internal ("Out: %1", script_out);
+	foreach (string line, script_out, {
+	    if (line != nil)
+		UI::ChangeWidget (`id (`log), `LastLine, "\n" + line);
+	});
         ret = (symbol)UI::PollInput();
         if (ret == `back || ret == `abort )
         {
-            SCR::Execute (.process.kill, pid);
+            SCR::Execute (.background.kill);
             break;
         }
     }
+    Wizard::EnableNextButton ();
     if (Support::WhoAmI() != 0)
 	SCR::Write (.target.string, Support::pwd_file, "");
     while(ret!=`back && ret!=`abort && ret!=`next){
