@@ -867,7 +867,7 @@ module Yast
 
     def GenerateDialog
       caption = _("Collecting Data")
-      contents = VBox(LogView(Id(:log), _("Progress"), 1000, 1000))
+      contents = VBox(LogView(Id(:log), Opt(:vstretch), _("Progress"), 10, 1000))
       Wizard.SetContentsButtons(
         caption,
         contents,
