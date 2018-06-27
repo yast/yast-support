@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jun 27 09:50:24 CEST 2018 - schubi@suse.de
+
+- Added additional searchkeys to desktop file (fate#321043).
+- 4.0.0
+
+-------------------------------------------------------------------
 Fri Jun 16 08:08:10 UTC 2017 - jreidinger@suse.com
 
 - Allow service request number longer then 11 digits (bsc#1040706)
