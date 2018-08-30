@@ -696,14 +696,22 @@ module Yast
       contents = VBox(
         Frame(
           _("Contact Information"),
-          VBox(
-            input_field(:company, _("Company"), "VAR_OPTION_CONTACT_COMPANY"),
-            input_field(:email, _("Email Address"), "VAR_OPTION_CONTACT_EMAIL"),
-            input_field(:name, _("Name"), "VAR_OPTION_CONTACT_NAME"),
-            input_field(:phone, _("Phone Number"), "VAR_OPTION_CONTACT_PHONE"),
-            input_field(:storeid, _("Store ID"), "VAR_OPTION_CONTACT_STOREID"),
-            input_field(:terminalid, _("Terminal ID"), "VAR_OPTION_CONTACT_TERMINALID"),
-            input_field(:gpg_uid, _("GPG UID"), "VAR_OPTION_GPG_UID")
+          HBox(
+            Top(
+              VBox(
+                input_field(:company, _("Company"), "VAR_OPTION_CONTACT_COMPANY"),
+                input_field(:email, _("Email Address"), "VAR_OPTION_CONTACT_EMAIL"),
+                input_field(:name, _("Name"), "VAR_OPTION_CONTACT_NAME"),
+                input_field(:phone, _("Phone Number"), "VAR_OPTION_CONTACT_PHONE")
+              )
+            ),
+            Top(
+              VBox(
+                input_field(:storeid, _("Store ID"), "VAR_OPTION_CONTACT_STOREID"),
+                input_field(:terminalid, _("Terminal ID"), "VAR_OPTION_CONTACT_TERMINALID"),
+                input_field(:gpg_uid, _("GPG UID"), "VAR_OPTION_GPG_UID")
+              )
+            )
           )
         ),
         Frame(
