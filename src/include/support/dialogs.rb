@@ -677,6 +677,15 @@ module Yast
       Convert.to_symbol(ret)
     end
 
+    # A helper to construct the UI
+    # @param id [Symbol]
+    # @param label [String]
+    # @param key [String] key in Support.options
+    def input_field(id, label, key)
+      value = Support.options.fetch(key, "")
+      Left(InputField(Id(id), label, value))
+    end
+
     # Configure2 dialog
     # @return dialog result
     def ContactDialog
@@ -688,67 +697,13 @@ module Yast
         Frame(
           _("Contact Information"),
           VBox(
-            Left(
-              InputField(
-                Id(:company),
-                _("Company"),
-                Ops.get_string(
-                  Support.options,
-                  "VAR_OPTION_CONTACT_COMPANY",
-                  ""
-                )
-              )
-            ),
-            Left(
-              InputField(
-                Id(:email),
-                _("Email Address"),
-                Ops.get_string(Support.options, "VAR_OPTION_CONTACT_EMAIL", "")
-              )
-            ),
-            Left(
-              InputField(
-                Id(:name),
-                _("Name"),
-                Ops.get_string(Support.options, "VAR_OPTION_CONTACT_NAME", "")
-              )
-            ),
-            Left(
-              InputField(
-                Id(:phone),
-                _("Phone Number"),
-                Ops.get_string(Support.options, "VAR_OPTION_CONTACT_PHONE", "")
-              )
-            ),
-            Left(
-              InputField(
-                Id(:storeid),
-                _("Store ID"),
-                Ops.get_string(
-                  Support.options,
-                  "VAR_OPTION_CONTACT_STOREID",
-                  ""
-                )
-              )
-            ),
-            Left(
-              InputField(
-                Id(:terminalid),
-                _("Terminal ID"),
-                Ops.get_string(
-                  Support.options,
-                  "VAR_OPTION_CONTACT_TERMINALID",
-                  ""
-                )
-              )
-            ),
-            Left(
-              InputField(
-                Id(:gpg_uid),
-                _("GPG UID"),
-                Ops.get_string(Support.options, "VAR_OPTION_GPG_UID", "")
-              )
-            )
+            input_field(:company, _("Company"), "VAR_OPTION_CONTACT_COMPANY"),
+            input_field(:email, _("Email Address"), "VAR_OPTION_CONTACT_EMAIL"),
+            input_field(:name, _("Name"), "VAR_OPTION_CONTACT_NAME"),
+            input_field(:phone, _("Phone Number"), "VAR_OPTION_CONTACT_PHONE"),
+            input_field(:storeid, _("Store ID"), "VAR_OPTION_CONTACT_STOREID"),
+            input_field(:terminalid, _("Terminal ID"), "VAR_OPTION_CONTACT_TERMINALID"),
+            input_field(:gpg_uid, _("GPG UID"), "VAR_OPTION_GPG_UID")
           )
         ),
         Frame(
@@ -759,11 +714,7 @@ module Yast
                 Id(:target),
                 _("Upload Target"),
                 Builtins.deletechars(
-                  Ops.get_string(
-                    Support.options,
-                    "VAR_OPTION_UPLOAD_TARGET",
-                    ""
-                  ),
+                  Support.options.fetch("VAR_OPTION_UPLOAD_TARGET", ""),
                   "'"
                 )
               )
