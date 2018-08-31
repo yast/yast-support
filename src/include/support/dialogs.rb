@@ -826,7 +826,10 @@ module Yast
 
     def GenerateDialog
       caption = _("Collecting Data")
-      contents = VBox(LogView(Id(:log), Opt(:vstretch), _("Progress"), 10, 1000))
+      contents = VBox(
+        ReplacePoint(Id(:rp), Empty()),
+        LogView(Id(:log), Opt(:vstretch), _("Progress"), 10, 1000)
+      )
       Wizard.SetContentsButtons(
         caption,
         contents,
@@ -875,6 +878,7 @@ module Yast
           end
         else
           Wizard.EnableNextButton
+          UI.ReplaceWidget(Id(:rp), Empty()) # work around bsc#1106744
           break
         end
         ret = Convert.to_symbol(UI.PollInput)
