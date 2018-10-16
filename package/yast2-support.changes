@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Oct 16 15:16:10 CEST 2018 - schubi@suse.de
+
+- Added license file to spec.
+
+-------------------------------------------------------------------
 Thu Aug 30 13:01:32 UTC 2018 - mvidner@suse.com
 
 - In ncurses the "Next" button to submit the gathered information
