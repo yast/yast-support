@@ -64,3 +64,4 @@ rake install DESTDIR="%{buildroot}"
 %{yast_desktopdir}/support.desktop
 %{yast_scrconfdir}/*.scr
 %doc %{yast_docdir}
+%license COPYING
