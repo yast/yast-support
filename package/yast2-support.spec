@@ -17,7 +17,7 @@
 
 
 Name:           yast2-support
-Version:        4.0.1
+Version:        4.0.2
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -63,5 +63,6 @@ rake install DESTDIR="%{buildroot}"
 %{yast_moduledir}/Support.*
 %{yast_desktopdir}/support.desktop
 %{yast_scrconfdir}/*.scr
+%{_datadir}/icons/*
 %doc %{yast_docdir}
 %license COPYING
