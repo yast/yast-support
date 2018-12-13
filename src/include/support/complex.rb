@@ -25,6 +25,9 @@
 # Authors:	Michal Zugec <mzugec@novell.com>
 #
 # $Id: complex.ycp 41350 2007-10-10 16:59:00Z dfiser $
+
+require "shellwords"
+
 module Yast
   module SupportComplexInclude
     def initialize_support_complex(include_target)
@@ -64,21 +67,16 @@ module Yast
       #    if (!Confirm::MustBeRoot()) return `abort;
       if Support.WhoAmI != 0
         # use configuration file in home directory
-        cmd = Builtins.sformat("ls %1", "~/.supportconfig")
-        out = Convert.to_map(SCR.Execute(path(".target.bash_output"), cmd))
+        cmd = Builtins.sformat()
+        out = SCR.Execute(path(".target.bash_output"), "/usr/bin/ls ~/.supportconfig")
         file = Ops.get_string(out, "stdout", "")
         file = Ops.get(Builtins.splitstring(file, "\n"), 0, "")
         return :abort if !Confirm.MustBeRoot if file == "" || file == nil
         Builtins.y2milestone("Using configuration file %1", file)
         Builtins.setenv("SC_CONF", file)
         # ensure ~/.supportconfig does exist
-        if Ops.less_than(SCR.Read(path(".target.size"), file), 0)
-          cmd2 = Builtins.sformat(
-            "/bin/cp %1 %2",
-            "/etc/supportconfig.conf",
-            file
-          )
-          SCR.Execute(path(".target.bash"), cmd2)
+        if SCR.Read(path(".target.size"), file) < 0
+          SCR.Execute(path(".target.bash"), "/usr/bin/cp /etc/supportconfig.conf #{file.shellescape}")
         end
         SCR.UnregisterAgent(path(".etc.supportconfig"))
         SCR.RegisterAgent(
