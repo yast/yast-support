@@ -28,6 +28,8 @@
 
 require "yast/core_ext"
 
+require "shellwords"
+
 # Main file for support configuration. Uses all other files.
 module Yast
   module SupportDialogsInclude
@@ -153,11 +155,7 @@ module Yast
             Popup.Error(_("Could not find any installed browser."))
           else
             url = "'http://scc.suse.com/tickets'"
-            if 0 ==
-                SCR.Execute(
-                  path(".target.bash"),
-                  "env|grep LOGNAME|cut -d'=' -f2- | grep root"
-                )
+            if ENV["LOGNAME"] == "root"
               if Popup.ContinueCancel(
                   Builtins.sformat(
                     _(
@@ -176,7 +174,7 @@ module Yast
                 )
                 SCR.Execute(
                   path(".target.bash"),
-                  Builtins.sformat("%1 %2", Support.browser, url)
+                  Builtins.sformat("%1 %2", Support.browser.shellescape, url.shellescape)
                 )
               end
             else
@@ -185,12 +183,13 @@ module Yast
                 Support.browser,
                 url
               )
+
               SCR.Execute(
                 path(".target.bash"),
                 Builtins.sformat(
-                  "su $(env|grep LOGNAME|cut -d'=' -f2-) -c \"%1 %2\"",
-                  Support.browser,
-                  url
+                  "/usr/bin/su #{ENV["LOGNAME"].shellescape} -c %1",
+                  # double shell escaping is needed here as first it is evaluated by shell and then by su
+                  "#{Support.browser.shellescape} #{url.shellescape}".shellescape
                 )
               )
             end
@@ -209,15 +208,7 @@ module Yast
       )
       Builtins.y2milestone("URL value from /etc/supportconfig.conf : %1", url)
       Builtins.y2milestone("%1", Support.log_files)
-      dir_to_save = Ops.get_string(
-        Convert.convert(
-          SCR.Execute(path(".target.bash_output"), "echo ~|tr -d '\n'"),
-          :from => "any",
-          :to   => "map <string, any>"
-        ),
-        "stdout",
-        ""
-      )
+      dir_to_save = ENV["HOME"]
       if dir_to_save == "/root"
         dir_to_save = "/var/log"
       end
@@ -278,28 +269,29 @@ module Yast
         if ret == :next
           if !data_prepared
             unpack = Builtins.sformat(
-              "cd %1 && tar xvf %2",
-              Ops.get_string(Support.log_files, "tmp_dir", ""),
-              Ops.get_string(Support.log_files, "tarball", "")
+              "cd %1 && /usr/bin/tar xvf %2",
+              Ops.get_string(Support.log_files, "tmp_dir", "").shellescape,
+              Ops.get_string(Support.log_files, "tarball", "").shellescape
             )
+            result = SCR.Execute(path(".target.bash_output"), unpack)
             Builtins.y2milestone(
               "unpack %1",
-              SCR.Execute(path(".target.bash_output"), unpack)
-            ) 
+              result
+            )
             #	  break;
           end
           Builtins.y2milestone("data_prepared %1", data_prepared)
           Builtins.y2milestone("Support::log_files %1", Support.log_files)
           command = Builtins.sformat(
-            "supportconfig %1 -f %2",
-            Support.GetParameterList,
-            Ops.get_string(Support.log_files, "tmp_dir", "")
+            "/sbin/supportconfig %1 -f %2",
+            Support.GetParameterList, # cannot escape as it is list of params
+            Ops.get_string(Support.log_files, "tmp_dir", "").shellescape
           )
           if Convert.to_boolean(UI.QueryWidget(:upload, :Value))
             url2 = Convert.to_string(UI.QueryWidget(:url, :Value))
             if Ops.greater_than(Builtins.size(url2), 0) #{
-              command = Builtins.sformat("%1 -u -U '%2'", command, url2)
-            end 
+              command = Builtins.sformat("%1 -u -U %2", command, url2.shellescape)
+            end
             #	   }
           end
           if Support.WhoAmI != 0
@@ -311,8 +303,8 @@ module Yast
               Ops.add(Support.root_pw, "\n")
             )
             command = Builtins.sformat(
-              "cat %2 | su -c '%1'",
-              command,
+              "/usr/bin/cat %2 | /usr/bin/su -c %1",
+              command.shellescape,
               Support.pwd_file
             )
           end
@@ -842,10 +834,10 @@ module Yast
         "novell.com"
       ) ? "-q" : ""
       cmd = Builtins.sformat(
-        "supportconfig %1 %2 -t %3",
+        "/sbin/supportconfig %1 %2 -t %3",
         Support.GetParameterList,
         uuid_param,
-        Ops.get_string(Support.log_files, "tmp_dir", "")
+        Ops.get_string(Support.log_files, "tmp_dir", "").shellescape
       )
       if Support.WhoAmI != 0
         return :back if !Support.AskForRootPwd
@@ -901,13 +893,11 @@ module Yast
     def FilesDialog
       caption = _("Collected Data Review")
       # FIXME use list of generated files, as well as directory prefix
-      output = Convert.to_map(
-        SCR.Execute(
-          path(".target.bash_output"),
-          Builtins.sformat(
-            "ls -t %1|grep nts|head -n1|tr -d '\n'",
-            Ops.get_string(Support.log_files, "tmp_dir", "")
-          )
+      output = SCR.Execute(
+        path(".target.bash_output"),
+        Builtins.sformat(
+          "/usr/bin/ls -t %1 | /usr/bin/grep nts | /usr/bin/head -n1 | /usr/bin/tr -d '\n'",
+          Ops.get_string(Support.log_files, "tmp_dir", "").shellescape
         )
       )
       Builtins.y2milestone("output %1", output)
@@ -928,7 +918,7 @@ module Yast
       output = Convert.to_map(
         SCR.Execute(
           path(".target.bash_output"),
-          Builtins.sformat("ls %1", full_log_path)
+          "/usr/bin/ls #{full_log_path.shellescape}"
         )
       )
       if Ops.get_integer(output, "exit", -1) != 0
@@ -1000,10 +990,11 @@ module Yast
           )
           ret = :filelist
           # FIXME uncomment, following line not tested
-          Builtins.y2milestone("removing %1%2", full_log_path, file)
+          path = File.join(full_log_path, file)
+          Builtins.y2milestone("removing #{path}")
           SCR.Execute(
             path(".target.bash"),
-            Builtins.sformat("/bin/rm %1%2", full_log_path, file)
+            "/bin/rm #{path.shellescape}"
           )
         end
       end

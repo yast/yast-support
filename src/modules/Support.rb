@@ -30,6 +30,9 @@
 # Input and output routines.
 require "yast"
 
+require "shellwords"
+require "fileutils"
+
 module Yast
   class SupportClass < Module
     include Yast::Logger
@@ -97,21 +100,16 @@ module Yast
       end
       SCR.Execute(
         path(".target.bash"),
-        Builtins.sformat("test -e %1 || touch %1", @pwd_file)
+        Builtins.sformat("/usr/bin/test -e %1 || /usr/bin/touch %1", @pwd_file.shellescape)
       )
-      SCR.Execute(
-        path(".target.bash"),
-        Builtins.sformat("chmod 600 %1", @pwd_file)
-      )
+      ::FileUtils.chmod(0o600, @pwd_file)
       SCR.Write(path(".target.string"), @pwd_file, Ops.add(pw, "\n"))
-      exit = Convert.to_integer(
-        SCR.Execute(
-          path(".target.bash"),
-          Builtins.sformat("cat %1 | su -c 'echo 0'", @pwd_file)
-        )
+      exitcode = SCR.Execute(
+        path(".target.bash"),
+        "/usr/bin/cat #{@pwd_file.shellescape} | /usr/bin/su -c '/usr/bin/echo 0'"
       )
       SCR.Write(path(".target.string"), @pwd_file, "")
-      success = exit == 0
+      success = exitcode == 0
       Builtins.y2milestone("Root password check: %1", success)
       @root_pw = pw if success
       success
