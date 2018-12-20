@@ -67,7 +67,6 @@ module Yast
       #    if (!Confirm::MustBeRoot()) return `abort;
       if Support.WhoAmI != 0
         # use configuration file in home directory
-        cmd = Builtins.sformat()
         out = SCR.Execute(path(".target.bash_output"), "/usr/bin/ls ~/.supportconfig")
         file = Ops.get_string(out, "stdout", "")
         file = Ops.get(Builtins.splitstring(file, "\n"), 0, "")
