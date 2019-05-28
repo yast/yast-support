@@ -154,7 +154,7 @@ module Yast
           if Support.browser == nil
             Popup.Error(_("Could not find any installed browser."))
           else
-            url = "'http://scc.suse.com/tickets'"
+            url = "http://scc.suse.com/tickets"
             if ENV["LOGNAME"] == "root"
               if Popup.ContinueCancel(
                   Builtins.sformat(
