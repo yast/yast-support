@@ -18,6 +18,7 @@ X-SuSE-YaST-Keywords=help,logfile
 Icon=yast-support
 Exec=xdg-su -c "/sbin/yast2 support"
 
-Name=Support
-GenericName=support
+Name=YaST Support
+GenericName=Support
+Comment=Collect support information from the system
 StartupNotify=true
