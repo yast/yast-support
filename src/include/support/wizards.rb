@@ -131,7 +131,7 @@ module Yast
       }
 
       Wizard.CreateDialog
-      Wizard.SetDesktopTitle("support")
+      Wizard.SetDesktopTitle("org.openSUSE.YaST.Support")
 
       ret = Sequencer.Run(aliases, sequence)
 
