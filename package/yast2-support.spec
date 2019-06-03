@@ -27,7 +27,7 @@ License:        GPL-2.0
 Source0:        %{name}-%{version}.tar.bz2
 
 BuildRequires:  yast2
-BuildRequires:  yast2-devtools >= 3.0.6
+BuildRequires:  yast2-devtools >= 4.2.2
 BuildRequires:  rubygem(yast-rake)
 
 BuildArch:      noarch
