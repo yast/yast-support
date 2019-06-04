@@ -44,7 +44,7 @@ support in a standardized format.
 %setup -q
 
 %check
-rake test:unit
+%yast_check
 
 %build
 
