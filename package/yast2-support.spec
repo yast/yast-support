@@ -12,57 +12,54 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
 
 Name:           yast2-support
-Version:        4.1.1
+Summary:        YaST2 - Support Inquiries
+Version:        4.2.0
 Release:        0
-
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Source0:        %{name}-%{version}.tar.bz2
-url:            http://github.com/yast/yast-support
-
-Group:	        System/YaST
+Url:            https://github.com/yast/yast-support
+Group:          System/YaST
 License:        GPL-2.0
-Requires:	yast2
-BuildRequires:	yast2
-BuildRequires:  yast2-devtools >= 3.0.6
+
+Source0:        %{name}-%{version}.tar.bz2
+
+BuildRequires:  yast2
+BuildRequires:  yast2-devtools >= 4.2.2
 BuildRequires:  rubygem(yast-rake)
 
-BuildArch:	noarch
+BuildArch:      noarch
 
 # Yast::CoreExt::AnsiString
 Requires:       yast2-ruby-bindings >= 3.1.36
-
-Summary:	YaST2 - Support Inquiries
+Requires:       yast2
 
 %description
 This module allows you to collect system information for installation
 support in a standardized format.
 
 %prep
-%setup -n %{name}-%{version}
+%setup -q
 
 %check
-rake test:unit
+%yast_check
 
 %build
 
 %install
-rake install DESTDIR="%{buildroot}"
-
+%yast_install
+%yast_metainfo
 
 %files
-%defattr(-,root,root)
-%dir %{yast_yncludedir}/support
-%{yast_yncludedir}/support/*
-%{yast_clientdir}/support.rb
-%{yast_clientdir}/support_*.rb
-%{yast_moduledir}/Support.*
-%{yast_desktopdir}/support.desktop
-%{yast_scrconfdir}/*.scr
+%{yast_yncludedir}
+%{yast_clientdir}
+%{yast_clientdir}
+%{yast_moduledir}
+%{yast_desktopdir}
+%{yast_metainfodir}
+%{yast_scrconfdir}
 %{yast_icondir}
 %doc %{yast_docdir}
 %license COPYING
