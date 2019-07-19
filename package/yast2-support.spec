@@ -18,7 +18,7 @@
 
 Name:           yast2-support
 Summary:        YaST2 - Support Inquiries
-Version:        4.2.0
+Version:        4.2.1
 Release:        0
 Url:            https://github.com/yast/yast-support
 Group:          System/YaST
@@ -29,6 +29,7 @@ Source0:        %{name}-%{version}.tar.bz2
 BuildRequires:  yast2
 BuildRequires:  yast2-devtools >= 4.2.2
 BuildRequires:  rubygem(yast-rake)
+BuildRequires:  update-desktop-files
 
 BuildArch:      noarch
 
