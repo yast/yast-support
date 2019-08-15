@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Thu Aug 30 13:01:32 UTC 2018 - mvidner@suse.com
+
+- In ncurses the "Next" button to submit the gathered information
+  was not visible (bsc#1093358)
+- Made the Contact Information screen fit in a 80x24 terminal
+- 3.2.1
+
+-------------------------------------------------------------------
 Fri Jun 16 08:08:10 UTC 2017 - jreidinger@suse.com
 
 - Allow service request number longer then 11 digits (bsc#1040706)
