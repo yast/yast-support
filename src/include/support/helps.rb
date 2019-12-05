@@ -166,7 +166,7 @@ module Yast
                 "Find SUSE's privacy policy at\n" +
                 "<i>%1</i>.</p>\n"
             ),
-            "https://www.suse.com/company/policies/privacy/"
+            "https://www.suse.com/company/legal/"
           )
         ),
         "upload_select"  => Ops.add(
@@ -191,7 +191,7 @@ module Yast
                 "Find SUSE's privacy policy at\n" +
                 "<i>%1</i>.</p>\n"
             ),
-            "https://www.suse.com/company/policies/privacy/"
+            "https://www.suse.com/company/legal/"
           )
         ),
         # Configure2 dialog help 1/2
