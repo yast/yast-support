@@ -18,7 +18,7 @@
 
 Name:           yast2-support
 Summary:        YaST2 - Support Inquiries
-Version:        4.2.3
+Version:        4.3.0
 Release:        0
 Url:            https://github.com/yast/yast-support
 Group:          System/YaST
@@ -36,6 +36,8 @@ BuildArch:      noarch
 # Yast::CoreExt::AnsiString
 Requires:       yast2-ruby-bindings >= 3.1.36
 Requires:       yast2
+
+Supplements:    autoyast(support)
 
 %description
 This module allows you to collect system information for installation
