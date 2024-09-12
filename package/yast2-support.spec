@@ -1,7 +1,7 @@
 #
 # spec file for package yast2-support
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2023 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -20,16 +20,16 @@ Name:           yast2-support
 Summary:        YaST2 - Support Inquiries
 Version:        4.6.0
 Release:        0
-Url:            https://github.com/yast/yast-support
+URL:            https://github.com/yast/yast-support
 Group:          System/YaST
-License:        GPL-2.0
+License:        GPL-2.0-only
 
 Source0:        %{name}-%{version}.tar.bz2
 
+BuildRequires:  update-desktop-files
 BuildRequires:  yast2
 BuildRequires:  yast2-devtools >= 4.2.2
 BuildRequires:  rubygem(%{rb_default_ruby_abi}:yast-rake)
-BuildRequires:  update-desktop-files
 
 BuildArch:      noarch
 
@@ -66,3 +66,5 @@ support in a standardized format.
 %{yast_icondir}
 %doc %{yast_docdir}
 %license COPYING
+
+%changelog
